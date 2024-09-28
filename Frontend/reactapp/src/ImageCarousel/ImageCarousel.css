@@ -1,0 +1,16 @@
+.carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel img {
+    width: 300px;
+    height: auto;
+    margin: 0 10px;
+}
+
+button {
+    padding: 10px;
+    cursor: pointer;
+}

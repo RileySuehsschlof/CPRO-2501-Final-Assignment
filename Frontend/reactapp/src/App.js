@@ -64,10 +64,33 @@ function userExists(newEmail) {
     }
   }
   userEmaildB.push(newEmail);
+  window.confirm(`User created with email: ${newEmail}`);
+}
+
+function passwordValid() {
+  document.getElementById("passwordError").innerHTML = "";
+  document.getElementById("passwordAgainError").innerHTML = "";
+  const passwordInput = document.getElementById("passwordInput").value.trim();
+  const confirmPassword = document
+    .getElementById("passwordAgainInput")
+    .value.trim();
+  const passwordMatch = passMatch(passwordInput, confirmPassword);
+  let validLogin = true;
+  if (passwordInput.length < 6) {
+    validLogin = false;
+    document.getElementById("passwordError").innerHTML =
+      "Password must be atleast 6 characters long.";
+  }
+  if (!passwordMatch) {
+    document.getElementById("passwordAgainError").innerHTML =
+      "Passwords Dont Match";
+    validLogin = false;
+  }
+  return validLogin;
 }
 
 function checkCreation() {
-  if (formFilled()) {
+  if (formFilled() && passwordValid()) {
     userExists(document.getElementById("emailInput").value.trim());
   }
 }

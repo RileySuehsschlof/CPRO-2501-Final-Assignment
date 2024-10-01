@@ -86,8 +86,8 @@ function App() {
           <a href="#" onClick={() => handleNavigation('home')}>Home</a>
           <a href="#" onClick={() => handleNavigation('wishlist')}>My Wishlist</a>
           <a href="http://localhost:3000/">Special Offers</a>
-          <a href="http://localhost:3000/">Other Cool Menu Thing</a>
           <a href="http://localhost:3000/">Our Locations</a>
+          <a href="http://localhost:3000/">Profile</a>
           <a href="http://localhost:3000/">Cart</a>
         </div>
       </header>

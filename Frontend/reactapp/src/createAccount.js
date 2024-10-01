@@ -3,7 +3,7 @@ import CreateButton from "./Button";
 import "./CreateAccount.css";
 
 function validate(value, name) {
-  if (value == "" || value == null) {
+  if (value === "" || value === null) {
     const error = `${name} is required.`;
     return error;
   }
@@ -59,7 +59,8 @@ let userEmaildB = ["test@email.com", "test1@email.com"];
 function userExists(newEmail) {
   for (let email of userEmaildB) {
     if (email === newEmail) {
-      window.confirm("User with that email already exists.");
+      document.getElementById("emailError").innerHTML =
+        "User with that email already exists.";
       return false;
     }
   }
@@ -76,26 +77,47 @@ function passwordValid() {
     .value.trim();
   const passwordMatch = passMatch(passwordInput, confirmPassword);
   let validLogin = true;
+
   if (passwordInput.length < 6) {
     validLogin = false;
     document.getElementById("passwordError").innerHTML =
       "Password must be atleast 6 characters long.";
+    return validLogin;
   }
+
   if (!passwordMatch) {
     document.getElementById("passwordAgainError").innerHTML =
       "Passwords Dont Match";
     validLogin = false;
+    return validLogin;
   }
   return validLogin;
 }
 
+function validateEmail(email) {
+  const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  return emailPattern.test(email);
+}
+function isValidEmail() {
+  const emailInput = document.getElementById("emailInput").value.trim();
+  let validEmail = true;
+  document.getElementById("emailError").innerHTML = "";
+  if (!validateEmail(emailInput)) {
+    console.log(!validateEmail(emailInput));
+    let emailError = "Invalid Email Format";
+    document.getElementById("emailError").innerHTML = emailError;
+    validEmail = false;
+  }
+  return validEmail;
+}
+
 function checkCreation() {
-  if (formFilled() && passwordValid()) {
+  if (formFilled() && passwordValid() && isValidEmail()) {
     userExists(document.getElementById("emailInput").value.trim());
   }
 }
 
-function App() {
+function CreateAccount() {
   return (
     <div className="formContainer">
       <h1>Generic Website Name</h1>
@@ -110,6 +132,7 @@ function App() {
           title="Email"
           placeholderTxt="example@email.com"
           id="email"
+          type="email"
         ></CreateField>
         <CreateField
           title="Password"
@@ -130,4 +153,4 @@ function App() {
     </div>
   );
 }
-export default App;
+export default CreateAccount;

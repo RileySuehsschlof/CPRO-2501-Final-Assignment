@@ -5,6 +5,7 @@
 }
 
 .carousel img {
+    /* sets the size of the images in the carousel */
     width: 300px;
     height: auto;
     margin: 0 10px;

@@ -5,6 +5,8 @@
     justify-content: center;
     /* Center columns horizontally */
     padding: 20px;
+    background-color: white;
+
 }
 
 .column {
@@ -43,6 +45,9 @@ button:hover {
     /* Darker shade on hover */
 }
 
+body {
+    background-color: #0056b3;
+}
 
 
 /* .product-page {

@@ -36,8 +36,6 @@ function App() {
         header
       </header>
       <ProductPage product={product} />
-
-      <button onClick={() => alert('Button clicked!')}>Click Me</button>
     </div>
   );
 }

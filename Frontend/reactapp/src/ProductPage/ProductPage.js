@@ -1,27 +1,22 @@
 import React from 'react';
 import ImageCarousel from '../ImageCarousel/ImageCarousel';
 import selfie from '../ImageCarousel/selfie.jpg';
+import batman from '../ImageCarousel/batman.png';
+import random from '../ImageCarousel/random.png';
 import './ProductPage.css';
 
 //an example object that represents a product
-const product = {
-    name: "Sample Product",
-    images: [
-        selfie,
-        'https://via.placeholder.com/400x300?text=Image+2',
-        'https://via.placeholder.com/400x300?text=Image+3',
-    ],
-    description: "This is a great product that you will love!",
-    price: 29.99
-};
+
 
 //will take in an object and display the details
 const ProductPage = ({ product }) => {
+
     return (
         <div className="product-page">
             <div className="column">
                 {/* calling our Image carousel */}
                 <ImageCarousel images={product.images} />
+                {/* <img src={product.images[0]} alt="Product Image" /> */}
             </div>
             <div className="column">
                 <h2>{product.name}</h2>

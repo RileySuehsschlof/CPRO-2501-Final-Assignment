@@ -1,0 +1,49 @@
+.navbar {
+  background-color: #002C3E;
+  overflow: hidden;
+  position: fixed;
+  margin-top: 0vw; /* Adjusted margin-top using vw */
+  z-index: 1000;
+  width: 100%; /* Ensure navbar takes up full width */
+}
+
+
+.navbar h1 {
+  float: left;
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 1vw 2vw; /* Adjusted padding using vw */
+  text-decoration: none;
+  font-weight: lighter; /* Lighter font weight */
+  margin-left: 1vw; /* Adjusted margin-left using vw */
+  font-family: 'Brush Script MT', cursive; /* Added font-family */
+}
+
+.navbar a {
+  float: left;
+  display: block;
+  color: #fff;
+  text-align: center;
+  padding: 1.5vw 2vw; /* Adjusted padding using vw */
+  text-decoration: none;
+  font-size: 1.6vw; /* Adjusted font size using vw */
+}
+
+.navbar a:hover {
+  background-color: #ddd;
+  color: #333;
+}
+
+header{
+  background-color: #002C3E;
+}
+body{
+  background-color: #78BCC4;
+  height: 1500px;
+}
+
+.cartPic{
+  width: 20px;
+  height: auto;
+}

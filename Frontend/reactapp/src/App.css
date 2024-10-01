@@ -1,23 +1,24 @@
+
 .navbar {
   background-color: #002C3E;
   overflow: hidden;
   position: fixed;
-  margin-top: 0vw; /* Adjusted margin-top using vw */
+  margin-top: -130px;
   z-index: 1000;
-  width: 100%; /* Ensure navbar takes up full width */
+  width: 100%;
+  margin-left: -40px;
 }
-
 
 .navbar h1 {
   float: left;
   display: block;
   color: white;
   text-align: center;
-  padding: 1vw 2vw; /* Adjusted padding using vw */
+  padding: 1vw 2vw; 
   text-decoration: none;
-  font-weight: lighter; /* Lighter font weight */
-  margin-left: 1vw; /* Adjusted margin-left using vw */
-  font-family: 'Brush Script MT', cursive; /* Added font-family */
+  font-weight: lighter; 
+  margin-left: 1vw; 
+  font-family: 'Brush Script MT', cursive; 
 }
 
 .navbar a {
@@ -25,9 +26,9 @@
   display: block;
   color: #fff;
   text-align: center;
-  padding: 1.5vw 2vw; /* Adjusted padding using vw */
+  padding: 1.5vw 2vw; 
   text-decoration: none;
-  font-size: 1.6vw; /* Adjusted font size using vw */
+  font-size: 1.6vw; 
 }
 
 .navbar a:hover {
@@ -35,15 +36,67 @@
   color: #333;
 }
 
-header{
+header {
   background-color: #002C3E;
 }
-body{
+
+body {
   background-color: #78BCC4;
   height: 1500px;
+  margin-top: 130px;
+  margin-left: 40px;
 }
 
-.cartPic{
+.cartPic {
   width: 20px;
   height: auto;
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 300px; 
+  overflow: hidden;
+  text-align: center;
+  margin: 10px;
+}
+
+.card-image {
+  width: 100%;
+  height: auto;
+}
+
+.card-content {
+  padding: 16px;
+}
+
+.card-title {
+  font-size: 1.5em;
+  margin: 0;
+  color: #333;
+}
+
+.card-price {
+  font-size: 1.2em;
+  color: #007BFF;
+}
+
+.card-link {
+  font-size: 1.2em;
+  color: #007BFF;
+}
+
+#recommendedCards {
+  display: flex; 
+  justify-content: flex-start;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+#regCards {
+  display: flex; 
+  justify-content: flex-start;
+  margin-top: 10px;
+  margin-left: 10px;
 }

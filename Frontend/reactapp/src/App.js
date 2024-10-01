@@ -77,6 +77,7 @@ function App() {
         </div>
       </body>
       <footer>
+        <h3>Contact us at 123-456-7890</h3>
       </footer>
     </div>
   );

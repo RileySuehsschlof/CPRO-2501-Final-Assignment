@@ -1,6 +1,6 @@
 import CreateField from "./Field";
 import CreateButton from "./Button";
-import "./CreateAccount.css";
+import "./CreateAccCSS.css";
 
 function validate(value, name) {
   //general function to check if any fields are empty then display message

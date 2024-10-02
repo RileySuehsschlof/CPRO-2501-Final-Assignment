@@ -2,15 +2,14 @@ import './App.css';
 
 
 const products = [
-  { id: 1, name: 'Item 1', price: 10 },
-  { id: 2, name: 'Item 2', price: 20 },
-  { id: 3, name: 'Item 3', price: 30 },
+  { id: 1, name: 'Item 1', price: 10, image: '/logo192.png' },
+  { id: 2, name: 'Item 2', price: 20, image: '/logo192.png' },
+  { id: 3, name: 'Item 3', price: 30, image: '/logo192.png' },
 ];
 
 const App = () => {
   return (
     <div className="Container">
-      <navBar />
       <div className="Cart" style={{ padding: '20px' }}>
         <h1 style={{ marginTop: '0px' }}>Shopping Cart</h1>
         <ProductList products={products} />
@@ -26,8 +25,9 @@ const ProductList = ({ products }) => {
       <ul>
         {products.map((product) => (
           <li key={product.id} style={{ marginBottom: '10px' }}>
-            <button style={{ marginRight: '10px' }}>Remove</button>
+            <img src={product.image} alt="Product"/>
             <span>{product.name} - ${product.price}</span>
+            <button style={{ marginLeft: '10px' }}>Remove</button>
           </li>
         ))}
       </ul>
@@ -37,13 +37,16 @@ const ProductList = ({ products }) => {
 
 const CartSubtotal = () => {
   return (
-    <div style={{ marginTop: '20px' }}>
-      <h2>Cart Subtotal</h2>
-      <p>No items in the cart yet.</p>
-      <button disabled>Checkout</button>
+    <div className="Subtotal-Container" style={{ marginTop: '20px' }}>
+      <span className="Subtotal">Cart Subtotal = ${calculateSubtotal()}</span>
+      <button className="Checkout" disabled>Checkout</button>
     </div>
   );
 };
+
+function calculateSubtotal () {
+  return products.reduce((sum, product) => sum + product.price, 0);
+}
 
 
 export default App;

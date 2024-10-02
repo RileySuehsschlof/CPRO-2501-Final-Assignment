@@ -11,3 +11,20 @@
   height: 100vh;
   background-color: #78BCC4;
 }
+
+.Subtotal-Container {
+  display: flex;
+
+}
+
+.Subtotal {
+  font-size: 25px;
+}
+
+.Checkout {
+  margin-left: auto;
+}
+
+span {
+  font-size: 30px;
+}

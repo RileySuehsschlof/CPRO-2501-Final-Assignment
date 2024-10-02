@@ -26,6 +26,16 @@ class Card {
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
 
+
+  // const handleResize = () => {
+  //   setWindowWidth(window.innerWidth)
+  // }
+
+
+  // useEffect(() => {
+  //   window.addEventListener('resize', handleResize)
+  // })
+
   const regCardData = [
     new Card(
       "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Eo_circle_blue_number-1.svg/2048px-Eo_circle_blue_number-1.svg.png",

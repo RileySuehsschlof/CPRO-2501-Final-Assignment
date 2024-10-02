@@ -1,34 +1,44 @@
 import "./cart.css";
+import { useState } from "react";
+import batman from "./ImageCarousel/batman.png";
+import random from "./ImageCarousel/random.png";
+import selfie from "./ImageCarousel/selfie.jpg";
 
-const products = [
-  { id: 1, name: "Item 1", price: 10, image: "/logo192.png" },
-  { id: 2, name: "Item 2", price: 20, image: "/logo192.png" },
-  { id: 3, name: "Item 3", price: 30, image: "/logo192.png" },
+const initialProducts = [
+  { id: 1, name: "Item 1", price: 10, image: batman },
+  { id: 2, name: "Item 2", price: 20, image: random },
+  { id: 3, name: "Item 3", price: 30, image: selfie },
 ];
 
 const Cart = () => {
+  const [products, setProducts] = useState(initialProducts);
+
+  const removeProduct = (id) => {
+    setProducts(products.filter((product) => product.id !== id));
+  };
+
   return (
-    <div className="Cart">
-      <div className="Container" style={{ padding: "20px" }}>
+    <div className="Container">
+      <div className="Cart">
         <h1 style={{ marginTop: "0px" }}>Shopping Cart</h1>
-        <ProductList products={products} />
-        <CartSubtotal />
+        <ProductList products={products} removeProduct={removeProduct} />
+        <CartSubtotal products={products} />
       </div>
     </div>
   );
 };
 
-const ProductList = ({ products }) => {
+const ProductList = ({ products, removeProduct }) => {
   return (
     <div>
       <ul>
         {products.map((product) => (
-          <li key={product.id} style={{ marginBottom: "10px" }}>
+          <li key={product.id}>
             <img src={product.image} alt="Product" />
             <span>
               {product.name} - ${product.price}
             </span>
-            <button>Remove</button>
+            <button onClick={() => removeProduct(product.id)}>Remove</button>
           </li>
         ))}
       </ul>
@@ -36,10 +46,12 @@ const ProductList = ({ products }) => {
   );
 };
 
-const CartSubtotal = () => {
+const CartSubtotal = ({ products }) => {
   return (
     <div className="Subtotal-Container">
-      <span className="Subtotal">Cart Subtotal = ${calculateSubtotal()}</span>
+      <span className="Subtotal">
+        Cart Subtotal = ${calculateSubtotal(products)}
+      </span>
       <button className="Checkout" disabled>
         Checkout
       </button>
@@ -47,7 +59,7 @@ const CartSubtotal = () => {
   );
 };
 
-function calculateSubtotal() {
+function calculateSubtotal(products) {
   return products.reduce((sum, product) => sum + product.price, 0);
 }
 

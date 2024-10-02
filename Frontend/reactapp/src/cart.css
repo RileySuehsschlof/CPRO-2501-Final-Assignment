@@ -1,0 +1,38 @@
+.Cart {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.Cart .Container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  border: 5px solid #002c3e;
+  border-radius: 5px;
+  width: fit-content;
+}
+.Cart .Subtotal-Container {
+  display: flex;
+}
+
+.Cart .Subtotal {
+  font-size: 25px;
+}
+
+.Cart .Checkout {
+  margin-left: auto;
+}
+
+.Cart span {
+  font-size: 30px;
+}
+.Cart li {
+  list-style-type: none;
+}
+.Cart ul {
+  padding-inline-start: 0px;
+}

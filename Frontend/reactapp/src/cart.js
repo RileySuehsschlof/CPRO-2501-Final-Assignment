@@ -1,4 +1,4 @@
-import "./App.css";
+import "./cart.css";
 
 const products = [
   { id: 1, name: "Item 1", price: 10, image: "/logo192.png" },
@@ -6,10 +6,10 @@ const products = [
   { id: 3, name: "Item 3", price: 30, image: "/logo192.png" },
 ];
 
-const App = () => {
+const Cart = () => {
   return (
-    <div className="Container">
-      <div className="Cart" style={{ padding: "20px" }}>
+    <div className="Cart">
+      <div className="Container" style={{ padding: "20px" }}>
         <h1 style={{ marginTop: "0px" }}>Shopping Cart</h1>
         <ProductList products={products} />
         <CartSubtotal />
@@ -28,7 +28,7 @@ const ProductList = ({ products }) => {
             <span>
               {product.name} - ${product.price}
             </span>
-            <button style={{ marginLeft: "10px" }}>Remove</button>
+            <button>Remove</button>
           </li>
         ))}
       </ul>
@@ -38,7 +38,7 @@ const ProductList = ({ products }) => {
 
 const CartSubtotal = () => {
   return (
-    <div className="Subtotal-Container" style={{ marginTop: "20px" }}>
+    <div className="Subtotal-Container">
       <span className="Subtotal">Cart Subtotal = ${calculateSubtotal()}</span>
       <button className="Checkout" disabled>
         Checkout
@@ -51,4 +51,4 @@ function calculateSubtotal() {
   return products.reduce((sum, product) => sum + product.price, 0);
 }
 
-export default App;
+export default Cart;

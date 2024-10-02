@@ -11,6 +11,9 @@ function Navigation() {
       <button className="navBtnRoute" onClick={() => navigate("/product")}>
         View a Product
       </button>
+      <button className="navBtnRoute" onClick={() => navigate("/cart")}>
+        View Cart
+      </button>
     </nav>
   );
 }

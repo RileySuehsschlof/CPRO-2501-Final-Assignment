@@ -1,3 +1,4 @@
+// component that makes up the create account form. COnsists of div with a p,input,p inside it
 function CreateField({ title, placeholderTxt = "", id, type = "" }) {
   return (
     <div className={id}>

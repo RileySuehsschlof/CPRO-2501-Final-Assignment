@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import "./Navigation.css";
-
+// function thatmanages page navigation to a segment
 function Navigation() {
   const navigate = useNavigate();
   return (

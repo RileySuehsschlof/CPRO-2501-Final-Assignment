@@ -6,6 +6,7 @@ import Navigation from "./Navigation";
 function App() {
   return (
     <>
+      {/* Enables navigation with routing */}
       <Router>
         <Navigation />
         <Routes>

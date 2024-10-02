@@ -29,6 +29,7 @@ function formFilled() {
     .getElementById("passwordAgainInput")
     .value.trim();
 
+  // checks validation foreach field then writes an error
   const nameError = validate(nameInput, "Name");
   let validLogin = true;
   if (nameError) {

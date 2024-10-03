@@ -1,4 +1,5 @@
 /* Styling for cart */
+
 .Container {
   display: flex;
   flex-direction: column;
@@ -46,4 +47,5 @@
 }
 .Cart {
   padding: 60px;
+  background-color: white;
 }

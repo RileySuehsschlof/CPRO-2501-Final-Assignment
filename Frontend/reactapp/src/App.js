@@ -1,88 +1,58 @@
 import './App.css';
 import { useState } from 'react';
-
-class Card {
-  constructor(image, title, price, link) {
-    this.image = image;
-    this.title = title;
-    this.price = price;
-    this.link = link;
-  }
-
-  render() {
-    return (
-      <div className="card">
-        <img src={this.image} alt="Product Image" className="card-image" />
-        <div className="card-content">
-          <h2 className="card-title">{this.title}</h2>
-          <p className="card-price">{this.price}</p>
-          <a className="card-link" href={this.link}>View Details</a>
-        </div>
-      </div>
-    );
-  }
-}
+import Navbar from './/Components/Navbar.js';
+import Footer from './/Components/Footer.js';
+import Card from './/Components/Card.js';
+import MainPage from './/Pages/MainPage.js';
+import WishlistPage from './/Pages/WishlistPage.js';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
 
-
-  // const handleResize = () => {
-  //   setWindowWidth(window.innerWidth)
-  // }
-
-
-  // useEffect(() => {
-  //   window.addEventListener('resize', handleResize)
-  // })
-
   const regCardData = [
-    new Card(
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Eo_circle_blue_number-1.svg/2048px-Eo_circle_blue_number-1.svg.png",
-      "Product Title 1",
-      "$29.99",
-      "http://localhost:3000/"
-    ),
-    new Card(
-      "https://cdn-icons-png.flaticon.com/512/6947/6947566.png",
-      "Product Title 2",
-      "$29.99",
-      "http://localhost:3000/"
-    ),
+    {
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Eo_circle_blue_number-1.svg/2048px-Eo_circle_blue_number-1.svg.png",
+      title: "Product Title 1",
+      price: "$29.99",
+      link: "http://localhost:3000/"
+    },
+    {
+      image: "https://cdn-icons-png.flaticon.com/512/6947/6947566.png",
+      title: "Product Title 2",
+      price: "$29.99",
+      link: "http://localhost:3000/"
+    },
   ];
 
   const recommendedCardData = [
-    new Card(
-      "https://cdn-icons-png.flaticon.com/512/8068/8068017.png",
-      "Product Title 1",
-      "$29.99",
-      "http://localhost:3000/"
-    ),
-    new Card(
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Eo_circle_red_number-2.svg/2048px-Eo_circle_red_number-2.svg.png",
-      "Product Title 2",
-      "$29.99",
-      "http://localhost:3000/"
-    ),
+    {
+      image: "https://cdn-icons-png.flaticon.com/512/8068/8068017.png",
+      title: "Product Title 1",
+      price: "$29.99",
+      link: "http://localhost:3000/"
+    },
+    {
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Eo_circle_red_number-2.svg/2048px-Eo_circle_red_number-2.svg.png",
+      title: "Product Title 2",
+      price: "$29.99",
+      link: "http://localhost:3000/"
+    },
   ];
-
 
   const wishlistCardData = [
-    new Card(
-      "https://as2.ftcdn.net/v2/jpg/00/99/53/31/1000_F_99533164_fpE2O6vEjnXgYhonMyYBGtGUFCLqfTWA.jpg",
-      "Product Title 1",
-      "$29.99",
-      "http://localhost:3000/"
-    ),
-    new Card(
-      "https://static.vecteezy.com/system/resources/thumbnails/011/287/998/small_2x/number-2-3d-gold-png.png",
-      "Product Title 2",
-      "$29.99",
-      "http://localhost:3000/"
-    ),
+    {
+      image: "https://as2.ftcdn.net/v2/jpg/00/99/53/31/1000_F_99533164_fpE2O6vEjnXgYhonMyYBGtGUFCLqfTWA.jpg",
+      title: "Product Title 1",
+      price: "$29.99",
+      link: "http://localhost:3000/"
+    },
+    {
+      image: "https://static.vecteezy.com/system/resources/thumbnails/011/287/998/small_2x/number-2-3d-gold-png.png",
+      title: "Product Title 2",
+      price: "$29.99",
+      link: "http://localhost:3000/"
+    },
   ];
-
-
 
   const handleNavigation = (page) => {
     setCurrentPage(page);
@@ -90,52 +60,16 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <div className="navbar">
-          <h1>Generic Store Name</h1>
-          <a href="#" onClick={() => handleNavigation('home')}>Home</a>
-          <a href="#" onClick={() => handleNavigation('wishlist')}>My Wishlist</a>
-          <a href="http://localhost:3000/">Special Offers</a>
-          <a href="http://localhost:3000/">Our Locations</a>
-          <a href="http://localhost:3000/">Profile</a>
-          <a href="http://localhost:3000/">Cart</a>
-        </div>
-      </header>
-      <body>
-
-{/* HOME PAGE */}
-
-
+      <Navbar onNavigate={handleNavigation} />
+      <main>
         {currentPage === 'home' && (
-          <>
-            <h1>On Sale</h1>
-            <div id="regCards">
-              {regCardData.map(card => card.render())}
-            </div>
-            <h1>Products You Might Like</h1>
-            <div id="recommendedCards">
-              {recommendedCardData.map(card => card.render())}
-            </div>
-          </>
+          <MainPage regCardData={regCardData} recommendedCardData={recommendedCardData} />
         )}
-
-
-
-{/* WISHLIST */}
-
-
         {currentPage === 'wishlist' && (
-          <div>
-            <h1>My Wishlist</h1>
-            <div id="recommendedCards">
-              {wishlistCardData.map(card => card.render())}
-            </div>
-          </div>
+          <WishlistPage wishlistCardData={wishlistCardData} />
         )}
-      </body>
-      <footer>
-        <h3>Contact us at 123-456-7890</h3>
-      </footer>
+      </main>
+      <Footer />
     </div>
   );
 }

@@ -4,16 +4,11 @@ import Product from "./Product";
 import Cart from "./cart";
 import Navigation from "./Navigation";
 import "./Pages/MainPage.js";
-import { useState } from "react";
-import Navbar from ".//Components/Navbar.js";
-import Footer from ".//Components/Footer.js";
-import Card from ".//Components/Card.js";
+import { useNavigate } from "react-router-dom";
 import MainPage from ".//Pages/MainPage.js";
 import WishlistPage from ".//Pages/WishlistPage.js";
 
 function App() {
-  const [currentPage, setCurrentPage] = useState("home");
-
   const regCardData = [
     {
       image:
@@ -63,42 +58,34 @@ function App() {
     },
   ];
 
-  const handleNavigation = (page) => {
-    setCurrentPage(page);
-  };
-
   return (
-    // <<<<<<< HEAD
-    //     <>
-    //       <Router>
-    //         <Navigation />
-    //         <Routes>
-    //           <Route path="/register" element={<CreateAccount />} />
-    //           <Route path="/product" element={<Product />} />
-    //           <Route path="/cart" element={<Cart />} />
-    //         </Routes>
-    //       </Router>
-    //     </>
-    //   );
-    // }
-    // export default App;
+    <>
+      <Router>
+        <Navigation />
+        <Routes>
+          <Route
+            path=""
+            element={
+              <MainPage
+                regCardData={regCardData}
+                recommendedCardData={recommendedCardData}
+              />
+            }
+          ></Route>
 
-    <div className="App">
-      <Navbar onNavigate={handleNavigation} />
-      <main>
-        {currentPage === "home" && (
-          <MainPage
-            regCardData={regCardData}
-            recommendedCardData={recommendedCardData}
-          />
-        )}
-        {currentPage === "wishlist" && (
-          <WishlistPage wishlistCardData={wishlistCardData} />
-        )}
-      </main>
-      <Footer />
-    </div>
+          <Route path="/product" element={<Product />} />
+
+          <Route
+            path="/wishlist"
+            element={<WishlistPage wishlistCardData={wishlistCardData} />}
+          ></Route>
+
+          <Route path="/cart" element={<Cart />} />
+
+          <Route path="/register" element={<CreateAccount />} />
+        </Routes>
+      </Router>
+    </>
   );
 }
-
 export default App;

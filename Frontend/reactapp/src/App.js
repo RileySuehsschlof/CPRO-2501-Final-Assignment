@@ -1,3 +1,7 @@
+// import './App.css';
+import './Pages/MainPage.js';
+import './App.css';
+import './App.css';
 import './App.css';
 import { useState } from 'react';
 import Navbar from './/Components/Navbar.js';

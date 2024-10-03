@@ -1,5 +1,3 @@
-// src/pages/MainPage.js
-
 import React from 'react';
 import Card from '../Components/Card';
 import './MainPage.css';

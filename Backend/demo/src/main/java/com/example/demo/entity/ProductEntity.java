@@ -21,7 +21,7 @@ public class ProductEntity {
     private byte[] img; // Store image as byte array instead of Image
 
     private String productName;
-    private int quantity;
+    private Integer quantity;
 
     private BigDecimal price; // Use BigDecimal for price
     private BigDecimal discount; // Use BigDecimal for discount

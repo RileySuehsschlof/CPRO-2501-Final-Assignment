@@ -17,17 +17,22 @@ public class ProductController {
         return productEntityService.getAllProducts();
     }
 
-    @GetMapping("/ProductsById")
-    public ProductEntity getProductById(int id){
+    @GetMapping("/ProductsById/{id}")
+    public ProductEntity getProductById(@PathVariable int id){
         return productEntityService.getProductById(id);
     }
 
-    @PostMapping("/save")
+    @PostMapping("/saveproduct")
     public String saveProduct(@RequestBody ProductEntity product){
         return productEntityService.saveProduct(product);
     }
 
-    @PutMapping("/edit")
+    @DeleteMapping("/deleteproduct/{id}")
+    public String deleteProduct(@PathVariable int id){
+        return productEntityService.deleteProduct(id);
+    }
+
+    @PutMapping("/edit/{id}")
     public ProductEntity editProduct(@PathVariable int id, @RequestBody ProductEntity updatedProduct) {
         return productEntityService.editProduct(id, updatedProduct);
     }

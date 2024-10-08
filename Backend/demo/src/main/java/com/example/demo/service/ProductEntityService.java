@@ -24,4 +24,34 @@ public class ProductEntityService {
     public ProductEntity getProductById(int id){
         return repository.findById(id).get();
     }
+    public ProductEntity editProduct(int id, ProductEntity upDatedProduct){
+        ProductEntity product = repository.findById(id).get();
+
+        if(upDatedProduct.getProductName() !=null){
+            product.setProductName(upDatedProduct.getProductName());
+        }
+        if(upDatedProduct.getImg() !=null){
+            product.setImg(upDatedProduct.getImg());
+        }
+        if(upDatedProduct.getCategory() !=null){
+            product.setCategory(upDatedProduct.getCategory());
+        }
+        if(upDatedProduct.getDiscount() !=null){
+            product.setDiscount(product.getDiscount());
+        }
+        if(upDatedProduct.getQuantity() !=null){
+            product.setQuantity(product.getQuantity());
+        }
+        return repository.save(product);
+
+    }
+    public String deleteProduct(Integer id){
+        if(id != null && repository.existsById(id)){
+
+                repository.deleteById(id);
+                return "succesfulfully deleted product:" +id;
+        }
+         return "unsuccesful";
+
+    }
 }

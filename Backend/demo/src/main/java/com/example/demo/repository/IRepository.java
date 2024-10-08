@@ -1,13 +1,12 @@
 package com.example.demo.repository;
 
-import com.example.demo.entity.TestEntity;
+
+import com.example.demo.entity.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import java.util.ArrayList;
+import java.util.List;
 
-
-
-//import com.example.demo.entity.TestEntity;
-//import org.springframework.data.jpa.repository.JpaRepository;
-
-public interface IRepository extends JpaRepository<TestEntity, Integer> {
+public interface IRepository extends JpaRepository<Account, Integer> {
 
 }

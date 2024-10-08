@@ -20,6 +20,7 @@ public class Account {
     private Integer id;
 
     @Email(message = "Email must be in format email@email.com")
+    @NotBlank(message="Email is required")
     private String email;
 
     @NotBlank(message = "Name is required")

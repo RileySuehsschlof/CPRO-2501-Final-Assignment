@@ -36,11 +36,13 @@ public class AccountController {
                 .orElseThrow(() -> new AccNotFoundException("Account not found with id: " + accountId));
     }
 
+//    Delete a specific account by ID
     @DeleteMapping("/delete/{accountId}")
     public ResponseEntity<String> deleteAccountById(@PathVariable Integer accountId){
        return accountService.deleteAccountById(accountId);
     }
 
+//    Edit a specific account by ID
     @PutMapping("/edit/{accountId}")
     public Account editAccountById(@PathVariable Integer accountId, @RequestBody Account account) {
         return accountService.editAccountById(accountId, account);

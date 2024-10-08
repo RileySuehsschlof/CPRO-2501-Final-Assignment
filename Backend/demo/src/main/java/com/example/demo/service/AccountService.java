@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-
 import com.example.demo.entity.Account;
 import com.example.demo.exception.AccNotFoundException;
 import com.example.demo.repository.IAccountRepository;
@@ -18,32 +17,45 @@ public class AccountService {
 
     @Autowired
     IAccountRepository repository;
+
+    //Log Errors
     private static final Logger logger = LoggerFactory.getLogger(AccountService.class);
 
+
+//    Method to return all Accounts
     public List<Account> getAllAccounts() {
         return repository.findAll();
     }
 
+    //Method to Create an account and save it to db
     public String saveAccount(Account account) {
         repository.save(account);
         return "Account Saved";
     }
 
+//    Method that passes a parameter to find an account with matching id
     public Optional<Account> getAccountById(int accountId) {
         return repository.findById(accountId);
     }
 
+//    method to validate email using regex pattern
     private boolean isValidEmail(String email) {
         String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
         return email != null && email.matches(emailRegex);
     }
+
+//    Method to validate card using regex pattern
     private boolean isValidCard(String card){
         String cardRegex = "^[0-9]{16}$";
         return card != null && card.matches(cardRegex);
     }
+
+//    Method to delete an account with a specific id
     public ResponseEntity<String> deleteAccountById(Integer accountId) {
+//        Make sure id exists
         if (accountId != null) {
             if (!repository.existsById(accountId)) {
+//                Account does not exist
                 throw new AccNotFoundException("Account not found with id: " + accountId);
             }
             repository.deleteById(accountId);
@@ -54,7 +66,7 @@ public class AccountService {
         }
     }
 
-
+//          Method to edit an accounts fields with an id and body parameters
     public Account editAccountById(Integer accountId, Account updatedAccount) {
         // Fetch the existing account
         Account existingAccount = repository.findById(accountId)
@@ -74,7 +86,6 @@ public class AccountService {
         if (updatedAccount.getShippingAddress() != null) {
             existingAccount.setShippingAddress(updatedAccount.getShippingAddress());
         }
-
         if (updatedAccount.getEmail() != null) {
             if (!isValidEmail(updatedAccount.getEmail())) {
                 throw new AccNotFoundException("Email must be in format email@email.com");

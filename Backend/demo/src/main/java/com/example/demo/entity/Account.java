@@ -15,6 +15,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 public class Account {
+
+//    @NotNull and @NotBlank are used to make sure fields are filled in
     @Id
     @NotNull(message = "Id is required")
     private Integer id;
@@ -34,5 +36,6 @@ public class Account {
 
     @NotNull(message = "Card Number is required")
     @Pattern(regexp = "^[0-9]{16}$", message = "Card Number must be exactly 16 digits and numeric")
+//    Pattern sets a regexp pattern for what an input should look like
     private String cardNumber;
 }

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+import java.util.Optional;
 
 
 @Service
@@ -25,26 +25,7 @@ public class AccountService {
         return "Account Saved";
     }
 
-    public Account getAccountById(int id) {
-        return repository.findById(id).get();
+    public Optional<Account> getAccountById(int accountId) {
+        return repository.findById(accountId);
     }
 }
-//@Service
-//public class AccountService {
-//
-//    @Autowired
-//    private IAccountRepository accountRepository;
-//
-//    public Account saveAccount(Account account) {
-//        return accountRepository.save(account);
-//    }
-//
-//    public Account findById(int id) {
-//        return accountRepository.findById(id);
-//    }
-//
-//    public List<Account> getAllAccounts() {
-//        return accountRepository.getAllAccounts();
-//    }
-//
-//}

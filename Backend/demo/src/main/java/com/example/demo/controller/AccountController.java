@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Account;
+import com.example.demo.exception.AccNotFoundException;
 import com.example.demo.service.AccountService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +28,10 @@ public class AccountController {
     }
 
     // Retrieve a specific account by ID
-    @GetMapping("account/{accountId}")
-    public Account getAccountById(@PathVariable int accountId) {
-        return accountService.getAccountById(accountId);
+    //Throw a custom error if account doesnt exist in the database
+    @GetMapping("/account/{accountId}")
+    public Account findAccountById(@PathVariable Integer accountId) {
+        return accountService.getAccountById(accountId)
+                .orElseThrow(() -> new AccNotFoundException("Account not found with id: " + accountId));
     }
 }
-

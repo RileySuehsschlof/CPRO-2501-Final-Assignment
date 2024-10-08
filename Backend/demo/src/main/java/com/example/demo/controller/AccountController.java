@@ -5,6 +5,7 @@ import com.example.demo.exception.AccNotFoundException;
 import com.example.demo.service.AccountService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -34,4 +35,15 @@ public class AccountController {
         return accountService.getAccountById(accountId)
                 .orElseThrow(() -> new AccNotFoundException("Account not found with id: " + accountId));
     }
+
+    @DeleteMapping("/delete/{accountId}")
+    public ResponseEntity<String> deleteAccountById(@PathVariable Integer accountId){
+       return accountService.deleteAccountById(accountId);
+    }
+
+    @PutMapping("/edit/{accountId}")
+    public Account editAccountById(@PathVariable Integer accountId, @RequestBody Account account) {
+        return accountService.editAccountById(accountId, account);
+    }
+
 }

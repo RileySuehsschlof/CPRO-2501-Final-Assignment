@@ -2,6 +2,7 @@ package com.example.demo.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -17,6 +18,9 @@ public class Account {
     @Id
     @NotNull(message = "Id is required")
     private Integer id;
+
+    @Email(message = "Email must be in format email@email.com")
+    private String email;
 
     @NotBlank(message = "Name is required")
     private String name;

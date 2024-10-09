@@ -15,6 +15,7 @@ const Card = ({ image, title, price, link, notes }) => {
           Product
         </button>
         <p className="card-notes">{notes}</p> {/* Display notes here */}
+        
 
         
       </div>

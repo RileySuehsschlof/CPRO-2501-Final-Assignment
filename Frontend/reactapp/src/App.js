@@ -14,13 +14,13 @@ function App() {
       image: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Eo_circle_blue_number-1.svg/2048px-Eo_circle_blue_number-1.svg.png",
       title: "Product Title 1",
       price: "$29.99",
-      link: "http://localhost:3000/",
+      link: "product",
     },
     {
       image: "https://cdn-icons-png.flaticon.com/512/6947/6947566.png",
       title: "Product Title 2",
       price: "$29.99",
-      link: "http://localhost:3000/",
+      link: "product",
     },
   ];
 
@@ -29,13 +29,13 @@ function App() {
       image: "https://cdn-icons-png.flaticon.com/512/8068/8068017.png",
       title: "Product Title 1",
       price: "$29.99",
-      link: "http://localhost:3000/",
+      link: "product",
     },
     {
       image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Eo_circle_red_number-2.svg/2048px-Eo_circle_red_number-2.svg.png",
       title: "Product Title 2",
       price: "$29.99",
-      link: "http://localhost:3000/",
+      link: "product",
     },
   ];
 

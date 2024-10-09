@@ -2,7 +2,7 @@ package com.example.demo.service;
 
 
 import com.example.demo.entity.ProductEntity;
-import com.example.demo.exceptionHandling.ProductException;
+import com.example.demo.exception.ProductException;
 import com.example.demo.repository.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,9 @@ public class ProductEntityService {
         return "Product saved " + productEntity.getProductName();//the validation happens in ProductEntity
     }
     public ProductEntity getProductById(Integer id){
+        System.out.println("hey what is my issue"+id);
         if(id == null){
+
             throw ProductException.invalidProductId();
         }
         if(!repository.existsById(id)){// making sure the product exists in the database
@@ -59,6 +61,7 @@ public class ProductEntityService {
         }
         if (!repository.existsById(id))
         {
+//            throw new AccNotFoundException("Hi");
             throw ProductException.productNotFound(id);
         }
         repository.deleteById(id);

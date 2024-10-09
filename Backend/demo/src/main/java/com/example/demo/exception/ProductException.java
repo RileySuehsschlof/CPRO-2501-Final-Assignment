@@ -1,5 +1,8 @@
-package com.example.demo.exceptionHandling;
+package com.example.demo.exception;
 
+import lombok.Getter;
+
+@Getter
 public class ProductException extends RuntimeException{
 
         private final String errorCode;
@@ -9,12 +12,8 @@ public class ProductException extends RuntimeException{
             this.errorCode = errorCode;
         }
 
-        public String getErrorCode() {
-            return errorCode;
-        }
 
-
-        public static ProductException invalidProductId() {
+    public static ProductException invalidProductId() {
             return new ProductException("Invalid Product id: . id cannot be empty.", "INVALID_PRODUCT_ID");
         }
 

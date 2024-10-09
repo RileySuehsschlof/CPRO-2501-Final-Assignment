@@ -16,20 +16,20 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class ProductEntity {
     @Id
-    @NotNull
+    @NotNull(message = "Must have a Id")
     private Integer id;
 
     @Lob
     private byte[] img; // Store image as byte array instead of Image
 
-    @NotNull
+    @NotNull(message = "Must have a Product Name")
     private String productName;
-    @NotNull
+    @NotNull(message = "Must have a quantity")
     private Integer quantity;
-    @NotNull
+    @NotNull(message = "Must have a Price")
     private BigDecimal price; // Using BigDecimal for price
-    @NotNull
+    @NotNull(message = "Must have a Discount")
     private BigDecimal discount; // Using BigDecimal for discount
-    @NotNull
+    @NotNull(message = "Must have a Category")
     private String category;
 }

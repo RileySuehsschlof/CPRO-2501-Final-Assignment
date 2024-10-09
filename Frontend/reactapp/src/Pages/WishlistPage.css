@@ -1,0 +1,23 @@
+#recommendedCards {
+    display: flex;
+    justify-content: flex-start;
+    margin-left: 10px;
+    margin-top: 10px;
+  }
+
+
+
+.wishlist-page {
+    flex: 1; 
+    padding: 20px;
+  }
+  
+  footer {
+    background-color: #002C3E;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    position: relative; 
+    margin-top: 800px;
+  }
+  

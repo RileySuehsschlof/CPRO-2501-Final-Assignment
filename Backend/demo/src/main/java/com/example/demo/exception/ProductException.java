@@ -6,7 +6,7 @@ import lombok.Getter;
 public class ProductException extends RuntimeException{
 
         private final String errorCode;
-
+        //template for my error messages
         public ProductException(String message, String errorCode) {
             super(message);
             this.errorCode = errorCode;
@@ -25,6 +25,6 @@ public class ProductException extends RuntimeException{
             return new ProductException("The Id: " + id + " is already in use", "ID_IN_USE");
         }
 
-        // Add more static methods for other edge cases as needed
+
 }
 

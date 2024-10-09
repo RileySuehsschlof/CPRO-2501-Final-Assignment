@@ -19,10 +19,10 @@ public class ProductController {
 
     @GetMapping("/ProductsById/{id}")
     public ProductEntity getProductById(@PathVariable Integer id){
-        System.out.println("in controller:");
         return productEntityService.getProductById(id);
     }
-    @GetMapping({"/ProductsById", "ProductsById/"})
+
+    @GetMapping({"/ProductsById", "ProductsById/"})//duplicate for null values
     public ResponseEntity<String> getProductByIdWithoutId() {
         return ResponseEntity.badRequest().body("Product Id is required.");
     }
@@ -36,14 +36,17 @@ public class ProductController {
     public String deleteProduct(@PathVariable int id){
         return productEntityService.deleteProduct(id);
     }
-    @DeleteMapping({"/deleteproduct/","/deleteproduct"})
+    @DeleteMapping({"/deleteproduct/","/deleteproduct"})//duplicate for null values
     public ResponseEntity<String> deleteProductWithoutId(){
         return ResponseEntity.badRequest().body("Product Id is required");
     }
 
-    @PutMapping("/edit/{id}")
+    @PutMapping("/editproduct/{id}")
     public ProductEntity editProduct(@PathVariable int id, @RequestBody ProductEntity updatedProduct) {
         return productEntityService.editProduct(id, updatedProduct);
     }
-
+    @PutMapping({"/editproduct/","/editproduct"})//duplicate for null values
+    public ResponseEntity<String> editProductWithoutId(){
+        return ResponseEntity.badRequest().body("Product Id is required");
+    }
 }

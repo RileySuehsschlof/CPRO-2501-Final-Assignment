@@ -6,19 +6,22 @@ import jakarta.validation.ConstraintValidatorContext;
 
 import java.math.BigDecimal;
 
-public class BigDecimalValidator implements ConstraintValidator<ValidBigDecimal, BigDecimal> {
+public class BigDecimalValidator implements ConstraintValidator<ValidBigDecimal, String> {
     @Override
-    public void initialize(ValidBigDecimal constraintAnnotation) {
-    }
+    public void initialize(ValidBigDecimal constraintAnnotation) {}
 
     @Override
-    public boolean isValid(BigDecimal value, ConstraintValidatorContext context) {
+    public boolean isValid(String value, ConstraintValidatorContext context) {
         // Allow null values to be validated by @NotNull
-        if (value == null) {
+        if (value == null || value.trim().isEmpty()) {
             return true;
         }
 
-        // Check if the value is a valid BigDecimal
-        return value instanceof BigDecimal;
+        try {
+            new BigDecimal(value); // Try to create a BigDecimal from the string
+            return true; // If successful, it's valid
+        } catch (NumberFormatException e) {
+            return false; // If there's an exception, it's not a valid BigDecimal
+        }
     }
 }

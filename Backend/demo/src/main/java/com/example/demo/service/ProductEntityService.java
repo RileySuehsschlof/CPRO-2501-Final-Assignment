@@ -19,7 +19,8 @@ public class ProductEntityService {
     }
 
     public String saveProduct(ProductEntity productEntity){
-        if(repository.existsById(productEntity.getId())){
+
+        if(repository.existsById(productEntity.getId())){//checks to make sure the id is unique
             throw ProductException.IdAlreadyExists(productEntity.getId());
         }
         repository.save(productEntity);
@@ -37,8 +38,9 @@ public class ProductEntityService {
         }
 
     public ProductEntity editProduct(Integer id, ProductEntity upDatedProduct){
-        ProductEntity product = getProductById(id);
+        ProductEntity product = getProductById(id);//gets the product to edit
 
+        //checks each value to see if we need to update them
         if(upDatedProduct.getProductName() !=null){
             product.setProductName(upDatedProduct.getProductName());
         }
@@ -49,21 +51,26 @@ public class ProductEntityService {
             product.setCategory(upDatedProduct.getCategory());
         }
         if(upDatedProduct.getDiscount() !=null){
-            product.setDiscount(product.getDiscount());
+            product.setDiscount(upDatedProduct.getDiscount());
         }
         if(upDatedProduct.getQuantity() !=null){
-            product.setQuantity(product.getQuantity());
+            product.setQuantity(upDatedProduct.getQuantity());
+        }
+        if(upDatedProduct.getPrice() != null){
+            product.setPrice(upDatedProduct.getPrice());
         }
         return repository.save(product);
 
     }
     public String deleteProduct(Integer id){
+
         if(id == null){
             throw ProductException.invalidProductId();
         }
+        //checks if the product exists
         if (!repository.existsById(id))
         {
-//            throw new AccNotFoundException("Hi");
+
             throw ProductException.productNotFound(id);
         }
         repository.deleteById(id);

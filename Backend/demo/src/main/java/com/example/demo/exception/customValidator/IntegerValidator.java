@@ -7,14 +7,12 @@ import jakarta.validation.ConstraintValidatorContext;
 public class IntegerValidator implements ConstraintValidator<ValidInteger, String> {
 
     @Override
-    public void initialize(ValidInteger constraintAnnotation) {
-        // Initialization logic, if needed
-    }
+    public void initialize(ValidInteger constraintAnnotation) {}
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         if (value == null) {
-            return true; // Allow null values if you are using @NotNull elsewhere
+            return true; // Allow null values for our @NotNull check
         }
         try {
             Integer.parseInt(value);

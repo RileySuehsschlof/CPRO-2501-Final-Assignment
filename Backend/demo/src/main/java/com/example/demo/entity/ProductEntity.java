@@ -17,11 +17,12 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductEntity {
+    //primairy key
     @Id
     @NotNull(message = "Must have a Id")
     private Integer id;
 
-    @Lob
+    @Lob//for images
     private byte[] img; // Store image as byte array instead of Image
 
     @NotNull(message = "Must have a Product Name")
@@ -31,13 +32,13 @@ public class ProductEntity {
     @NotNull(message = "Must have a quantity")
     private String quantity;//is a string so my validation can work
 
-    @ValidBigDecimal(message = "Must be a valid decimal")
+    @ValidBigDecimal(message = "Must be a valid decimal")//this ensures it can be converted to a BigDecimal
     @NotNull(message = "Must have a Price")
-    private BigDecimal price; // Using BigDecimal for price
+    private String price;
 
     @ValidBigDecimal(message = "Must be a valid decimal")
     @NotNull(message = "Must have a Discount")
-    private BigDecimal discount; // Using BigDecimal for discount
+    private String discount;
 
     @NotNull(message = "Must have a Category")
     private String category;

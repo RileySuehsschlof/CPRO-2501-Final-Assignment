@@ -43,9 +43,9 @@ public class AccountController {
     }
 
 //    Edit a specific account by ID
-    @PutMapping("/edit/{accountId}")
-    public Account editAccountById(@PathVariable Integer accountId, @RequestBody Account account) {
-        return accountService.editAccountById(accountId, account);
-    }
+//    @PutMapping("/edit/{accountId}")
+//    public Account editAccountById(@PathVariable Integer accountId, @RequestBody Account account) {
+//        return accountService.editAccountById(accountId, account);
+//    }
 
 }

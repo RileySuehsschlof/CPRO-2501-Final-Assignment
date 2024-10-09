@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 import com.example.demo.entity.ProductEntity;
 import com.example.demo.service.ProductEntityService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,7 @@ public class ProductController {
     }
 
     @PostMapping("/saveproduct")
-    public String saveProduct(@RequestBody ProductEntity product){
+    public String saveProduct(@RequestBody @Valid ProductEntity product){
         return productEntityService.saveProduct(product);
     }
 

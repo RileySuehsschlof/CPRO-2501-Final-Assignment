@@ -19,11 +19,13 @@ public class ProductEntityService {
     }
 
     public String saveProduct(ProductEntity productEntity){
+        if(repository.existsById(productEntity.getId())){
+            throw ProductException.IdAlreadyExists(productEntity.getId());
+        }
         repository.save(productEntity);
-        return "Product saved " + productEntity.getProductName();//the validation happens in ProductEntity
+        return "Product saved: " + productEntity.getProductName();//the validation happens in ProductEntity
     }
     public ProductEntity getProductById(Integer id){
-        System.out.println("hey what is my issue"+id);
         if(id == null){
 
             throw ProductException.invalidProductId();
@@ -34,7 +36,7 @@ public class ProductEntityService {
         return repository.findById(id).get();
         }
 
-    public ProductEntity editProduct(int id, ProductEntity upDatedProduct){
+    public ProductEntity editProduct(Integer id, ProductEntity upDatedProduct){
         ProductEntity product = getProductById(id);
 
         if(upDatedProduct.getProductName() !=null){

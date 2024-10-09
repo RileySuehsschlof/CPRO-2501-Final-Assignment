@@ -24,7 +24,7 @@ public class AccountController {
     }
 
     // Retrieve all accounts
-    @GetMapping("/accounts")
+    @GetMapping({"/accounts","/accounts/"})
     public List<Account> getAllAccounts() {
         return accountService.getAllAccounts();
     }

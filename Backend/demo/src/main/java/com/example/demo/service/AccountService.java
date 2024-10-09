@@ -30,8 +30,14 @@ public class AccountService {
 
     //Method to Create an account and save it to db
     public String saveAccount(Account account) {
-        repository.save(account);
-        return "Account Saved";
+        if (repository.existsById(account.getId())){
+            return "Account already exists";
+        }
+        else {
+            repository.save(account);
+            return "Account Saved";
+
+        }
     }
 
 //    Method that passes a parameter to find an account with matching id

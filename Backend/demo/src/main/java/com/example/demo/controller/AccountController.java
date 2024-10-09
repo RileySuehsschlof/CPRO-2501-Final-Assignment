@@ -29,7 +29,7 @@ public class AccountController {
     }
 
     // Retrieve a specific account by ID
-    //Throw a custom error if account doesnt exist in the database
+    //Throw a custom error if account doesn't exist in the database
     @GetMapping("/account/{accountId}")
     public Account findAccountById(@PathVariable Integer accountId) {
         return accountService.getAccountById(accountId)
@@ -37,13 +37,13 @@ public class AccountController {
     }
 
 //    Delete a specific account by ID
-    @DeleteMapping("/delete/{accountId}")
+    @DeleteMapping("/deleteaccount/{accountId}")
     public ResponseEntity<String> deleteAccountById(@PathVariable Integer accountId){
        return accountService.deleteAccountById(accountId);
     }
 
 //    Edit a specific account by ID
-    @PutMapping("/edit/{accountId}")
+    @PutMapping("/editaccount/{accountId}")
     public Account editAccountById(@PathVariable Integer accountId, @RequestBody Account account) {
         return accountService.editAccountById(accountId, account);
     }

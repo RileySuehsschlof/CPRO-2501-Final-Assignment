@@ -20,6 +20,7 @@ public class Account {
 
     @Email(message = "Email must be in format email@email.com")
     @NotBlank(message="Email is required")
+    @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message="Invalid format")
     private String email;
 
     @NotBlank(message="Password is required")

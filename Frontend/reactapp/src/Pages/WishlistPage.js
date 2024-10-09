@@ -15,6 +15,7 @@ const WishlistPage = ({ wishlist }) => {
             price={item.price || "Price not available"} // Replace with actual product price if available
             link={`/product/${item.ProductID}`} // Link to the product detail page
             comment={item.notes}
+            notes={item.notes} // Pass the notes to the Card
           />
         ))}
       </div>

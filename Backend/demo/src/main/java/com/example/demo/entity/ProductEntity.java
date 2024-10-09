@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 
@@ -15,16 +16,20 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class ProductEntity {
     @Id
-    private int id;
+    @NotNull
+    private Integer id;
 
     @Lob
     private byte[] img; // Store image as byte array instead of Image
 
+    @NotNull
     private String productName;
+    @NotNull
     private Integer quantity;
-
-    private BigDecimal price; // Use BigDecimal for price
-    private BigDecimal discount; // Use BigDecimal for discount
-
+    @NotNull
+    private BigDecimal price; // Using BigDecimal for price
+    @NotNull
+    private BigDecimal discount; // Using BigDecimal for discount
+    @NotNull
     private String category;
 }

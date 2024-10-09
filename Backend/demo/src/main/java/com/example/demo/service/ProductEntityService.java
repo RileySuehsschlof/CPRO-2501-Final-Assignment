@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 
 import com.example.demo.entity.ProductEntity;
+import com.example.demo.exceptionHandling.ProductException;
 import com.example.demo.repository.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,18 +15,25 @@ public class ProductEntityService {
     IProductRepository repository;
 
     public List<ProductEntity> getAllProducts(){
-        return repository.findAll();
+        return repository.findAll();//returns an empty list if there are no products
     }
 
     public String saveProduct(ProductEntity productEntity){
         repository.save(productEntity);
-        return "Product saved " + productEntity.getProductName();
+        return "Product saved " + productEntity.getProductName();//the validation happens in ProductEntity
     }
-    public ProductEntity getProductById(int id){
+    public ProductEntity getProductById(Integer id){
+        if(id == null){
+            throw ProductException.invalidProductId();
+        }
+        if(!repository.existsById(id)){// making sure the product exists in the database
+            throw ProductException.productNotFound(id);
+        }
         return repository.findById(id).get();
-    }
+        }
+
     public ProductEntity editProduct(int id, ProductEntity upDatedProduct){
-        ProductEntity product = repository.findById(id).get();
+        ProductEntity product = getProductById(id);
 
         if(upDatedProduct.getProductName() !=null){
             product.setProductName(upDatedProduct.getProductName());
@@ -46,12 +54,15 @@ public class ProductEntityService {
 
     }
     public String deleteProduct(Integer id){
-        if(id != null && repository.existsById(id)){
-
-                repository.deleteById(id);
-                return "succesfulfully deleted product:" +id;
+        if(id == null){
+            throw ProductException.invalidProductId();
         }
-         return "unsuccesful";
+        if (!repository.existsById(id))
+        {
+            throw ProductException.productNotFound(id);
+        }
+        repository.deleteById(id);
+        return "succesfulfully deleted product:" +id;
 
     }
 }

@@ -14,8 +14,10 @@ const Card = ({ image, title, price, link }) => {
         <button className="navBtnRoute" onClick={() => navigate(`/product/`)}>
           Product
         </button>
+        
       </div>
     </div>
+    
   );
 };
 

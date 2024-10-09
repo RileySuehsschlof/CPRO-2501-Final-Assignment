@@ -23,6 +23,7 @@ public class AccountService {
 
 
 //    Method to return all Accounts
+    //returns an empty list if no accounts exist in database
     public List<Account> getAllAccounts() {
         return repository.findAll();
     }
@@ -85,6 +86,14 @@ public class AccountService {
         }
         if (updatedAccount.getShippingAddress() != null) {
             existingAccount.setShippingAddress(updatedAccount.getShippingAddress());
+        }
+        if (updatedAccount.getPassword() != null) {
+            if (updatedAccount.getPassword().length() < 6){
+                throw new AccNotFoundException("Password must be at least 6 characters long");
+            }
+            else {
+                existingAccount.setPassword(updatedAccount.getPassword());
+            }
         }
         if (updatedAccount.getEmail() != null) {
             if (!isValidEmail(updatedAccount.getEmail())) {

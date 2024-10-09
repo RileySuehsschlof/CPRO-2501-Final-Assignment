@@ -6,7 +6,7 @@ import './App.css';
 import { useState } from 'react';
 import Navbar from './/Components/Navbar.js';
 import Footer from './/Components/Footer.js';
-import Card from './/Components/Card.js';
+// import Card from './/Components/Card.js';
 import MainPage from './/Pages/MainPage.js';
 import WishlistPage from './/Pages/WishlistPage.js';
 

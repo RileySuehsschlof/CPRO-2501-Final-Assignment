@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Cart;
 import com.example.demo.service.CartService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,7 @@ public class CartController {
     }
 
     @PostMapping // Create new cart
-    public ResponseEntity<Cart> createCart(@RequestBody Cart cart) {
+    public ResponseEntity<Cart> createCart(@RequestBody @Valid Cart cart) {
         Cart savedCart = cartService.saveCart(cart);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedCart);
     }

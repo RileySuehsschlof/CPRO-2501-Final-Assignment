@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/wishlistproducts")
 public class WishlistProductController {
-    
+
     @Autowired
     WishlistProductService wishlistProductService;
 
@@ -21,23 +21,23 @@ public class WishlistProductController {
         return wishlistProductService.getAllWishlistProducts();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/get{id}")
     public ResponseEntity<WishlistProductEntity> getWishlistProductById(@PathVariable String id) {
         WishlistProductEntity wishlistProduct = wishlistProductService.getWishlistProductById(id);
         return ResponseEntity.ok(wishlistProduct);
     }
 
-    @PostMapping
+    @PostMapping("/addWish")  
     public String saveWishlistProduct(@RequestBody @Valid WishlistProductEntity wishlistProduct) {
         return wishlistProductService.saveWishlistProduct(wishlistProduct);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/remove{id}")
     public String deleteWishlistProduct(@PathVariable String id) {
         return wishlistProductService.deleteWishlistProduct(id);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update{id}")
     public WishlistProductEntity editWishlistProduct(@PathVariable String id, @RequestBody WishlistProductEntity updatedWishlistProduct) {
         return wishlistProductService.editWishlistProduct(id, updatedWishlistProduct);
     }

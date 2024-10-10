@@ -35,7 +35,7 @@ public class WishlistProductEntity {
 
     @ValidBigDecimal(message = "Must be a valid decimal")
     @NotNull(message = "Must have a Price")
-    private BigDecimal price; // Using BigDecimal for price
+    private String price; // Using BigDecimal for price
 
     @NotNull(message = "Must have Notes")
     private String notes; // Any additional notes for the wishlist item

@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Cart;
+import com.example.demo.exception.CartNotFoundException;
 import com.example.demo.repository.ICartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,6 @@ public class CartService {
     }
 
     public Cart saveCart(Cart cart) {
-        // You can add business logic here, e.g., calculating totalPrice
         return repository.save(cart);
     }
 

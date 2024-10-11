@@ -20,7 +20,7 @@ public class CartService {
     }
 
     public Optional<Cart> getCartById(Integer id) {
-        return repository.findById(id);
+        return Optional.ofNullable(repository.findById(id).orElseThrow(() -> new CartNotFoundException("Cart not found with id " + id)));
     }
 
     public Cart saveCart(Cart cart) {

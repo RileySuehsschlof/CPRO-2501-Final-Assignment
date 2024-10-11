@@ -15,18 +15,22 @@ public class CartService {
     @Autowired
     ICartRepository repository;
 
+    // Method that gets all carts
     public List<Cart> getAllCarts() {
         return repository.findAll();
     }
 
+    // Method that gets a cart by its ID
     public Optional<Cart> getCartById(Integer id) {
         return Optional.ofNullable(repository.findById(id).orElseThrow(() -> new CartNotFoundException("Cart not found with id " + id)));
     }
 
+    // Method that saves a cart to the database
     public Cart saveCart(Cart cart) {
         return repository.save(cart);
     }
 
+    // Method that deletes a cart by its ID
     public void deleteCartById(Integer id) {
         repository.deleteById(id);
     }

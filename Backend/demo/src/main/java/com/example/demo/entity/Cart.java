@@ -14,7 +14,7 @@ import jakarta.persistence.Id;
 public class Cart {
 
     @Id
-    @NotNull(message = "Id is required")
+    @NotNull(message = "Id is required") // @NotNull is used to make sure insertions are not blank
     private Integer id;
 
     @NotNull(message = "userId is required")

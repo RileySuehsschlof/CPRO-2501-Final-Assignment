@@ -90,7 +90,7 @@ function App() {
 
           <Route
             path="/wishlist"
-            element={<WishlistPage wishlistCardData={wishlistCardData} />}
+            element={<WishlistPage wishlist={wishlist} />}
           ></Route>
 
           <Route path="/cart" element={<Cart />} />

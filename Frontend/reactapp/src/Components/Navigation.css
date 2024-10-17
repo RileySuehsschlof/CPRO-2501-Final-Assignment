@@ -1,0 +1,17 @@
+.nav {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  height: 60px;
+  position: sticky;
+  top: 0px;
+}
+.navbarButton {
+  text-decoration: none;
+  color: #b62f30;
+  font-size: 30px;
+  padding: 20px;
+}
+.right {
+  margin-left: auto;
+}

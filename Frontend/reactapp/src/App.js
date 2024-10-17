@@ -1,12 +1,13 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import CreateAccount from "./createAccount";
-import Product from "./Product";
-import Cart from "./cart";
-import Navigation from "./Navigation";
+import CreateAccount from "./CreateAccPage/createAccount.js";
+import Product from "./Components/Product.js";
+import Cart from "./Cart/cart.js";
+import TempNav from "./Components/TempNav.js";
 import "./Pages/MainPage.js";
-import { useNavigate } from "react-router-dom";
 import MainPage from ".//Pages/MainPage.js";
 import WishlistPage from ".//Pages/WishlistPage.js";
+import ScrollToTop from "./Components/ScrollToTop.js";
+import Navigation from "./Components/Navigation.js";
 
 function App() {
   const regCardData = [
@@ -62,7 +63,10 @@ function App() {
     <>
       {/* Enables navigation with routing */}
       <Router>
+        {/* TempNav was a temporary navigation bar whose only use was for an assignment */}
+        {/* <TempNav /> */}
         <Navigation />
+        <ScrollToTop />
         <Routes>
           <Route
             path=""

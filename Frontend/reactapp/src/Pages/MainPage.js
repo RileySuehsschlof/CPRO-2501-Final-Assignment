@@ -1,6 +1,6 @@
-import React from 'react';
-import Card from '../Components/Card';
-import './MainPage.css';
+import React from "react";
+import Card from "../Components/Card";
+import "./MainPage.css";
 
 const MainPage = ({ regCardData, recommendedCardData }) => {
   return (

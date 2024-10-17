@@ -1,8 +1,8 @@
 import "./cart.css";
 import { useState } from "react";
-import batman from "./ImageCarousel/batman.png";
-import random from "./ImageCarousel/random.png";
-import selfie from "./ImageCarousel/selfie.jpg";
+import batman from "../ImageCarousel/batman.png";
+import random from "../ImageCarousel/random.png";
+import selfie from "../ImageCarousel/selfie.jpg";
 
 const initialProducts = [
   { id: 1, name: "Item 1", price: 10, image: batman },
@@ -48,14 +48,16 @@ const ProductList = ({ products, removeProduct }) => {
 
 const CartSubtotal = ({ products }) => {
   return (
-    <div className="Subtotal-Container">
-      <span className="Subtotal">
-        Cart Subtotal = ${calculateSubtotal(products)}
-      </span>
+    <>
+      <div className="Subtotal-Container">
+        <span className="Subtotal">
+          Cart Subtotal = ${calculateSubtotal(products)}
+        </span>
+      </div>
       <button className="Checkout" disabled>
         Checkout
       </button>
-    </div>
+    </>
   );
 };
 

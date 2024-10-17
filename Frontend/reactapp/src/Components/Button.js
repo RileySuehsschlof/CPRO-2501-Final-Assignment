@@ -2,7 +2,7 @@
 function CreateButton({ text, functionName }) {
   return (
     <div>
-      <button type="button" onClick={functionName}>
+      <button className="fieldBtn" type="button" onClick={functionName}>
         {text}
       </button>
     </div>

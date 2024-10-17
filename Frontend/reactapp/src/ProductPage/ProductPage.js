@@ -11,7 +11,7 @@ import "./ProductPage.css";
 const ProductPage = ({ product }) => {
   return (
     <div className="product-page">
-      <div className="column">
+      <div className="column2">
         {/* calling our Image carousel */}
         <ImageCarousel images={product.images} />
         {/* <img src={product.images[0]} alt="Product Image" /> */}

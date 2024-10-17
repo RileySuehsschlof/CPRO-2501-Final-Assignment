@@ -1,17 +1,20 @@
 .carousel {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  margin-left: 2vw;
+  margin-right: 2vw;
 }
 
 .carousel img {
-    /* sets the size of the images in the carousel */
-    width: 300px;
-    height: auto;
-    margin: 0 10px;
+  /* sets the size of the images in the carousel */
+  width: 35vw;
+  height: auto;
+  margin: 0 10px;
 }
 
 button {
-    padding: 10px;
-    cursor: pointer;
+  padding: 10px;
+  cursor: pointer;
 }

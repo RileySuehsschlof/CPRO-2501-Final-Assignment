@@ -12,7 +12,7 @@ const MainPage = ({ regCardData, recommendedCardData }) => {
         ))}
       </div>
       <h1>Products You Might Like</h1>
-      <div id="recommendedCards">
+      <div id="recCards">
         {recommendedCardData.map((data, index) => (
           <Card key={index} {...data} />
         ))}

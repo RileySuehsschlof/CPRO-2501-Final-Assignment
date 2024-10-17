@@ -1,6 +1,6 @@
 import React from "react";
 import "./Card.css";
-import Navigation from "../Navigation";
+import Navigation from "./TempNav";
 import { useNavigate } from "react-router-dom";
 
 const Card = ({ image, title, price, link, notes }) => {

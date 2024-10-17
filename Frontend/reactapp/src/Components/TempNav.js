@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import "./Navigation.css";
+import "./TempNav.css";
 // function thatmanages page navigation to a segment
-function Navigation() {
+function TempNav() {
   const navigate = useNavigate();
   return (
     <nav className="nav">
@@ -27,4 +27,4 @@ function Navigation() {
     </nav>
   );
 }
-export default Navigation;
+export default TempNav;

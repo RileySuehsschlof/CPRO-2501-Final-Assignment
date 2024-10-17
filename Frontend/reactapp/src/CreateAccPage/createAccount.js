@@ -1,5 +1,5 @@
-import CreateField from "./Field";
-import CreateButton from "./Button";
+import CreateField from "../Components/Field";
+import CreateButton from "../Components/Button";
 import "./CreateAccCSS.css";
 
 function validate(value, name) {

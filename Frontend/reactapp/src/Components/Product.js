@@ -1,11 +1,11 @@
 import React from "react";
-import "./App.css";
+// import "//App.css";
 
-import ProductPage from "./ProductPage/ProductPage";
+import ProductPage from "../ProductPage/ProductPage";
 // import selfie from '../ImageCarousel/selfie.jpg';
-import selfie from "./ImageCarousel/selfie.jpg";
-import batman from "./ImageCarousel/batman.png";
-import random from "./ImageCarousel/random.png";
+import selfie from "../ImageCarousel/selfie.jpg";
+import batman from "../ImageCarousel/batman.png";
+import random from "../ImageCarousel/random.png";
 
 function Product() {
   const product = {

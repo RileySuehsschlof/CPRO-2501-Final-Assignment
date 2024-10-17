@@ -43,10 +43,7 @@ public class AccountController {
             return ResponseEntity.badRequest().body("Account ID is missing");
         }
     }
-//    @GetMapping({"/account","/account/"})
-//    public ResponseEntity<String> handleMissingAccountId() {
-//        return ResponseEntity.badRequest().body("Account ID is missing");
-//    }
+
 
 //    Delete a specific account by ID
     @DeleteMapping("/deleteaccount/{accountId}")

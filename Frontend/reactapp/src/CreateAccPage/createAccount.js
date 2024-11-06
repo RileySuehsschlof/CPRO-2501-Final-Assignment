@@ -1,6 +1,8 @@
 import CreateField from "../Components/Field";
 import CreateButton from "../Components/Button";
 import "./CreateAccCSS.css";
+import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 
 function validate(value, name) {
   //general function to check if any fields are empty then display message
@@ -60,7 +62,7 @@ function formFilled() {
 
 let userEmaildB = ["test@email.com", "test1@email.com"];
 
-function userExists(newEmail) {
+function userExists(newEmail, navigate) {
   //check if user is in the list, otherwise adds it
   for (let email of userEmaildB) {
     if (email === newEmail) {
@@ -69,9 +71,16 @@ function userExists(newEmail) {
       return false;
     }
   }
-  userEmaildB.push(newEmail);
-  //temporary confirmation of account creation
-  window.confirm(`User created with email: ${newEmail}`);
+  // Prepare data to pass to the next page
+  const userData = getUserObject();
+  navigate("/register2", { state: userData });
+}
+function getUserObject() {
+  const email = document.getElementById("emailInput").value;
+  const name = document.getElementById("nameInput").value;
+  const password = document.getElementById("passwordInput").value;
+  const user = { email, name, password };
+  return user;
 }
 
 function passwordValid() {
@@ -118,49 +127,66 @@ function isValidEmail() {
   return validEmail;
 }
 //Checks if all conditions to make an account are satisfied
-function checkCreation() {
+function checkCreation(navigate) {
   if (formFilled() && passwordValid() && isValidEmail()) {
-    userExists(document.getElementById("emailInput").value.trim());
+    userExists(document.getElementById("emailInput").value.trim(), navigate);
   }
 }
 
 function CreateAccount() {
+  const navigate = useNavigate();
+  const [isFormReady, setIsFormReady] = useState(false);
+
+  useEffect(() => {
+    // Simulate a delay (e.g., fetching data or waiting for a component to load)
+    setTimeout(() => {
+      setIsFormReady(true);
+    }, 400);
+  }, []);
+
   return (
-    <div className="formContainer">
-      <h1>Generic Website Name</h1>
-      <form className="myForm">
-        <h2>Create Account</h2>
-        {/* Templated element for a <p>, <input>, and <p> for error message */}
-        {/* Accepts title for the text to display, placeholderTxt for placeholder text, id for the elements id and errorId which is defined in the field.js */}
-        {/* also accepts type for the type of input you want */}
-        <CreateField
-          title="Name"
-          placeholderTxt="First and Last Name"
-          id="name"
-        ></CreateField>
-        <CreateField
-          title="Email"
-          placeholderTxt="example@email.com"
-          id="email"
-          type="email"
-        ></CreateField>
-        <CreateField
-          title="Password"
-          placeholderTxt="At least 6 characters"
-          id="password"
-          type="password"
-        ></CreateField>
-        <CreateField
-          title="Password Again"
-          id="passwordAgain"
-          type="password"
-        ></CreateField>
-        <CreateButton
-          text="Create Account"
-          functionName={checkCreation}
-        ></CreateButton>
-      </form>
+    <div>
+      {isFormReady ? (
+        <div className="formContainer">
+          <h1>Generic Website Name</h1>
+          <form className="myForm">
+            <h2>Create Account</h2>
+            {/* Templated element for a <p>, <input>, and <p> for error message */}
+            {/* Accepts title for the text to display, placeholderTxt for placeholder text, id for the elements id and errorId which is defined in the field.js */}
+            {/* Also accepts type for the type of input you want */}
+            <CreateField
+              title="Name"
+              placeholderTxt="First and Last Name"
+              id="name"
+            />
+            <CreateField
+              title="Email"
+              placeholderTxt="example@email.com"
+              id="email"
+              type="email"
+            />
+            <CreateField
+              title="Password"
+              placeholderTxt="At least 6 characters"
+              id="password"
+              type="password"
+            />
+            <CreateField
+              title="Password Again"
+              id="passwordAgain"
+              type="password"
+            />
+            <CreateButton
+              text="Continue"
+              functionName={() => checkCreation(navigate)}
+            />
+          </form>
+        </div>
+      ) : (
+        <p>Loading form...</p> // Show a loading message while the form is not ready
+      )}
     </div>
   );
 }
+
 export default CreateAccount;

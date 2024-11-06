@@ -2,12 +2,13 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import CreateAccount from "./CreateAccPage/createAccount.js";
 import Product from "./Components/Product.js";
 import Cart from "./Cart/cart.js";
-import TempNav from "./Components/TempNav.js";
 import "./Pages/MainPage.js";
 import MainPage from ".//Pages/MainPage.js";
 import WishlistPage from ".//Pages/WishlistPage.js";
 import ScrollToTop from "./Components/ScrollToTop.js";
 import Navigation from "./Components/Navigation.js";
+import Login from "./LoginPage/Login.js";
+import SecondaryInfo from "./CreateAccPage/SecondaryInfo.js";
 
 function App() {
   const regCardData = [
@@ -76,6 +77,7 @@ function App() {
         <Navigation />
         <ScrollToTop />
         <Routes>
+          {/* Define Routes here */}
           <Route
             path=""
             element={
@@ -96,6 +98,10 @@ function App() {
           <Route path="/cart" element={<Cart />} />
 
           <Route path="/register" element={<CreateAccount />} />
+
+          <Route path="/login" element={<Login />} />
+
+          <Route path="/register2" element={<SecondaryInfo />} />
         </Routes>
       </Router>
     </>

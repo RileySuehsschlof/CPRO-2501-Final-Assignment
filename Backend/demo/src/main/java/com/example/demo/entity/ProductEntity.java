@@ -12,11 +12,11 @@ import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 
-@Entity
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductEntity {
+public abstract class ProductEntity {
     //primairy key
     @Id
     @NotNull(message = "Must have a Id")

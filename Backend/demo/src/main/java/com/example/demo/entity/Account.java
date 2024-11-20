@@ -1,6 +1,8 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -15,7 +17,7 @@ public class Account {
 
 //    @NotNull and @NotBlank are used to make sure fields are filled in
     @Id
-    @NotNull(message = "Id is required")
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
 
     @Email(message = "Email must be in format email@email.com")

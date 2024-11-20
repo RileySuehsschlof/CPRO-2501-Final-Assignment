@@ -1,0 +1,33 @@
+body {
+  background-color: #f7f8f3;
+  margin: 0px;
+  margin-left: 0px;
+}
+
+.fieldBtn {
+  width: 300px;
+}
+.myForm {
+  background-color: white;
+  border: 5px solid #002c3e;
+  padding: 20px;
+  border-radius: 5px;
+  min-width: 300px;
+  width: max-content;
+}
+.formContainer {
+  display: flex;
+  justify-content: center;
+  max-height: fit-content;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+}
+.errorClass {
+  width: 300px;
+}
+.myFields {
+  display: flex;
+  flex-direction: row;
+}

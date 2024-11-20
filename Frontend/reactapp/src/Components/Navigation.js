@@ -1,10 +1,32 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Navigation.css";
+import { useNavigate } from "react-router-dom";
 
 // Function that returns the component for the navigation bar
 function Navigation() {
   const [isOpen, setIsOpen] = useState(false); // State to toggle hamburger menu
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    !!sessionStorage.getItem("authToken")
+  );
+  const navigate = useNavigate();
+  useEffect(() => {
+    // Function to check sessionStorage for authToken changes
+    const checkAuthToken = () => {
+      const token = sessionStorage.getItem("authToken");
+      setIsLoggedIn(!!token && token.trim() !== "");
+    };
+    // Update state on page load
+    checkAuthToken();
+
+    // Listen for changes to sessionStorage
+    window.addEventListener("storage", checkAuthToken);
+    // Clean up the listener
+    return () => {
+      window.removeEventListener("storage", checkAuthToken);
+    };
+  }, []);
+  // const linkToAccount = isLoggedIn ? "/account" : "/login";
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -12,6 +34,16 @@ function Navigation() {
 
   const closeMenu = () => {
     setIsOpen(false);
+  };
+  const handleAccountClick = (e) => {
+    e.preventDefault();
+    const token = sessionStorage.getItem("authToken");
+    if (token && token.trim() !== "") {
+      navigate("/account");
+    } else {
+      navigate("/login");
+    }
+    closeMenu();
   };
 
   return (
@@ -25,9 +57,12 @@ function Navigation() {
         &#9776;
       </div>
       <div className="right">
-        <Link className="navbarButton" to="/register" onClick={closeMenu}>
+        <a className="navbarButton" href="#" onClick={handleAccountClick}>
           Account
-        </Link>
+        </a>
+        {/* <Link className="navbarButton" to={linkToAccount} onClick={closeMenu}>
+          Account
+        </Link> */}
         <Link className="navbarButton" to="/wishlist" onClick={closeMenu}>
           Wishlist
         </Link>

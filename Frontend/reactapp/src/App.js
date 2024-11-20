@@ -9,6 +9,8 @@ import ScrollToTop from "./Components/ScrollToTop.js";
 import Navigation from "./Components/Navigation.js";
 import Login from "./LoginPage/Login.js";
 import SecondaryInfo from "./CreateAccPage/SecondaryInfo.js";
+import PrivateRoute from "./Components/PrivateRoute.js";
+import AccDetailsPage from ".//Pages/AccDetailsPage.js";
 
 function App() {
   const regCardData = [
@@ -90,18 +92,24 @@ function App() {
 
           <Route path="/product" element={<Product />} />
 
-          <Route
-            path="/wishlist"
-            element={<WishlistPage wishlist={wishlist} />}
-          ></Route>
-
-          <Route path="/cart" element={<Cart />} />
-
           <Route path="/register" element={<CreateAccount />} />
 
           <Route path="/login" element={<Login />} />
 
           <Route path="/register2" element={<SecondaryInfo />} />
+          <Route
+            path="/account"
+            element={<PrivateRoute element={<AccDetailsPage />} />}
+          />
+
+          {/* Protected Routes */}
+          <Route
+            path="/wishlist"
+            element={
+              <PrivateRoute element={<WishlistPage wishlist={wishlist} />} />
+            }
+          />
+          <Route path="/cart" element={<PrivateRoute element={<Cart />} />} />
         </Routes>
       </Router>
     </>

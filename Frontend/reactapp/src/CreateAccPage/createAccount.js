@@ -141,7 +141,7 @@ function CreateAccount() {
     // Simulate a delay (e.g., fetching data or waiting for a component to load)
     setTimeout(() => {
       setIsFormReady(true);
-    }, 400);
+    }, 100);
   }, []);
 
   return (
@@ -183,7 +183,7 @@ function CreateAccount() {
           </form>
         </div>
       ) : (
-        <p>Loading form...</p> // Show a loading message while the form is not ready
+        <p>Loading form...</p>
       )}
     </div>
   );

@@ -70,7 +70,7 @@ function AccDetailsPage() {
       <div className="formContainer">
         <h1>Account Details</h1>
         <form className="myForm">
-          <div>
+          <div className="container">
             <div className="myFields">
               <label htmlFor="name">Name:</label>
               <input
@@ -116,7 +116,7 @@ function AccDetailsPage() {
                 onChange={handleChange}
               />
             </div>
-            <button>Update</button>
+            <button>Click to Update</button>
           </div>
         </form>
         <button onClick={logout}>Log out</button>

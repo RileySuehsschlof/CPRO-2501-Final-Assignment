@@ -30,4 +30,18 @@ body {
 .myFields {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.myFields label {
+  width: 150px;
+  text-align: right;
+  margin-right: 10px;
+}
+.myFields input {
+  flex: 1;
+  padding: 5px;
+}
+.container {
+  text-align: center;
 }

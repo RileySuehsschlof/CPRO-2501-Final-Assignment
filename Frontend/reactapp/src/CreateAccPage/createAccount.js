@@ -3,6 +3,7 @@ import CreateButton from "../Components/Button";
 import "./CreateAccCSS.css";
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 function validate(value, name) {
   //general function to check if any fields are empty then display message
@@ -60,29 +61,6 @@ function formFilled() {
   } else return false;
 }
 
-let userEmaildB = ["test@email.com", "test1@email.com"];
-
-function userExists(newEmail, navigate) {
-  //check if user is in the list, otherwise adds it
-  for (let email of userEmaildB) {
-    if (email === newEmail) {
-      document.getElementById("emailError").innerHTML =
-        "User with that email already exists.";
-      return false;
-    }
-  }
-  // Prepare data to pass to the next page
-  const userData = getUserObject();
-  navigate("/register2", { state: userData });
-}
-function getUserObject() {
-  const email = document.getElementById("emailInput").value;
-  const name = document.getElementById("nameInput").value;
-  const password = document.getElementById("passwordInput").value;
-  const user = { email, name, password };
-  return user;
-}
-
 function passwordValid() {
   document.getElementById("passwordError").innerHTML = "";
   document.getElementById("passwordAgainError").innerHTML = "";
@@ -127,9 +105,47 @@ function isValidEmail() {
   return validEmail;
 }
 //Checks if all conditions to make an account are satisfied
-function checkCreation(navigate) {
+async function checkCreation(navigate) {
   if (formFilled() && passwordValid() && isValidEmail()) {
-    userExists(document.getElementById("emailInput").value.trim(), navigate);
+    let email = document.getElementById("emailInput").value.trim();
+    console.log(email);
+    let emailExists = await userExists(email, (errorMessage) => {
+      document.getElementById("emailError").innerHTML = errorMessage;
+    });
+
+    console.log("This one?" + emailExists);
+
+    if (emailExists) {
+      let userData = {
+        name: document.getElementById("nameInput").value.trim(),
+        email: document.getElementById("emailInput").value.trim(),
+        password: document.getElementById("passwordInput").value.trim(),
+      };
+      sessionStorage.setItem("myData", JSON.stringify(userData));
+      console.log(JSON.stringify(userData));
+
+      navigate("/register2");
+    }
+  }
+}
+async function userExists(newEmail, setEmailError) {
+  try {
+    console.log(newEmail);
+    const response = await axios.get("http://localhost:8881/checkEmail", {
+      params: { email: newEmail },
+    });
+    console.log("Response inside axios.get =" + response.data);
+
+    if (response.data) {
+      setEmailError("User with that email already exists.");
+      return false; // Email exists
+    }
+    console.log("past the if response data");
+    return true; // Email does not exist
+  } catch (error) {
+    setEmailError("Error checking email.");
+    console.log("Entered catch block");
+    return false;
   }
 }
 

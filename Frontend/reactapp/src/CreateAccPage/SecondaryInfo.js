@@ -67,6 +67,7 @@ function RedirectToMainPage(navigate) {
       })
       .then((response) => {
         console.log("User created", response.data);
+        sessionStorage.removeItem("myData");
         navigate("/login");
       })
       .catch((error) => {
@@ -75,7 +76,7 @@ function RedirectToMainPage(navigate) {
   }
 }
 function createUserData() {
-  let pastData = JSON.parse(localStorage.getItem("userData"));
+  let pastData = JSON.parse(sessionStorage.getItem("myData"));
 
   let userData = {
     email: pastData.email,
@@ -85,7 +86,6 @@ function createUserData() {
     billingAddress: document.getElementById("billingAddressInput").value,
     cardNumber: document.getElementById("cardNumberInput").value,
   };
-  localStorage.removeItem("userData");
   return userData;
 }
 

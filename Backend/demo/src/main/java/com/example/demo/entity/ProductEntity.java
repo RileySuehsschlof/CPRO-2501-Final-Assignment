@@ -2,12 +2,10 @@ package com.example.demo.entity;
 
 import com.example.demo.exception.customAnnotation.ValidBigDecimal;
 import com.example.demo.exception.customAnnotation.ValidInteger;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
 import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
@@ -16,23 +14,25 @@ import java.math.BigDecimal;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)  // Or another inheritance strategy
+@DiscriminatorColumn(name = "product_type", discriminatorType = DiscriminatorType.STRING) // Optional, for distinguishing between different product types
 public abstract class ProductEntity {
-    //primairy key
     @Id
-    @NotNull(message = "Must have a Id")
+    @NotNull(message = "Must have an Id")
     private Integer id;
 
-    @Lob//for images
-    private byte[] img; // Store image as byte array instead of Image
+    @Lob
+    private byte[] img;
 
     @NotNull(message = "Must have a Product Name")
     private String productName;
 
-    @ValidInteger//this ensures that it can be converted to an integer
+    @ValidInteger
     @NotNull(message = "Must have a quantity")
-    private String quantity;//is a string so my validation can work
+    private String quantity;
 
-    @ValidBigDecimal(message = "Must be a valid decimal")//this ensures it can be converted to a BigDecimal
+    @ValidBigDecimal(message = "Must be a valid decimal")
     @NotNull(message = "Must have a Price")
     private String price;
 

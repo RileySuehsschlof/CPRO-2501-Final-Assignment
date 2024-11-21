@@ -9,6 +9,6 @@ import lombok.Data;
 @Data
 //A simple product that only has the basic data
 public class BasicProductEntity extends ProductEntity{
-    @Id
-    private Integer id;
+//    @Id
+//    private Integer id;
 }

@@ -11,11 +11,12 @@ public class config implements WebMvcConfigurer {
 
     // This method configures CORS globally
     @Override
-    public void addCorsMappings(CorsRegistry registry) {
+
+    public void addCorsMappings(CorsRegistry registry){
         registry.addMapping("/**")  // Apply CORS to all endpoints
-                .allowedOrigins("http://localhost:3000")  // Allow requests from React app (localhost:3000)
-                .allowedMethods("GET", "POST", "PUT", "DELETE")  // Allowed HTTP methods
+                .allowedOrigins("*")  // Allow requests from any origin/port
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")  // Allow necessary HTTP methods
                 .allowedHeaders("*")  // Allow all headers
-                .allowCredentials(true);  // Optional: If you need to send credentials like cookies or authentication headers
+                .allowCredentials(true);
     }
 }

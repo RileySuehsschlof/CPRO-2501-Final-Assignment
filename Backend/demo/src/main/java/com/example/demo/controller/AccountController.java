@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.DTO.LoginRequestDTO;
 import com.example.demo.entity.Account;
-import com.example.demo.exception.AccNotFoundException;
 import com.example.demo.service.AccountService;
 import com.example.demo.utility.JwtUtility;
 import jakarta.validation.Valid;
@@ -46,7 +45,11 @@ public class AccountController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
         }
     }
-
+    @GetMapping("/checkEmail")
+    public boolean checkEmail(@RequestParam String email){
+       Optional<Account> account = accountService.getAccountByEmail(email);
+       return account.isPresent();
+    }
 
     class JwtResponse {
         private String token;

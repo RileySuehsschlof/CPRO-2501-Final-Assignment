@@ -30,13 +30,12 @@ public class AccountService {
 
     //Method to Create an account and save it to db
     public String saveAccount(Account account) {
-        if (repository.existsById(account.getId())){
-            return "Account already exists";
+        if (repository.existsByEmail(account.getEmail())) {
+            return "Account with this email already exists.";
         }
         else {
             repository.save(account);
-            return "Account Saved";
-
+            return "Account saved.";
         }
     }
 
@@ -72,6 +71,11 @@ public class AccountService {
             throw new IllegalArgumentException("Account ID cannot be null");
         }
     }
+    public boolean validateLogin(String email, String password) {
+        // Checks if an account exists with the given email and password
+        return repository.existsByEmailAndPassword(email, password);
+    }
+
 
 //          Method to edit an accounts fields with an id and body parameters
     public Account editAccountById(Integer accountId, Account updatedAccount) {
@@ -116,4 +120,7 @@ public class AccountService {
     }
 
 
+    public Optional<Account> getAccountByEmail(String email) {
+        return repository.findByEmail(email);
+    }
 }

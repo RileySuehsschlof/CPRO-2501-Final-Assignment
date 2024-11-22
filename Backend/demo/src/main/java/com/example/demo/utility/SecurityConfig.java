@@ -23,12 +23,20 @@ public class SecurityConfig implements WebMvcConfigurer {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf().disable()
                 .authorizeRequests()
-                .requestMatchers("/login", "/register", "/","/createaccount","/checkEmail") // Allow login and register without token
+                .requestMatchers("/login", "/register", "/", "/createaccount", "/checkEmail", "/ProductsById/**") // Allow
+                // login
+                // and
+                // register
+                // without
+                // token
                 .permitAll()
-                .requestMatchers("/account/**").authenticated()// No token required for login and register endpoint
+                .requestMatchers("/account/**").authenticated()// No token required for login and
+                                                               // register endpoint
                 .anyRequest().authenticated() // Protect all other requests
                 .and()
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // Add JWT filter before other filters
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // Add JWT filter
+                                                                                                      // before other
+                                                                                                      // filters
                 .cors() // Enable CORS in Spring Security
                 .and()
                 .build();

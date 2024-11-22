@@ -171,10 +171,9 @@ function AccDetailsPage() {
     e.preventDefault();
     const password = await checkPassword(initialEmail);
     if (accountData.oldPassword === password) {
+      //if input password matches db password
       if (validNewInfo(accountData, setErrors)) {
         try {
-          console.log("ACcountData password" + accountData.newPassword);
-          console.log(accountData);
           if (accountData.newPassword != null) {
             accountData.password = accountData.newPassword;
           }
@@ -191,8 +190,7 @@ function AccDetailsPage() {
             accountData
           );
           const newToken = response.data.token;
-          console.log("HERE" + newToken);
-
+          //update token after email is changed
           sessionStorage.setItem("authToken", newToken);
           setErrors({ generalError: "Account updated successfully" });
           navigate("/");

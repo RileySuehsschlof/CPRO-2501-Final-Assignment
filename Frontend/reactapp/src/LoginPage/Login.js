@@ -39,7 +39,6 @@ const Login = () => {
 
         setMessage("Login successful!");
 
-        // Optionally, you can redirect the user after successful login
         const redirectTo = location.state?.from?.pathname || "/";
         navigate(redirectTo);
       } else {

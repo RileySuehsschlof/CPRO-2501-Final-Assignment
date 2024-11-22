@@ -10,6 +10,6 @@ import lombok.Data;
 @DiscriminatorValue("BasicProduct") // Set the discriminator value for this subclass
 // A simple product that only has the basic data
 public class BasicProductEntity extends ProductEntity {
-    // @Id
-    // private Integer id;
+
+    private String description;
 }

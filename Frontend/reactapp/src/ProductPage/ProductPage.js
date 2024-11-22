@@ -75,7 +75,7 @@ const ProductPage = () => {
         {/* <img src={product.images[0]} alt="Product Image" /> */}
       </div>
       <div className="column">
-        <h2>{product.name}</h2>
+        <h2>{product.productName}</h2>
         <p>{product.description}</p>
       </div>
 

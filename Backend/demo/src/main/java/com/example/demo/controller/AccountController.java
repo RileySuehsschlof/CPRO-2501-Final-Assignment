@@ -50,6 +50,14 @@ public class AccountController {
        Optional<Account> account = accountService.getAccountByEmail(email);
        return account.isPresent();
     }
+    @GetMapping("/checkPassword")
+    public String checkPassword(@RequestParam String email){
+        Optional<Account> account = accountService.getAccountByEmail(email);
+        if (account.isPresent()){
+            return account.get().getPassword();
+        }
+        return "";
+    }
 
     class JwtResponse {
         private String token;
@@ -82,13 +90,17 @@ public class AccountController {
     }
 
 //    Edit a specific account by ID
-    @PutMapping("/editaccount/{accountId}")
-    public Account editAccountById(@PathVariable Integer accountId, @RequestBody Account account) {
-        return accountService.editAccountById(accountId, account);
-    }
+//    @PutMapping("/editaccount/{accountId}")
+//    public Account editAccountById(@PathVariable Integer accountId, @RequestBody Account account) {
+//        return accountService.editAccountById(accountId, account);
+//    }
     @PutMapping({"/editaccount/","/editaccount"})
     public ResponseEntity<String> editAccountError(){
         return ResponseEntity.badRequest().body("Account Id is missing");
+    }
+    @PutMapping("/editaccount/{email}")
+    public Account editAccountById(@PathVariable String email, @RequestBody Account account){
+        return accountService.editAccountByEmail(email, account);
     }
 
 }

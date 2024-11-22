@@ -78,9 +78,55 @@ public class AccountService {
 
 
 //          Method to edit an accounts fields with an id and body parameters
-    public Account editAccountById(Integer accountId, Account updatedAccount) {
+//    public Account editAccountById(Integer accountId, Account updatedAccount) {
+//        // Fetch the existing account
+//        Account existingAccount = repository.findById(accountId)
+//                .orElseThrow(() -> new AccNotFoundException("Account not found"));
+//        logger.info("Existing account before update: {}", existingAccount);
+//
+//        // Update fields only if new values are provided
+//        if (updatedAccount.getBillingAddress() != null) {
+//            existingAccount.setBillingAddress(updatedAccount.getBillingAddress());
+//        }
+//        if (updatedAccount.getCardNumber() != null) {
+//            if (!isValidCard(updatedAccount.getCardNumber())) {
+//                throw new AccNotFoundException("Card Number must be exactly 16 long and numeric");
+//            }
+//            existingAccount.setCardNumber(updatedAccount.getCardNumber());
+//        }
+//        if (updatedAccount.getShippingAddress() != null) {
+//            existingAccount.setShippingAddress(updatedAccount.getShippingAddress());
+//        }
+//        if (updatedAccount.getPassword() != null) {
+//            if (updatedAccount.getPassword().length() < 6){
+//                throw new AccNotFoundException("Password must be at least 6 characters long");
+//            }
+//            else {
+//                existingAccount.setPassword(updatedAccount.getPassword());
+//            }
+//        }
+//        if (updatedAccount.getEmail() != null) {
+//            if (!isValidEmail(updatedAccount.getEmail())) {
+//                throw new AccNotFoundException("Email must be in format email@email.com");
+//            }
+//            existingAccount.setEmail(updatedAccount.getEmail());
+//        }
+//        if (updatedAccount.getName() != null){
+//            existingAccount.setName(updatedAccount.getName());
+//        }
+//
+//        // Save the updated account
+//        return repository.save(existingAccount);
+//    }
+
+
+    public Optional<Account> getAccountByEmail(String email) {
+        return repository.findByEmail(email);
+    }
+
+    public Account editAccountByEmail(String email, Account updatedAccount) {
         // Fetch the existing account
-        Account existingAccount = repository.findById(accountId)
+        Account existingAccount = repository.findByEmail(email)
                 .orElseThrow(() -> new AccNotFoundException("Account not found"));
         logger.info("Existing account before update: {}", existingAccount);
 
@@ -119,8 +165,4 @@ public class AccountService {
         return repository.save(existingAccount);
     }
 
-
-    public Optional<Account> getAccountByEmail(String email) {
-        return repository.findByEmail(email);
-    }
 }

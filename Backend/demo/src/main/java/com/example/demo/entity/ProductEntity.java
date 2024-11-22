@@ -10,13 +10,14 @@ import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)  // Or another inheritance strategy
-@DiscriminatorColumn(name = "product_type", discriminatorType = DiscriminatorType.STRING) // Optional, for distinguishing between different product types
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE) // Or another inheritance strategy
+@DiscriminatorColumn(name = "product_type", discriminatorType = DiscriminatorType.STRING) // Optional, for
+                                                                                          // distinguishing between
+                                                                                          // different product types
 public abstract class ProductEntity {
     @Id
     @NotNull(message = "Must have an Id")
@@ -42,4 +43,7 @@ public abstract class ProductEntity {
 
     @NotNull(message = "Must have a Category")
     private String category;
+
+    // @Column(name = "product_type")
+    // private String productType;
 }

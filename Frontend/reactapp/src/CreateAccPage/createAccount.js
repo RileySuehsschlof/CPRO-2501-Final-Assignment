@@ -113,8 +113,6 @@ async function checkCreation(navigate) {
       document.getElementById("emailError").innerHTML = errorMessage;
     });
 
-    console.log("This one?" + emailExists);
-
     if (emailExists) {
       let userData = {
         name: document.getElementById("nameInput").value.trim(),

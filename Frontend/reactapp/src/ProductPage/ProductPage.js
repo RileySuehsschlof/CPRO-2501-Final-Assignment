@@ -31,16 +31,16 @@ const ProductPage = () => {
     // });
 
     const fetchProductData = async () => {
-      const axiosInstance = axios.create({
-        baseURL: "http://localhost:8881",
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
-          "Content-Type": "application/json",
-        },
-      });
+      // const axiosInstance = axios.create({
+      //   baseURL: "http://localhost:8881",
+      //   headers: {
+      //     Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+      //     "Content-Type": "application/json",
+      //   },
+      // });
       try {
-        // const response = await axios.get(`http://localhost:8881/ProductsById/${productId}`);
-        const response = await axiosInstance.get(`/ProductsById/${productId}`);
+        const response = await axios.get(`http://localhost:8881/ProductsById/${productId}`);
+        // const response = await axiosInstance.get(`/ProductsById/${productId}`);
 
         setProduct(response.data);
       } catch (error) {

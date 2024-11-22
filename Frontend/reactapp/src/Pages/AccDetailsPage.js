@@ -32,6 +32,7 @@ async function validNewInfo(accountData, setErrors) {
   let { email, shippingAddress, billingAddress, cardNumber, name, password } =
     accountData;
   setErrors({
+    nameError: "",
     shippingError: "",
     billingError: "",
     emailError: "",
@@ -47,6 +48,7 @@ async function validNewInfo(accountData, setErrors) {
       billingError: !billingAddress ? "Missing billing address" : "",
       emailError: !email ? "Missing email" : "",
       cardNumberError: !cardNumber ? "Missing card number" : "",
+      nameError: !name ? "Missing name" : "",
     }));
     return false;
   }
@@ -106,7 +108,7 @@ function AccDetailsPage() {
     shippingAddress: "",
     billingAddress: "",
     cardNumber: "",
-    oldPassword: "",
+    password: "",
     newPassword: "",
   });
 
@@ -171,6 +173,11 @@ function AccDetailsPage() {
     if (accountData.oldPassword === password) {
       if (validNewInfo(accountData, setErrors)) {
         try {
+          console.log("ACcountData password" + accountData.newPassword);
+          console.log(accountData);
+          if (accountData.newPassword != null) {
+            accountData.password = accountData.newPassword;
+          }
           const axiosInstance = axios.create({
             baseURL: "http://localhost:8881",
             headers: {
@@ -183,6 +190,10 @@ function AccDetailsPage() {
             `/editaccount/${initialEmail}`,
             accountData
           );
+          const newToken = response.data.token;
+          console.log("HERE" + newToken);
+
+          sessionStorage.setItem("authToken", newToken);
           setErrors({ generalError: "Account updated successfully" });
           navigate("/");
         } catch (err) {}
@@ -193,6 +204,13 @@ function AccDetailsPage() {
   };
   const navigate = useNavigate();
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!accountData) {
+    return <div>Error: Account details not found</div>;
+  }
   return (
     <div>
       <div className="formContainer">
@@ -208,7 +226,7 @@ function AccDetailsPage() {
                 onChange={handleChange}
               />
             </div>
-            <p>{errors.shippingError}</p>
+            <p>{errors.nameError}</p>
 
             <div className="myFields">
               <label htmlFor="email">Email:</label>

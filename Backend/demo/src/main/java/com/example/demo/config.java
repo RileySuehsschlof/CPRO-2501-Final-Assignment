@@ -14,7 +14,7 @@ public class config implements WebMvcConfigurer {
 
     public void addCorsMappings(CorsRegistry registry){
         registry.addMapping("/**")  // Apply CORS to all endpoints
-                .allowedOrigins("*")  // Allow requests from any origin/port
+                .allowedOrigins("*")  // Allow requests from any origin/portp
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")  // Allow necessary HTTP methods
                 .allowedHeaders("*")  // Allow all headers
                 .allowCredentials(true);

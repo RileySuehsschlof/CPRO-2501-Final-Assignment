@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -98,9 +100,16 @@ public class AccountController {
     public ResponseEntity<String> editAccountError(){
         return ResponseEntity.badRequest().body("Account Id is missing");
     }
+//    @PutMapping("/editaccount/{email}")
+//    public Account editAccountById(@PathVariable String email, @RequestBody Account account){
+//        return accountService.editAccountByEmail(email, account);
+//    }
     @PutMapping("/editaccount/{email}")
-    public Account editAccountById(@PathVariable String email, @RequestBody Account account){
-        return accountService.editAccountByEmail(email, account);
+    public ResponseEntity<Map<String, String>>editAccountById(@PathVariable String email, @RequestBody Account account) {
+        accountService.editAccountByEmail(email, account);
+        String newToken = jwtUtil.generateToken(account.getEmail());
+        Map<String, String> response = new HashMap<>();
+        response.put("token", newToken);
+        return ResponseEntity.ok(response);
     }
-
 }

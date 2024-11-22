@@ -11,7 +11,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
+//Delegating buisness logic to service methods is a way of showing encapsulation
 @Service
 public class AccountService {
 
@@ -76,19 +76,19 @@ public class AccountService {
         return repository.existsByEmailAndPassword(email, password);
     }
 
-
-
-
-
-    public Optional<Account> getAccountByEmail(String email) {
-        return repository.findByEmail(email);
-    }
+public Optional<Account> getAccountByEmail(String email) {
+    return repository.findAll()
+            //get all accounts, then filter by the email
+            .stream()
+            .filter(account -> account.getEmail().equalsIgnoreCase(email))
+            .findFirst();
+}
+//This was to use streams for the assignment.
 
     public Account editAccountByEmail(String email, Account updatedAccount) {
         // Fetch the existing account
         Account existingAccount = repository.findByEmail(email)
                 .orElseThrow(() -> new AccNotFoundException("Account not found"));
-        logger.info("Existing account before update: {}", existingAccount);
 
         // Update fields only if new values are provided
         if (updatedAccount.getBillingAddress() != null) {

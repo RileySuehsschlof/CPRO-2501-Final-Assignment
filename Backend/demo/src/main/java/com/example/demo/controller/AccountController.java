@@ -37,6 +37,7 @@ public class AccountController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequestDTO loginRequest) {
+        //checks if email and password from the request are valid
         boolean isValid = accountService.validateLogin(loginRequest.getEmail(), loginRequest.getPassword());
 
         if (isValid) {
@@ -49,12 +50,15 @@ public class AccountController {
     }
     @GetMapping("/checkEmail")
     public boolean checkEmail(@RequestParam String email){
+        //maybe returns an account if its email is correct
        Optional<Account> account = accountService.getAccountByEmail(email);
+       //returns a boolean based on presence of account
        return account.isPresent();
     }
     @GetMapping("/checkPassword")
     public String checkPassword(@RequestParam String email){
         Optional<Account> account = accountService.getAccountByEmail(email);
+        //used to return a password to compare to input
         if (account.isPresent()){
             return account.get().getPassword();
         }
@@ -91,23 +95,18 @@ public class AccountController {
         return ResponseEntity.badRequest().body("Account ID is missing");
     }
 
-//    Edit a specific account by ID
-//    @PutMapping("/editaccount/{accountId}")
-//    public Account editAccountById(@PathVariable Integer accountId, @RequestBody Account account) {
-//        return accountService.editAccountById(accountId, account);
-//    }
+
     @PutMapping({"/editaccount/","/editaccount"})
     public ResponseEntity<String> editAccountError(){
         return ResponseEntity.badRequest().body("Account Id is missing");
     }
-//    @PutMapping("/editaccount/{email}")
-//    public Account editAccountById(@PathVariable String email, @RequestBody Account account){
-//        return accountService.editAccountByEmail(email, account);
-//    }
+
     @PutMapping("/editaccount/{email}")
     public ResponseEntity<Map<String, String>>editAccountById(@PathVariable String email, @RequestBody Account account) {
         accountService.editAccountByEmail(email, account);
+        //reissue a new token that corresponds to the updated email
         String newToken = jwtUtil.generateToken(account.getEmail());
+        //structure response
         Map<String, String> response = new HashMap<>();
         response.put("token", newToken);
         return ResponseEntity.ok(response);

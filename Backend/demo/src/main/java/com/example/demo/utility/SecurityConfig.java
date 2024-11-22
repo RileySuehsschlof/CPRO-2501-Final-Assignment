@@ -23,11 +23,9 @@ public class SecurityConfig implements WebMvcConfigurer {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf().disable()
                 .authorizeRequests()
-                //no token needed
-                .requestMatchers("/login", "/register", "/","/createaccount") // Allow login and register without token
+                .requestMatchers("/login", "/register", "/","/createaccount","/checkEmail","/checkPassword") // Allow login and register without token
                 .permitAll()
-                //token needed
-                .requestMatchers("/account/**","/checkEmail","/checkPassword").authenticated()
+                .requestMatchers("/account/**").authenticated()
                 .anyRequest().authenticated() // Protect all other requests
                 .and()
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // Add JWT filter before other filters

@@ -13,26 +13,73 @@ public class SecurityConfig implements WebMvcConfigurer {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    // Inject JwtAuthenticationFilter
+    // // Inject JwtAuthenticationFilter
     public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
     // Configure Spring Security
+    // @Bean
+    // public SecurityFilterChain securityFilterChain(HttpSecurity http) throws
+    // Exception {
+    // return http.csrf().disable()
+    // .authorizeRequests()
+    // .requestMatchers("/login", "/register", "/", "/createaccount", "/checkEmail",
+    // "/ProductsById/**") // Allow
+    // // login
+    // // and
+    // // register
+    // // without
+    // // token
+    // .permitAll()
+    // .requestMatchers("/account/**").authenticated()// No token required for login
+    // // and
+    // // register endpoint
+    // .anyRequest().authenticated() // Protect all other requests
+    // .and()
+    // .addFilterBefore(jwtAuthenticationFilter,
+    // UsernamePasswordAuthenticationFilter.class) // Add JWT filter
+    // // before other
+    // // filters
+    // .cors() // Enable CORS in Spring Security
+    // .and()
+    // .build();
+    // }
+    // Configure Spring Security
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf().disable()
                 .authorizeRequests()
-                .requestMatchers("/login", "/register", "/","/createaccount","/checkEmail","/checkPassword") // Allow login and register without token
+                .requestMatchers("/login", "/register", "/", "/createaccount", "/checkEmail", "/ProductsById/**") // Allow
+                                                                                                                  // public
+                                                                                                                  // routes
+                .permitAll() // Public endpoints without token
+                .requestMatchers("/error", "/error?continue") // Allow access to error pages
                 .permitAll()
-                .requestMatchers("/account/**").authenticated()
-                .anyRequest().authenticated() // Protect all other requests
+                .requestMatchers("/images/**") // Allow access to images (static resources)
+                .permitAll()
+                .requestMatchers("/account/**").authenticated() // Secured endpoints
+                .anyRequest().authenticated() // Protect all other routes
                 .and()
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // Add JWT filter before other filters
-                .cors()
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // Add JWT filter
+                .cors() // Enable CORS in Spring Security
                 .and()
                 .build();
     }
+    // @Bean
+    // public SecurityFilterChain securityFilterChain(HttpSecurity http) throws
+    // Exception {
+    // return http.csrf().disable()
+    // .authorizeRequests()
+    // .antMatchers("/login", "/register", "/createaccount", "/checkEmail",
+    // "/ProductsById/**")
+    // .permitAll()
+    // .anyRequest().authenticated()
+    // .and()
+    // .cors() // Ensure CORS is enabled for your frontend
+    // .and()
+    // .build();
+    // }
 
     // Configure CORS globally
     @Override

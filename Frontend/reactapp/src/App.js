@@ -90,7 +90,7 @@ function App() {
             }
           ></Route>
 
-          <Route path="/product" element={<Product />} />
+          <Route path="/product/:productId" element={<Product />} />
 
           <Route path="/register" element={<CreateAccount />} />
 

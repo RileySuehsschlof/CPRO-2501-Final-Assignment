@@ -50,9 +50,10 @@ public class SecurityConfig implements WebMvcConfigurer {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf().disable()
                 .authorizeRequests()
-                .requestMatchers("/login", "/register", "/", "/createaccount", "/checkEmail", "/ProductsById/**") // Allow
-                                                                                                                  // public
-                                                                                                                  // routes
+                .requestMatchers("/login", "/register", "/", "/createaccount", "/checkEmail", "/checkPassword",
+                        "/ProductsById/**") // Allow
+                // public
+                // routes
                 .permitAll() // Public endpoints without token
                 .requestMatchers("/error", "/error?continue") // Allow access to error pages
                 .permitAll()

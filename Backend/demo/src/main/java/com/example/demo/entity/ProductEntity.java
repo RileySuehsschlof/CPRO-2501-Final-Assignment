@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -23,8 +24,8 @@ public abstract class ProductEntity {
     @NotNull(message = "Must have an Id")
     private Integer id;
 
-    @Lob
-    private byte[] img;
+    // @Lob
+    // private byte[] img;
 
     @NotNull(message = "Must have a Product Name")
     private String productName;
@@ -46,4 +47,7 @@ public abstract class ProductEntity {
 
     // @Column(name = "product_type")
     // private String productType;
+
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductImage> productImages;
 }

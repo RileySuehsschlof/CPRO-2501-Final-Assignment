@@ -56,6 +56,8 @@ public class SecurityConfig implements WebMvcConfigurer {
                 .permitAll() // Public endpoints without token
                 .requestMatchers("/error", "/error?continue") // Allow access to error pages
                 .permitAll()
+                .requestMatchers("/images/**") // Allow access to images (static resources)
+                .permitAll()
                 .requestMatchers("/account/**").authenticated() // Secured endpoints
                 .anyRequest().authenticated() // Protect all other routes
                 .and()

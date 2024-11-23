@@ -4,9 +4,15 @@ import com.example.demo.entity.ProductEntity;
 import com.example.demo.service.ProductEntityService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+// import org.springframework.core.io.Resource;
+// import org.springframework.http.HttpHeaders;
 
+// import java.nio.file.Files;
+// import java.nio.file.Path;
+// import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
@@ -29,6 +35,33 @@ public class ProductController {
     public ResponseEntity<String> getProductByIdWithoutId() {
         return ResponseEntity.badRequest().body("Product Id is required.");
     }
+
+    // not currently implemented in the product entity service layer
+    // @GetMapping("/products/images/{imageName}")
+    // public ResponseEntity<Resource> getProductImage(@PathVariable String
+    // imageName) {
+    // try {
+    // // Define the path to the image on the server
+    // Path imagePath =
+    // Paths.get("src/main/resources/static/images").resolve(imageName);
+
+    // // Load the image file as a resource
+    // Resource resource = new FileSystemResource(imagePath);
+
+    // if (!resource.exists()) {
+    // return ResponseEntity.notFound().build();
+    // }
+
+    // // Determine the content type of the image file
+    // String contentType = Files.probeContentType(imagePath);
+    // return ResponseEntity.ok()
+    // .header(HttpHeaders.CONTENT_TYPE, contentType)
+    // .body(resource);
+
+    // } catch (Exception e) {
+    // return ResponseEntity.status(500).build();
+    // }
+    // }
 
     @PostMapping("/saveproduct")
     public String saveProduct(@RequestBody @Valid ProductEntity product) {

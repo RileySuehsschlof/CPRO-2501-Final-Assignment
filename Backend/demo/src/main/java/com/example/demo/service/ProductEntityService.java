@@ -1,10 +1,13 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.ProductEntity;
+import com.example.demo.entity.ProductImage;
 import com.example.demo.exception.ProductException;
 import com.example.demo.repository.IProductRepository;
+import com.example.demo.repository.IProductImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -12,6 +15,8 @@ import java.util.List;
 public class ProductEntityService {
     @Autowired
     IProductRepository repository;
+    @Autowired
+    IProductImageRepository imageRepository;
 
     public List<ProductEntity> getAllProducts() {
         return repository.findAll();// returns an empty list if there are no products
@@ -44,9 +49,6 @@ public class ProductEntityService {
         if (upDatedProduct.getProductName() != null) {
             product.setProductName(upDatedProduct.getProductName());
         }
-        if (upDatedProduct.getImg() != null) {
-            product.setImg(upDatedProduct.getImg());
-        }
         if (upDatedProduct.getCategory() != null) {
             product.setCategory(upDatedProduct.getCategory());
         }
@@ -76,5 +78,24 @@ public class ProductEntityService {
         repository.deleteById(id);
         return "succesfulfully deleted product:" + id;
 
+    }
+
+    // takes a product and related images
+    @Transactional // ensures that if Product fails it does not go through with the rest of the
+                   // saving.
+    public String saveProductWithImages(ProductEntity productEntity, List<String> imageUrls) {
+        if (repository.existsById(productEntity.getId())) {
+            throw ProductException.IdAlreadyExists(productEntity.getId());
+        }
+
+        repository.save(productEntity);
+
+        for (String imageUrl : imageUrls) {
+            ProductImage productImage = new ProductImage();
+            productImage.setImageUrl(imageUrl);
+            productImage.setProduct(productEntity);
+            imageRepository.save(productImage);
+        }
+        return "Product and images saved: " + productEntity.getProductName();
     }
 }

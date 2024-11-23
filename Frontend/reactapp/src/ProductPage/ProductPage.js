@@ -21,28 +21,14 @@ const ProductPage = () => {
 
   useEffect(() => {
 
-
-    // const axiosInstance = axios.create({
-    //   baseURL: "http://localhost:8881",
-    //   headers:{
-    //     Authorization:`Bearer ${sessionStorage.getItem("authToken")}`,
-    //     "Content-Type":"application/json",
-    //   },
-    // });
-
+    // get the product from backend
     const fetchProductData = async () => {
-      // const axiosInstance = axios.create({
-      //   baseURL: "http://localhost:8881",
-      //   headers: {
-      //     Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
-      //     "Content-Type": "application/json",
-      //   },
-      // });
       try {
         const response = await axios.get(`http://localhost:8881/ProductsById/${productId}`);
-        // const response = await axiosInstance.get(`/ProductsById/${productId}`);
+
 
         setProduct(response.data);
+
       } catch (error) {
         setError("Failed to fetch product" + error.message);
       } finally {
@@ -60,19 +46,19 @@ const ProductPage = () => {
     return <div>Error: {error}</div>
   }
 
-
-
-
-
-
-
   return (
     <div className="product-page">
       <div className="column2">
-        {/* calling our Image carousel */}
-        {/* <ImageCarousel images={product.images} /> */}
-        <ImageCarousel images={product.img ? [product.img] : []} />
-        {/* <img src={product.images[0]} alt="Product Image" /> */}
+
+        {/* if there are no images to display let the user know */}
+        {product.productImages && product.productImages.length > 0 ? (
+          <ImageCarousel
+            images={product.productImages.map((img) => img.imageUrl)}
+          />
+        ) : (
+          <div>No images available for this product</div>
+        )}
+
       </div>
       <div className="column">
         <h2>{product.productName}</h2>

@@ -54,7 +54,10 @@ async function validNewInfo(accountData, setErrors) {
   }
 
   if (!isCardNumber(cardNumber)) {
-    setErrors((prev) => ({ ...prev, cardNumberError: "Invalid card number" }));
+    setErrors((prev) => ({
+      ...prev,
+      cardNumberError: "Invalid card number. Must be 16 consecutive numbers.",
+    }));
     return false;
   }
 

@@ -49,7 +49,9 @@ const MainPage = () => {
       <h1>Products You Might Like</h1>
       {/*Nothing here yet*/}
       <div id="recCards">
-        {/* Nothing here yet */}
+      {regCardData.map((product, index) => (
+          <Card key={index} {...product} /> // Assuming Card component takes product as props
+        ))}
       </div>
     </div>
   );

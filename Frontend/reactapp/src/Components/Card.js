@@ -1,26 +1,23 @@
 import React from "react";
 import "./Card.css";
-import Navigation from "./TempNav";
-import { useNavigate } from "react-router-dom";
 
-const Card = ({ image, title, price, link, notes }) => {
-  const navigate = useNavigate();
+const Card = ({ id, productName, price, description, productImages }) => {
   return (
     <div className="card">
-      <img src={image} alt="Product" className="card-image" />
-      <div className="card-content">
-        <h2 className="card-title">{title}</h2>
-        <p className="card-price">{price}</p>
-        <button className="navBtnRoute" onClick={() => navigate(link)}>
-          Product
-        </button>
-        <p className="card-notes">{notes}</p> {/* Display notes here */}
-        
-
-        
+      <div className="card-image">
+        {/* Display the first image or a placeholder */}
+        {productImages && productImages.length > 0 ? (
+          <img src={productImages[0].imageUrl} alt={productName} />
+        ) : (
+          <div>No image available</div>
+        )}
+      </div>
+      <div className="card-info">
+        <h2>{productName}</h2>
+        <p>{description}</p>
+        <p>Price: ${price}</p>
       </div>
     </div>
-    
   );
 };
 

@@ -1,8 +1,6 @@
-// import React from "react";
+
 import ImageCarousel from "../ImageCarousel/ImageCarousel";
-// import selfie from "../ImageCarousel/selfie.jpg";
-// import batman from "../ImageCarousel/batman.png";
-// import random from "../ImageCarousel/random.png";
+
 import "./ProductPage.css";
 import React, { useState, useEffect } from "react";
 import axios from "axios";

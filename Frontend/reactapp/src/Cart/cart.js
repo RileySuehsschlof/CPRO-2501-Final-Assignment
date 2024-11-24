@@ -1,68 +1,43 @@
-import "./cart.css";
-import { useState } from "react";
-import batman from "../ImageCarousel/batman.png";
-import random from "../ImageCarousel/random.png";
-import selfie from "../ImageCarousel/selfie.jpg";
-
-const initialProducts = [
-  { id: 1, name: "Item 1", price: 10, image: batman },
-  { id: 2, name: "Item 2", price: 20, image: random },
-  { id: 3, name: "Item 3", price: 30, image: selfie },
-];
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import CartItem from "./CartItem";
 
 const Cart = () => {
-  const [products, setProducts] = useState(initialProducts);
+  const [cart, setCart] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const removeProduct = (id) => {
-    setProducts(products.filter((product) => product.id !== id));
-  };
+  // Fetch cart data on component mount
+  useEffect(() => {
+    const fetchCart = async () => {
+      try {
+        const response = await axios.get("/carts/1"); // Adjust the cart ID as needed
+        setCart(response.data.items);
+      } catch (error) {
+        console.error("Error fetching cart:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  return (
-    <div className="Container">
-      <div className="Cart">
-        <h1 style={{ marginTop: "0px" }}>Shopping Cart</h1>
-        <ProductList products={products} removeProduct={removeProduct} />
-        <CartSubtotal products={products} />
-      </div>
-    </div>
-  );
-};
+    fetchCart();
+  }, []);
 
-const ProductList = ({ products, removeProduct }) => {
+  if (loading) {
+    return <div>Loading cart...</div>;
+  }
+
   return (
     <div>
-      <ul>
-        {products.map((product) => (
-          <li key={product.id}>
-            <img src={product.image} alt="Product" />
-            <span>
-              {product.name} - ${product.price}
-            </span>
-            <button onClick={() => removeProduct(product.id)}>Remove</button>
-          </li>
-        ))}
-      </ul>
+      <h2>Your Cart</h2>
+      {cart.length > 0 ? (
+        cart.map((item) => (
+          <CartItem key={item.id} item={item} />
+        ))
+      ) : (
+        <p>Your cart is empty.</p>
+      )}
     </div>
   );
 };
-
-const CartSubtotal = ({ products }) => {
-  return (
-    <>
-      <div className="Subtotal-Container">
-        <span className="Subtotal">
-          Cart Subtotal = ${calculateSubtotal(products)}
-        </span>
-      </div>
-      <button className="Checkout" disabled>
-        Checkout
-      </button>
-    </>
-  );
-};
-
-function calculateSubtotal(products) {
-  return products.reduce((sum, product) => sum + product.price, 0);
-}
 
 export default Cart;

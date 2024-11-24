@@ -132,17 +132,14 @@ async function userExists(newEmail, setEmailError) {
     const response = await axios.get("http://localhost:8881/checkEmail", {
       params: { email: newEmail },
     });
-    console.log("Response inside axios.get =" + response.data);
 
     if (response.data) {
       setEmailError("User with that email already exists.");
       return false; // Email exists
     }
-    console.log("past the if response data");
     return true; // Email does not exist
   } catch (error) {
     setEmailError("Error checking email.");
-    console.log("Entered catch block");
     return false;
   }
 }
@@ -152,7 +149,7 @@ function CreateAccount() {
   const [isFormReady, setIsFormReady] = useState(false);
 
   useEffect(() => {
-    // Simulate a delay (e.g., fetching data or waiting for a component to load)
+    //wait for page to load
     setTimeout(() => {
       setIsFormReady(true);
     }, 100);

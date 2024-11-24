@@ -1,9 +1,14 @@
 import React from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate from react-router-dom
+import { useNavigate } from "react-router-dom";
 import "./Card.css";
 
 const Card = ({ id, productName, price, description, productImages }) => {
   const navigate = useNavigate(); // Hook to navigate programmatically
+
+  // Check if the product has images
+  const imageUrl = productImages && productImages.length > 0
+    ? `http://localhost:8881/${productImages[0].imageUrl}` // Corrected URL construction
+    : null; // No image URL if there are no product images
 
   // Handler to navigate when a card is clicked
   const handleCardClick = () => {
@@ -11,13 +16,13 @@ const Card = ({ id, productName, price, description, productImages }) => {
   };
 
   return (
-    <div className="card" onClick={handleCardClick}> {/* Add onClick to the card */}
+    <div className="card" onClick={handleCardClick}> {/* Make card clickable */}
       <div className="card-image">
-        {/* Display the first image or a placeholder */}
-        {productImages && productImages.length > 0 ? (
-          <img src={productImages[0].imageUrl} alt={productName} />
+        {/* If an image exists, show it. Otherwise, show a placeholder text */}
+        {imageUrl ? (
+          <img src={imageUrl} alt={productName} />
         ) : (
-          <div>No image available</div>
+          <div className="no-image">No image available</div>
         )}
       </div>
       <div className="card-info">

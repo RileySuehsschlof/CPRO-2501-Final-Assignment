@@ -6,15 +6,18 @@ import { useNavigate } from "react-router-dom";
 function logout() {
   sessionStorage.removeItem("authToken");
   window.location.href = "/login";
+  //remove authtoken and redirect to main page
 }
 
 function isCardNumber(input) {
+  //helper function to check card number format
   const cardRegex = /^[0-9]{16}$/;
   return cardRegex.test(input);
 }
 
 async function userExists(newEmail) {
   try {
+    //check if email is in the database already
     const response = await axios.get("http://localhost:8881/checkEmail", {
       params: { email: newEmail },
     });
@@ -41,6 +44,7 @@ async function validNewInfo(accountData, setErrors) {
     generalError: "",
   });
 
+  //check if fields have an input otherwise display corresponding error
   if (!shippingAddress || !billingAddress || !email || !cardNumber || !name) {
     setErrors((prev) => ({
       ...prev,
@@ -54,6 +58,7 @@ async function validNewInfo(accountData, setErrors) {
   }
 
   if (!isCardNumber(cardNumber)) {
+    //checks format of card number and display message
     setErrors((prev) => ({
       ...prev,
       cardNumberError: "Invalid card number. Must be 16 consecutive numbers.",
@@ -62,6 +67,7 @@ async function validNewInfo(accountData, setErrors) {
   }
 
   if (password && password.length < 6) {
+    //checks if new password is logn enough
     setErrors((prev) => ({
       ...prev,
       newPasswordError: "New password must be at least 6 characters long",
@@ -70,12 +76,11 @@ async function validNewInfo(accountData, setErrors) {
   }
 
   if (!userExists(email)) {
+    //checks if email already in use
     setErrors((prev) => ({ ...prev, generalError: "Email already in use" }));
     return false;
   }
-  console.log(validateEmail(email));
   const isEmailAvailable = await userExists(email);
-  console.log("isEmailAvailable" + isEmailAvailable);
   if (isEmailAvailable) {
     setErrors((prev) => ({
       ...prev,
@@ -86,11 +91,13 @@ async function validNewInfo(accountData, setErrors) {
   return true;
 }
 function validateEmail(email) {
+  //helper function to validate email format
   const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   return emailPattern.test(email);
 }
 async function checkPassword(email) {
   try {
+    //get password orresponding to email
     const response = await axios.get("http://localhost:8881/checkPassword", {
       params: { email: email },
     });
@@ -130,6 +137,7 @@ function AccDetailsPage() {
   useEffect(() => {
     const fetchAccountDetails = async () => {
       try {
+        //check for token
         const token = sessionStorage.getItem("authToken");
         if (!token) {
           throw new Error("No token found");
@@ -145,10 +153,11 @@ function AccDetailsPage() {
             "Content-Type": "application/json",
           },
         });
-
+        //get account matching the token
         const response = await axiosInstance.get(
           `/account/${decodedPayload.sub}`
         );
+        //update states corresponding to email and store old email incase the want to update email
         setAccountData(response.data);
         setInitialEmail(response.data.email);
       } catch (err) {
@@ -173,11 +182,13 @@ function AccDetailsPage() {
 
     e.preventDefault();
     const password = await checkPassword(initialEmail);
+    //check if user entered password matches db password
     if (accountData.oldPassword === password) {
       //if input password matches db password
       if (validNewInfo(accountData, setErrors)) {
         try {
           if (accountData.newPassword != null) {
+            //if theres a new password, update accoutn objects password
             accountData.password = accountData.newPassword;
           }
           const axiosInstance = axios.create({
@@ -187,7 +198,7 @@ function AccDetailsPage() {
               "Content-Type": "application/json",
             },
           });
-
+          //edit database for new information
           const response = await axiosInstance.put(
             `/editaccount/${initialEmail}`,
             accountData

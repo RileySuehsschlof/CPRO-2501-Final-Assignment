@@ -7,14 +7,13 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
-  const location = useLocation(); // Capture the location passed via state
-
+  const location = useLocation();
   const [message, setMessage] = useState("");
   const [accountCred, setAccountCred] = useState({
     email: "",
     password: "",
   });
-
+  //update state on change
   const handleChange = (event) => {
     const { id, value } = event.target;
     setAccountCred((prevState) => ({
@@ -26,6 +25,7 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
+      //send a request to /login with object container email and password to verify user
       const response = await axios.post(
         "http://localhost:8881/login",
         accountCred,
@@ -38,7 +38,7 @@ const Login = () => {
         sessionStorage.setItem("authToken", token);
 
         setMessage("Login successful!");
-
+        //if there is a locationState go there, otherwise go to default page
         const redirectTo = location.state?.from?.pathname || "/";
         navigate(redirectTo);
       } else {

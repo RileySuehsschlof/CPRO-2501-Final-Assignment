@@ -7,12 +7,9 @@ import com.example.demo.exception.CartNotFoundException;
 import com.example.demo.repository.ICartRepository;
 import com.example.demo.repository.IProductRepository;
 
-import jakarta.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,11 +20,6 @@ public class CartService {
 
     @Autowired
     private IProductRepository productRepository;
-
-    // Method that gets all carts
-    public List<Cart> getAllCarts() {
-        return cartRepository.findAll();
-    }
 
     // Method that gets a cart by its ID
     public Optional<Cart> getCartById(Integer id) {
@@ -44,7 +36,7 @@ public class CartService {
         cartRepository.deleteById(id);
     }
 
-    @Transactional
+    // Method that adds an item to the cart by its ID
     public void addItemToCart(Integer cartId, Integer productId, Integer quantity) {
         // Find the cart by its ID
         Cart cart = cartRepository.findById(cartId)
@@ -80,7 +72,6 @@ public class CartService {
         cartRepository.save(cart);
     }
 
-    @Transactional
     public void removeItemFromCart(Integer cartId, Integer itemId) {
         // Find the cart by its ID, throw exception if not found
         Cart cart = cartRepository.findById(cartId)
@@ -97,6 +88,17 @@ public class CartService {
 
         // Save the updated cart
         cartRepository.save(cart);
+    }
+
+    public Optional<Cart> getCartByUserEmail(String userEmail) {
+        
+        return cartRepository.findByUserEmail(userEmail);
+    }
+
+    public Cart createCartForUser(String userEmail) {
+        Cart cart = new Cart();
+        cart.setUserEmail(userEmail);
+        return cartRepository.save(cart);
     }
 
 }

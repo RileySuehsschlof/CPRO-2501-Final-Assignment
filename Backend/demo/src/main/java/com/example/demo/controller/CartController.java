@@ -9,20 +9,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/carts")
+@RequestMapping("/cart")
 public class CartController {
 
     @Autowired
     private CartService cartService;
-
-    @GetMapping // Get all carts
-    public ResponseEntity<List<Cart>> getAllCarts() {
-        List<Cart> carts = cartService.getAllCarts();
-        return ResponseEntity.ok(carts);
-    }
 
     @GetMapping("/{id}") // Get cart by ID
     public ResponseEntity<Cart> getCartById(@PathVariable Integer id) {
@@ -31,19 +25,19 @@ public class CartController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping // Create new cart
+    @PostMapping("/create/{cartId}") // Create new cart
     public ResponseEntity<Cart> createCart(@RequestBody @Valid Cart cart) {
         Cart savedCart = cartService.saveCart(cart);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedCart);
     }
 
-    @DeleteMapping("/{id}") // delete cart by ID
+    @DeleteMapping("/delete/{id}") // delete cart by ID
     public ResponseEntity<Void> deleteCartById(@PathVariable Integer id) {
         cartService.deleteCartById(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/{cartId}/items")
+    @PostMapping("/{cartId}/items") // Add item to cart by ID
     public ResponseEntity<String> addItemToCart(
             @PathVariable Integer cartId,
             @RequestParam Integer productId,
@@ -56,7 +50,7 @@ public class CartController {
         }
     }
 
-    @DeleteMapping("/{cartId}/items/{itemId}")
+    @DeleteMapping("/{cartId}/items/{itemId}") //Remove an item from a cart by ID
     public ResponseEntity<String> removeItemFromCart(@PathVariable Integer cartId, @PathVariable Integer itemId) {
         try {
             cartService.removeItemFromCart(cartId, itemId);
@@ -64,5 +58,14 @@ public class CartController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
+    }
+
+    @GetMapping("/{userEmail}") //Get cart by user email
+    public ResponseEntity<Cart> getCartByUserEmail(@PathVariable String userEmail) {
+        // Retrieve the cart by user email
+        Optional<Cart> cart = cartService.getCartByUserEmail(userEmail);
+
+        return cart.map(ResponseEntity::ok)
+                   .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

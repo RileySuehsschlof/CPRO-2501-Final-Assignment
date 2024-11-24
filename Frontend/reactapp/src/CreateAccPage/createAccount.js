@@ -6,7 +6,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 function validate(value, name) {
-  //general function to check if any fields are empty then display message
+  //helper function to check if any fields are empty then display message
   if (value === "" || value === null) {
     const error = `${name} is required.`;
     return error;
@@ -15,6 +15,7 @@ function validate(value, name) {
 }
 
 function passMatch(pass1, pass2) {
+  //helper function to compare two passwords then return a boolean
   return pass1 === pass2;
 }
 
@@ -33,22 +34,27 @@ function formFilled() {
     .value.trim();
 
   // checks validation foreach field then writes an error
+  //for all inputs, uses validate function to get boolean, then if boolean is true,
+  //writes an error message in corresponding error field
   const nameError = validate(nameInput, "Name");
   let validLogin = true;
   if (nameError) {
     document.getElementById("nameError").innerHTML = nameError;
     validLogin = false;
   }
+
   const emailError = validate(emailInput, "Email");
   if (emailError) {
     document.getElementById("emailError").innerHTML = emailError;
     validLogin = false;
   }
+
   const passwordError = validate(passwordInput, "Password");
   if (passwordError) {
     document.getElementById("passwordError").innerHTML = passwordError;
     validLogin = false;
   }
+
   const passwordMatch = passMatch(passwordInput, confirmPassword);
   if (!passwordMatch) {
     document.getElementById("passwordAgainError").innerHTML =
@@ -62,12 +68,14 @@ function formFilled() {
 }
 
 function passwordValid() {
+  //get the values from the page
   document.getElementById("passwordError").innerHTML = "";
   document.getElementById("passwordAgainError").innerHTML = "";
   const passwordInput = document.getElementById("passwordInput").value.trim();
   const confirmPassword = document
     .getElementById("passwordAgainInput")
     .value.trim();
+
   let validLogin = true;
   //checks if the password is long enough
   if (passwordInput.length < 6) {
@@ -95,9 +103,11 @@ function validateEmail(email) {
 function isValidEmail() {
   const emailInput = document.getElementById("emailInput").value.trim();
   let validEmail = true;
+  //resets email error message to blank
   document.getElementById("emailError").innerHTML = "";
+
+  //validateEmail() returns a false if it doesnt match the regex, invert it to enter the if
   if (!validateEmail(emailInput)) {
-    console.log(!validateEmail(emailInput));
     let emailError = "Invalid Email Format";
     document.getElementById("emailError").innerHTML = emailError;
     validEmail = false;
@@ -108,37 +118,39 @@ function isValidEmail() {
 async function checkCreation(navigate) {
   if (formFilled() && passwordValid() && isValidEmail()) {
     let email = document.getElementById("emailInput").value.trim();
-    console.log(email);
+    //userExists() check the database to see if a user with that email already exists
     let emailExists = await userExists(email, (errorMessage) => {
       document.getElementById("emailError").innerHTML = errorMessage;
     });
-
+    //returns false if  user exists, returns true if it doesnt
     if (emailExists) {
+      //prepare object with details
       let userData = {
         name: document.getElementById("nameInput").value.trim(),
         email: document.getElementById("emailInput").value.trim(),
         password: document.getElementById("passwordInput").value.trim(),
       };
+      //store the userdata object in sessionStorage before navigating to the next page to get details
       sessionStorage.setItem("myData", JSON.stringify(userData));
-      console.log(JSON.stringify(userData));
-
       navigate("/register2");
     }
   }
 }
 async function userExists(newEmail, setEmailError) {
   try {
-    console.log(newEmail);
+    //send request to backend to check if email already exists
     const response = await axios.get("http://localhost:8881/checkEmail", {
       params: { email: newEmail },
     });
-
+    //if it sends a response back, sets error message to show
     if (response.data) {
       setEmailError("User with that email already exists.");
       return false; // Email exists
     }
+    //if no response, return true for it being a new email
     return true; // Email does not exist
   } catch (error) {
+    //any errors, return message saying theres an error
     setEmailError("Error checking email.");
     return false;
   }
@@ -155,6 +167,7 @@ function CreateAccount() {
     }, 100);
   }, []);
 
+  //page displayed from this component
   return (
     <div>
       {isFormReady ? (

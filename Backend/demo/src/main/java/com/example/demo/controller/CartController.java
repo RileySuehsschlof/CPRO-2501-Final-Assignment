@@ -41,4 +41,27 @@ public class CartController {
         cartService.deleteCartById(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/{cartId}/items")
+    public ResponseEntity<String> addItemToCart(
+            @PathVariable Integer cartId,
+            @RequestParam Integer productId,
+            @RequestParam Integer quantity) {
+        try {
+            cartService.addItemToCart(cartId, productId, quantity);
+            return ResponseEntity.ok("Item added to cart successfully!");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/{cartId}/items/{itemId}")
+    public ResponseEntity<String> removeItemFromCart(@PathVariable Integer cartId, @PathVariable Integer itemId) {
+        try {
+            cartService.removeItemFromCart(cartId, itemId);
+            return ResponseEntity.ok("Item removed from cart successfully!");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
 }

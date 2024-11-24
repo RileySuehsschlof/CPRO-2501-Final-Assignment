@@ -4,8 +4,15 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 @Data
@@ -20,10 +27,12 @@ public class Cart {
     @NotNull(message = "userId is required")
     private Integer userId;
 
-    @NotNull(message = "productId is required")
-    private Integer productId;
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CartItem> items = new ArrayList<>(); // List of items in the cart
 
-    private Integer itemAmount; // aggregate
-
-    private Integer totalPrice; // aggregate
+    public BigDecimal getTotalPrice() {
+        return items.stream()
+                .map(CartItem::getTotalPrice) // Aggregate item prices
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
 }

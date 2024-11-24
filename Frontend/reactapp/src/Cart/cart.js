@@ -10,7 +10,9 @@ const Cart = () => {
   useEffect(() => {
     const fetchCart = async () => {
       try {
-        const response = await axios.get("/carts/1"); // Adjust the cart ID as needed
+        //const decodedToken = extractEmail(sessionStorage.getItem("token"));
+        //const userEmail = decodedToken.email; //TODO: do this part in the back end and then pass the email here instead
+        const response = await axios.get(`/carts/1`); // change 1 to ${userEmail}
         setCart(response.data.items);
       } catch (error) {
         console.error("Error fetching cart:", error);

@@ -24,8 +24,8 @@ public class Cart {
     @NotNull(message = "Id is required") // @NotNull is used to make sure insertions are not blank
     private Integer id;
 
-    @NotNull(message = "userId is required")
-    private Integer userId;
+    @NotNull(message = "Email is required")
+    private String userEmail;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CartItem> items = new ArrayList<>(); // List of items in the cart

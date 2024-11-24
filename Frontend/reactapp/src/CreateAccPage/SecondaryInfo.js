@@ -6,7 +6,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 function validate(value, name) {
-  //general function to check if any fields are empty then display message
+  //helper function to check if any fields are empty then display message
   if (value === "" || value === null) {
     const error = `${name} is required.`;
     return error;
@@ -14,6 +14,7 @@ function validate(value, name) {
   return "";
 }
 function checkInputs() {
+  //resets errors to blank
   document.getElementById("shippingAddressError").innerHTML = "";
   document.getElementById("billingAddressError").innerHTML = "";
   document.getElementById("cardNumberError").innerHTML = "";
@@ -30,6 +31,8 @@ function checkInputs() {
   let validInputs = true;
 
   //checks validation of form
+  //checks for each field being empty
+  //if empty, set error in ui
   const shippingError = validate(shippingInput, "Shipping Address");
   if (shippingError) {
     document.getElementById("shippingAddressError").innerHTML = shippingError;
@@ -48,25 +51,27 @@ function checkInputs() {
   if (!isCardNumber(cardInput)) {
     document.getElementById("cardNumberError").innerHTML =
       "Invalid card number.";
-    return false;
+    validInputs = false;
   }
   return validInputs;
 }
+//function to compare input to the regex
 function isCardNumber(input) {
   const cardRegex = /^[0-9]{16}$/;
   return cardRegex.test(input);
 }
 function RedirectToMainPage(navigate) {
   if (checkInputs()) {
+    //createUserData returns a user object from all the input fields
     let user = createUserData();
-    console.log(user);
 
+    //send a post to /createaccount with the user object.
     axios
       .post("http://localhost:8881/createaccount", user, {
         headers: { "Content-Type": "application/json" },
       })
       .then((response) => {
-        console.log("User created", response.data);
+        //remove myData from sessionStorage
         sessionStorage.removeItem("myData");
         navigate("/login");
       })
@@ -76,8 +81,9 @@ function RedirectToMainPage(navigate) {
   }
 }
 function createUserData() {
+  //get data from initial sign up page
   let pastData = JSON.parse(sessionStorage.getItem("myData"));
-
+  //construct user object with old data and new data
   let userData = {
     email: pastData.email,
     password: pastData.password,

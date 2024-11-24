@@ -47,9 +47,9 @@ const MainPage = () => {
         ))}
       </div>
       <h1>Products You Might Like</h1>
-      {/* You can add another section here for recommended products if needed */}
+      {/*Nothing here yet*/}
       <div id="recCards">
-        {/* Render recommended products here if you have a separate list */}
+        {/* Nothing here yet */}
       </div>
     </div>
   );

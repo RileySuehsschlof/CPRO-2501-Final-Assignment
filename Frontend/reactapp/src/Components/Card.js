@@ -1,9 +1,17 @@
 import React from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate from react-router-dom
 import "./Card.css";
 
 const Card = ({ id, productName, price, description, productImages }) => {
+  const navigate = useNavigate(); // Hook to navigate programmatically
+
+  // Handler to navigate when a card is clicked
+  const handleCardClick = () => {
+    navigate(`/Product/${id}`); // Navigate to the product detail page with product ID
+  };
+
   return (
-    <div className="card">
+    <div className="card" onClick={handleCardClick}> {/* Add onClick to the card */}
       <div className="card-image">
         {/* Display the first image or a placeholder */}
         {productImages && productImages.length > 0 ? (

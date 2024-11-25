@@ -4,7 +4,9 @@ import './RecommendedProduct.css';
 import { Link } from "react-router-dom";
 
 
-const RecommendedProductPage = ({ category }) => {
+
+
+const RecommendedProductPage = ({ category, productId }) => {
 
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -12,10 +14,11 @@ const RecommendedProductPage = ({ category }) => {
 
     useEffect(() => {
 
-        // get the products with the same category from backend 
+        // get the products with the same category from backend  but not with the same productId
         const fetchProductData = async () => {
             try {
-                const response = await axios.get(`http://localhost:8881/ProductsByCategory/${category}`);
+                const response = await axios.get(`http://localhost:8881/ProductsByCategory`,
+                    { params: { category: category, productId: productId } });
                 setProducts(response.data);
 
             } catch (error) {

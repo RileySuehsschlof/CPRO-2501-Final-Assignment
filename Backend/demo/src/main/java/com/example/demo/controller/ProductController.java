@@ -25,9 +25,9 @@ public class ProductController {
         return productEntityService.getAllProducts();
     }
 
-    @GetMapping("/ProductsByCategory/{catString}")
-    public List<ProductEntity> getProductsByCategory(@PathVariable String catString) {
-        return productEntityService.getProductsByCategory(catString);
+    @GetMapping("/ProductsByCategory")
+    public List<ProductEntity> getProductsByCategory(@RequestParam String category, @RequestParam int productId) {
+        return productEntityService.getProductsByCategory(productId, category);
     }
 
     @GetMapping("/ProductsById/{id}")

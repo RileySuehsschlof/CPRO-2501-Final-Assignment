@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collector;
+
 import java.util.stream.Collectors;
 
 @Service
@@ -45,9 +45,10 @@ public class ProductEntityService {
         return repository.findById(id).get();
     }
 
-    public List<ProductEntity> getProductsByCategory(String category) {
+    public List<ProductEntity> getProductsByCategory(int id, String category) {
         return repository.findAll().stream()
                 .filter(product -> product.getCategory().equals(category)) // Filter by category
+                .filter(product -> product.getId() != id) // Filter out product with the given ID
                 .sorted(Comparator.comparing(ProductEntity::getPrice)) // Sort by price
                 .collect(Collectors.toList());
     }

@@ -61,6 +61,7 @@ const ProductPage = () => {
       <div className="column">
         <h2>{product.productName}</h2>
         <p>{product.description}</p>
+        <p>{product.id}</p>
 
       </div>
 
@@ -69,7 +70,10 @@ const ProductPage = () => {
         <button onClick={() => addToCart(product)}>Add to Cart</button>
         <button onClick={() => addToWishlist(product)}>Add to Wishlist</button>
       </div>
-      <RecommendedProductPage category={product.category} />
+      <RecommendedProductPage
+        category={product.category}
+        productId={product.id}
+      />
     </div>
   );
 };

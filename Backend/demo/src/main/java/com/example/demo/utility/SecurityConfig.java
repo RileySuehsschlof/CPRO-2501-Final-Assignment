@@ -59,7 +59,7 @@ public class SecurityConfig implements WebMvcConfigurer {
                 .permitAll()
                 .requestMatchers("/images/**") // Allow access to images (static resources)
                 .permitAll()
-                .requestMatchers("/account/**").authenticated() // Secured endpoints
+                .requestMatchers("/account/**", "/cart**").authenticated() // Secured endpoints
                 .anyRequest().authenticated() // Protect all other routes
                 .and()
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // Add JWT filter

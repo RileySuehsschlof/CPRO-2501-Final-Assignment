@@ -1,4 +1,5 @@
 package com.example.demo.entity;
+import com.example.demo.exception.customAnnotation.ValidBigDecimal;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -31,7 +32,8 @@ public class CartItem {
     private Integer quantity;
 
     @Transient
-    private BigDecimal totalPrice; // Derived dynamically
+    @ValidBigDecimal(message = "Must be a valid decimal")
+    private String totalPrice; // Derived dynamically
 
     public BigDecimal getTotalPrice() {
         return new BigDecimal(product.getPrice()).multiply(new BigDecimal(quantity));

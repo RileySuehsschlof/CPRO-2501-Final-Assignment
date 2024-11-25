@@ -38,7 +38,7 @@ public class AccountService {
         }
         else {
             repository.save(account);
-            cartService.createCartForUser(account.getEmail());
+            cartService.createCart(account.getEmail());
             return "Account saved.";
         }
     }

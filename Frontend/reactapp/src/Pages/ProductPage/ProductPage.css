@@ -16,6 +16,7 @@
   /* background-color: #fff; */
   border-radius: 8px;
 }
+
 .column2 {
   flex: 2;
   min-width: 300px;
@@ -23,6 +24,14 @@
   padding: 20px;
   /* background-color: #fff; */
   border-radius: 8px;
+}
+
+.recommended {
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  width: 100%;
 }
 
 h2 {

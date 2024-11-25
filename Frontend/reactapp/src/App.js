@@ -10,7 +10,7 @@ import Navigation from "./Components/Navigation.js";
 import Login from "./Pages/LoginPage/Login.js";
 import SecondaryInfo from "./Pages/CreateAccPage/SecondaryInfo.js";
 import PrivateRoute from "./Components/PrivateRoute.js";
-import AccDetailsPage from ".//Pages/AccDetailsPage.js";
+import AccDetailsPage from ".//Pages/AccDetailsPage/AccDetailsPage.js";
 
 function App() {
   const regCardData = [

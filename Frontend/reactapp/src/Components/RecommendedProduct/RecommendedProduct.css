@@ -1,0 +1,90 @@
+.recommended-products .tile {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    /* Space between items */
+    justify-content: space-around;
+    padding: 20px;
+}
+
+/* Style for each product card */
+.recommended-products .tile>.product-card {
+    width: 200px;
+
+    text-align: center;
+
+    border: 1px solid #ddd;
+
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    background-color: #fff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect on product cards */
+.recommended-products .tile>.product-card:hover {
+    transform: translateY(-5px);
+    /* Slight lift when hovering */
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    /* Stronger shadow on hover */
+}
+
+/* Standardize image size and ensure proper aspect ratio */
+.recommended-products img {
+    width: 100%;
+
+    height: auto;
+
+    max-height: 200px;
+
+    object-fit: cover;
+
+    border-radius: 8px;
+
+    margin-bottom: 10px;
+
+}
+
+/* styling for when there is no img */
+.recommended-products .no-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    /* Match image height */
+    border: 1px dashed #ddd;
+    color: #888;
+    font-size: 14px;
+    text-align: center;
+    border-radius: 8px;
+}
+
+
+.recommended-products h3 {
+    font-size: 16px;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+
+
+@media (max-width: 768px) {
+    .tile {
+        flex-direction: column;
+        /* Stack the product cards on smaller screens */
+        align-items: center;
+    }
+
+    .tile>div {
+        width: 90%;
+        /* Make cards wider on smaller screens */
+    }
+
+    img {
+        max-height: 150px;
+        /* Reduce image height on smaller screens */
+    }
+}

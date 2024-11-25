@@ -1,5 +1,5 @@
-import CreateField from "../Components/Field";
-import CreateButton from "../Components/Button";
+import CreateField from "../../Components/Field";
+import CreateButton from "../../Components/Button";
 import "./CreateAccCSS.css";
 import { useLocation } from "react-router-dom";
 import axios from "axios";

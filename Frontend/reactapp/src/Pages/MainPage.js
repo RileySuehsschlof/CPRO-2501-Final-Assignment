@@ -10,25 +10,48 @@ const MainPage = () => {
   const [error, setError] = useState(null);
 
   // Fetch the products from the backend when the component mounts
+  const [regCarouselIndex, setRegCarouselIndex] = useState(0);
+  const [recCarouselIndex, setRecCarouselIndex] = useState(0);
+
+  const [cardsPerSlide, setCardsPerSlide] = useState(3);
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         // Make an API call to fetch all products
         const response = await axios.get("http://localhost:8881/Products");
-
         // Set the response data into regCardData state
         setRegCardData(response.data);
       } catch (error) {
         // Handle any error that occurs during the fetch
         setError("Failed to fetch products: " + error.message);
       } finally {
-        // Set loading to false when the fetch is complete
         setLoading(false);
       }
     };
 
     fetchProducts();
-  }, []); // Empty dependency array means this runs once on component mount
+  }, []);
+
+  // Dynamic adjustment for cards per slide based on screen width
+  const updateCardsPerSlide = () => {
+    const width = window.innerWidth;
+    if (width >= 1230) {
+      setCardsPerSlide(3);
+    } else if (width >= 840) {
+      setCardsPerSlide(2);
+    } else {
+      setCardsPerSlide(1);
+    }
+  };
+
+  useEffect(() => {
+    updateCardsPerSlide(); // Set initial cards per slide
+    window.addEventListener("resize", updateCardsPerSlide);
+    return () => {
+      window.removeEventListener("resize", updateCardsPerSlide);
+    };
+  }, []);
 
   if (loading) {
     return <div>Loading products...</div>; // Display loading text
@@ -38,20 +61,85 @@ const MainPage = () => {
     return <div>Error: {error}</div>; // Display error message
   }
 
+  // Calculate the range of items to display based on the carousel index
+  const currentRegCards = regCardData.slice(
+    regCarouselIndex * cardsPerSlide,
+    (regCarouselIndex + 1) * cardsPerSlide
+  );
+
+  const currentRecCards = regCardData.slice(
+    recCarouselIndex * cardsPerSlide,
+    (recCarouselIndex + 1) * cardsPerSlide
+  );
+
+  // Function to handle next slide for regular carousel
+  const nextRegSlide = () => {
+    if ((regCarouselIndex + 1) * cardsPerSlide < regCardData.length) {
+      setRegCarouselIndex(regCarouselIndex + 1);
+    }
+  };
+
+  // Function to handle previous slide for regular carousel
+  const prevRegSlide = () => {
+    if (regCarouselIndex > 0) {
+      setRegCarouselIndex(regCarouselIndex - 1);
+    }
+  };
+
+  // Function to handle next slide for recommended carousel
+  const nextRecSlide = () => {
+    if ((recCarouselIndex + 1) * cardsPerSlide < regCardData.length) {
+      setRecCarouselIndex(recCarouselIndex + 1);
+    }
+  };
+
+  // Function to handle previous slide for recommended carousel
+  const prevRecSlide = () => {
+    if (recCarouselIndex > 0) {
+      setRecCarouselIndex(recCarouselIndex - 1);
+    }
+  };
+
   return (
     <div className="main-page">
       <h1>On Sale</h1>
-      <div id="regCards">
-        {regCardData.map((product, index) => (
-          <Card key={index} {...product} /> // Assuming Card component takes product as props
-        ))}
+      <div className="carousel-container">
+        <button onClick={prevRegSlide} disabled={regCarouselIndex === 0}>
+          Prev
+        </button>
+        <div id="regCarousel" className="carousel-cards">
+          {currentRegCards.map((product, index) => (
+            <Card key={index} {...product} />
+          ))}
+        </div>
+        <button
+          onClick={nextRegSlide}
+          disabled={
+            (regCarouselIndex + 1) * cardsPerSlide >= regCardData.length
+          }
+        >
+          Next
+        </button>
       </div>
+
       <h1>Products You Might Like</h1>
-      {/*Nothing here yet*/}
-      <div id="recCards">
-      {regCardData.map((product, index) => (
-          <Card key={index} {...product} /> // Assuming Card component takes product as props
-        ))}
+      <div className="carousel-container">
+        <button onClick={prevRecSlide} disabled={recCarouselIndex === 0}>
+          Prev
+        </button>
+        <div id="recCarousel" className="carousel-cards">
+          {currentRecCards.map((product, index) => (
+            <Card key={index} {...product} />
+          ))}
+        </div>
+        <button
+          onClick={nextRecSlide}
+          disabled={
+            (recCarouselIndex + 1) * cardsPerSlide >= regCardData.length
+          }
+        >
+          Next
+        </button>
       </div>
     </div>
   );

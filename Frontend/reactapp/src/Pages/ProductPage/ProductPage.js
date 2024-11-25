@@ -1,5 +1,5 @@
 
-import ImageCarousel from "../ImageCarousel/ImageCarousel";
+import ImageCarousel from "../../Components/ImageCarousel/ImageCarousel";
 
 import "./ProductPage.css";
 import React, { useState, useEffect } from "react";

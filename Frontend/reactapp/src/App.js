@@ -1,14 +1,14 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import CreateAccount from "./CreateAccPage/createAccount.js";
+import CreateAccount from "./Pages/CreateAccPage/createAccount.js";
 import Product from "./Components/Product.js";
-import Cart from "./Cart/cart.js";
+import Cart from "./Components/Cart/cart.js";
 import "./Pages/MainPage.js";
 import MainPage from ".//Pages/MainPage.js";
 import WishlistPage from ".//Pages/WishlistPage.js";
 import ScrollToTop from "./Components/ScrollToTop.js";
 import Navigation from "./Components/Navigation.js";
-import Login from "./LoginPage/Login.js";
-import SecondaryInfo from "./CreateAccPage/SecondaryInfo.js";
+import Login from "./Pages/LoginPage/Login.js";
+import SecondaryInfo from "./Pages/CreateAccPage/SecondaryInfo.js";
 import PrivateRoute from "./Components/PrivateRoute.js";
 import AccDetailsPage from ".//Pages/AccDetailsPage.js";
 

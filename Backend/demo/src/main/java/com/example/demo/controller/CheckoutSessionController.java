@@ -16,28 +16,39 @@ public class CheckoutSessionController {
 
     // Set your secret key (use your actual key in production)
     static {
-        Stripe.apiKey = System.getenv("STRIPE_API_KEY");
+        Stripe.apiKey = "sk_test_51QOtECKbLtLt8gtE6J6hpb3flSjtREEbF049R0e8xdyALYAOe3yIDvfkEEXloWcCyKaU4PRBJRrYkafq69ye1uwa00vCL76hFg";
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
-    @RequestMapping(value = "http://localhost:8080/create-checkout-session", method = RequestMethod.POST)
+    @RequestMapping(value = "/create-checkout-session", method = RequestMethod.POST)
     public ResponseEntity<String> createCheckoutSession() {
         try {
             SessionCreateParams params = SessionCreateParams.builder()
-                .setSuccessUrl("http://localhost:8080/success")
-                .setCancelUrl("http://localhost:8080/cancel")
+                .setSuccessUrl("http://localhost:3000/success")
+                .setCancelUrl("http://localhost:3000/cancel")
                 .addLineItem(
                     SessionCreateParams.LineItem.builder()
-                        .setPrice("price_1MotwRLkdIwHu7ixYcPLm5uZ")
-                        .setQuantity(2L)
+                        .setQuantity(1L) // Quantity - set dynamically
+                        .setPriceData(
+                            SessionCreateParams.LineItem.PriceData.builder()
+                                .setCurrency("cad")
+                                .setUnitAmount(1500L) // Amount in cents ($15.00) - set dynamically
+                                .setProductData(
+                                    SessionCreateParams.LineItem.PriceData.ProductData.builder()
+                                        .setName("Custom Item") // Product name - set dynamically
+                                        .build()
+                                )
+                                .build()
+                        )
                         .build()
                 )
                 .setMode(SessionCreateParams.Mode.PAYMENT)
                 .build();
             Session session = Session.create(params);
-            return ResponseEntity.ok(session.getUrl());
+            return ResponseEntity.ok(session.getId());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating checkout session: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Error creating checkout session: " + e.getMessage());
         }
     }
 }

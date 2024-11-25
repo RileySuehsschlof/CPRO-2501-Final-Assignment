@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import CartItem from "./CartItem";
+import CheckoutButton from "../Stripe/CheckoutButton";
 
 const Cart = () => {
   const [cart, setCart] = useState([]);
@@ -39,6 +40,7 @@ const Cart = () => {
     <div>
       <h2>Your Cart</h2>
       <button onClick={() => addItemToCart(2, 1, 1)}>Add Item to Cart</button>
+      <CheckoutButton />
       {cart.length > 0 ? (
         cart.map((item) => <CartItem key={item.id} item={item} />)
       ) : (

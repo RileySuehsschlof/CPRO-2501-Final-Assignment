@@ -2,13 +2,13 @@
 import ImageCarousel from "../../Components/ImageCarousel/ImageCarousel";
 
 import "./ProductPage.css";
+import RecommendedProductPage from "../../Components/RecommendedProduct/RecommendedProduct"
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
-//an example object that represents a product
 
-//will take in an object and display the details
+//will take in an objectId from params and display the details of the related product
 const ProductPage = () => {
 
 
@@ -61,6 +61,7 @@ const ProductPage = () => {
       <div className="column">
         <h2>{product.productName}</h2>
         <p>{product.description}</p>
+
       </div>
 
       <div className="column">
@@ -68,6 +69,7 @@ const ProductPage = () => {
         <button onClick={() => addToCart(product)}>Add to Cart</button>
         <button onClick={() => addToWishlist(product)}>Add to Wishlist</button>
       </div>
+      <RecommendedProductPage category={product.category} />
     </div>
   );
 };

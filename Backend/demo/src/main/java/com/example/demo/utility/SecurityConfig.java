@@ -51,7 +51,7 @@ public class SecurityConfig implements WebMvcConfigurer {
         return http.csrf().disable()
                 .authorizeRequests()
                 .requestMatchers("/login", "/register", "/", "/createaccount", "/checkEmail", "/checkPassword",
-                        "/ProductsById/**") // Allow
+                        "/ProductsById/**", "/cart**") // Allow
                 // public
                 // routes
                 .permitAll() // Public endpoints without token
@@ -59,7 +59,7 @@ public class SecurityConfig implements WebMvcConfigurer {
                 .permitAll()
                 .requestMatchers("/images/**") // Allow access to images (static resources)
                 .permitAll()
-                .requestMatchers("/account/**", "/cart**").authenticated() // Secured endpoints
+                .requestMatchers("/account/**").authenticated() // Secured endpoints
                 .anyRequest().authenticated() // Protect all other routes
                 .and()
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // Add JWT filter

@@ -7,12 +7,10 @@ const Cart = () => {
   //const userEmail = sessionStorage.getItem("userEmail");
   const userEmail = "fff@gmail.com";
 
-  // Function to fetch cart data
   const fetchCart = useCallback(async () => {
     try {
-      //Encode email
       const encodedEmail = encodeURIComponent(userEmail);
-      const response = await axios.get(`/cart/${encodedEmail}`);
+      const response = await axios.get(`http://localhost:8881/cart/${encodedEmail}`); // Was/cart/${encodedEmail}, but returned 404
       setCart(response.data.items || []);
     } catch (error) {
       console.error("Error fetching cart:", error);

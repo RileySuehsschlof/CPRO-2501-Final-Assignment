@@ -9,7 +9,9 @@ import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.net.URLDecoder;
 
 @RestController
 @RequestMapping("/cart")
@@ -39,6 +41,16 @@ public class CartController {
     // Get cart by user email
     @GetMapping("/{userEmail}")
     public Cart getCartByEmail(@PathVariable String userEmail) {
-        return cartService.getCartByEmail(userEmail);
+        try {
+            // Decode the email parameter
+            String decodedEmail = URLDecoder.decode(userEmail, "UTF-8");
+            
+            // Fetch the cart based on the decoded email
+            return cartService.getCartByEmail(decodedEmail);
+        } catch (UnsupportedEncodingException e) {
+            // Handle the exception if decoding fails
+            e.printStackTrace();
+            throw new RuntimeException("Error decoding the email: " + e.getMessage());
+        }
     }
 }

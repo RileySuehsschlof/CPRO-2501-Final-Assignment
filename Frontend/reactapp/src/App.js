@@ -11,6 +11,8 @@ import Login from "./Pages/LoginPage/Login.js";
 import SecondaryInfo from "./Pages/CreateAccPage/SecondaryInfo.js";
 import PrivateRoute from "./Components/PrivateRoute.js";
 import AccDetailsPage from ".//Pages/AccDetailsPage/AccDetailsPage.js";
+import Success from "./Stripe/Success.js";
+import Cancel from "./Stripe/Cancel.js";
 
 function App() {
   const regCardData = [
@@ -110,6 +112,8 @@ function App() {
             }
           />
           <Route path="/cart" element={<PrivateRoute element={<Cart />} />} />
+          <Route path="/success" element={<Success />} />
+          <Route path="/cancel" element={<Cancel />} />
         </Routes>
       </Router>
     </>

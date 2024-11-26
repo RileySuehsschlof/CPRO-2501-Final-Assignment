@@ -1,44 +1,56 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Cart;
+import com.example.demo.entity.CartItem;
 import com.example.demo.service.CartService;
-import jakarta.validation.Valid;
+
+import jakarta.validation.constraints.Min;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
+import java.net.URLDecoder;
 
 @RestController
-@RequestMapping("/carts")
+@RequestMapping("/cart")
 public class CartController {
 
     @Autowired
     private CartService cartService;
 
-    @GetMapping // Get all carts
-    public ResponseEntity<List<Cart>> getAllCarts() {
-        List<Cart> carts = cartService.getAllCarts();
-        return ResponseEntity.ok(carts);
+    // Create a new cart for a user by email
+    @PostMapping("/create")
+    public Cart createCart(@RequestParam String userEmail) {
+        return cartService.createCart(userEmail);
     }
 
-    @GetMapping("/{id}") // Get cart by ID
-    public ResponseEntity<Cart> getCartById(@PathVariable Integer id) {
-        return cartService.getCartById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    // Add an item to the cart by id
+    @PostMapping("/{cartId}/add-item")
+    public CartItem addItemToCart(@PathVariable Integer cartId, @RequestParam @Min(1) Integer productId, @RequestParam @Min(1) Integer quantity) {
+        return cartService.addItemToCart(cartId, productId, quantity);
     }
 
-    @PostMapping // Create new cart
-    public ResponseEntity<Cart> createCart(@RequestBody @Valid Cart cart) {
-        Cart savedCart = cartService.saveCart(cart);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedCart);
+    // Get the total price of items in the cart
+    @GetMapping("/{cartId}/total-price")
+    public BigDecimal getTotalPrice(@PathVariable Integer cartId) {
+        return cartService.getTotalPrice(cartId);
     }
 
-    @DeleteMapping("/{id}") // delete cart by ID
-    public ResponseEntity<Void> deleteCartById(@PathVariable Integer id) {
-        cartService.deleteCartById(id);
-        return ResponseEntity.noContent().build();
+    // Get cart by user email
+    @GetMapping("/{userEmail}")
+    public Cart getCartByEmail(@PathVariable String userEmail) {
+        try {
+            // Decode the email parameter
+            String decodedEmail = URLDecoder.decode(userEmail, "UTF-8");
+            
+            // Fetch the cart based on the decoded email
+            return cartService.getCartByEmail(decodedEmail);
+        } catch (UnsupportedEncodingException e) {
+            // Handle the exception if decoding fails
+            e.printStackTrace();
+            throw new RuntimeException("Error decoding the email: " + e.getMessage());
+        }
     }
 }

@@ -23,7 +23,7 @@ public class SecurityConfig implements WebMvcConfigurer {
         return http.csrf().disable()
                 .authorizeRequests()
                 .requestMatchers("/login", "/register", "/", "/createaccount", "/checkEmail", "/checkPassword",
-                        "/ProductsById/**", "/Products", "/ProductsByCategory") // Allow
+                        "/ProductsById/**", "/Products", "/ProductsByCategory", "/ProductsById/**", "/cart/**", "/create-checkout-session") // Allow
                 // public
                 // routes
                 .permitAll() // Public endpoints without token

@@ -5,11 +5,24 @@ const CartItem = ({ item }) => {
     return <div>Product not available</div>;
   }
 
+  const divStyle = {
+    backgroundColor: "white",
+    padding: "7px",
+    maxWidth: "100px",
+    border: "1px solid #ddd",
+    display: "inline-block"
+  };
+
+  const buttonStyle = {
+    backgroundColor: "red"
+  };
+
   return (
-    <div>
+    <div style={divStyle}>
       <h4>{item.product.productName}</h4>
-      <p>Quantity: {item.quantity}</p>
       <p>Price: {item.totalPrice}</p>
+      <p>Qty: {item.quantity}</p>
+      <button style={buttonStyle}>X</button>
     </div>
   );
 };

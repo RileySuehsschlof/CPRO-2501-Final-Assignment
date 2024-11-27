@@ -26,15 +26,20 @@ const Cart = () => {
     fetchCart();
   }, [fetchCart]);
 
+  const cartStyle = {
+    backgroundColor: "white"
+  };
+
   return (
-    <div>
+    <div style={cartStyle}>
       <h2>Your Cart</h2>
-      <CheckoutButton />
       {cart.length > 0 ? (
         cart.map((item) => <CartItem key={item.id} item={item} />)
       ) : (
         <p>Your cart is empty.</p>
       )}
+      <h1>Total Price: </h1>
+      <CheckoutButton />
     </div>
   );
 };

@@ -3,8 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.entity.Cart;
 import com.example.demo.entity.CartItem;
 import com.example.demo.service.CartService;
-
-import jakarta.validation.constraints.Min;
+import com.example.demo.DTO.AddItemRequestDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -28,8 +27,8 @@ public class CartController {
 
     // Add an item to the cart by id
     @PostMapping("/{cartId}/add-item")
-    public CartItem addItemToCart(@PathVariable Integer cartId, @RequestParam @Min(1) Integer productId, @RequestParam @Min(1) Integer quantity) {
-        return cartService.addItemToCart(cartId, productId, quantity);
+    public CartItem addItemToCart(@PathVariable Integer cartId, @RequestBody AddItemRequestDTO addItemRequest) {
+        return cartService.addItemToCart(cartId, addItemRequest.getProductId(), addItemRequest.getQuantity());
     }
 
     // Get the total price of items in the cart

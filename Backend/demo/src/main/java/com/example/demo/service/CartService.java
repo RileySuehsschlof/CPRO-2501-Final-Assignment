@@ -49,10 +49,6 @@ public class CartService {
         cartItem.setProduct(product);
         cartItem.setQuantity(quantity);
 
-        // Calculate total price and convert to string
-        BigDecimal totalPrice = cartItem.getTotalPrice();
-        cartItem.setTotalPrice(totalPrice.toString());
-
         return cartItemRepository.save(cartItem);
     }
 

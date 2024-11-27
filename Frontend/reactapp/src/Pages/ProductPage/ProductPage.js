@@ -17,6 +17,11 @@ const ProductPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const token = sessionStorage.getItem("authToken");
+  const [, payload] = token.split(".");
+  const decodedPayload = JSON.parse(atob(payload));
+  const userEmail = decodedPayload;
+
   useEffect(() => {
 
     // get the product from backend
@@ -67,7 +72,7 @@ const ProductPage = () => {
 
       <div className="column">
         <p>Price: ${product.price}</p>
-        <button onClick={() => addToCart(product)}>Add to Cart</button>
+        <button onClick={() => addItemToCart(1, productId, 1)}>Add to Cart</button>
         <button onClick={() => addToWishlist(product)}>Add to Wishlist</button>
       </div>
       <div className="recommended">
@@ -81,10 +86,20 @@ const ProductPage = () => {
     </div>
   );
 };
-//will eventually send the product to the cart
-const addToCart = (product) => {
-  console.log(`added: ${product.name} to cart`);
+
+const addItemToCart = async (cartId, productId, quantity) => {
+  try {
+      const response = await axios.post(`http://localhost:8881/cart/${cartId}/add-item`, {
+          cartId: cartId,
+          productId: productId,
+          quantity: quantity
+      });
+      console.log("Item added:", response.data);
+  } catch (error) {
+      console.error("Error adding item to cart:", error);
+  }
 };
+
 //will eventually send the product to the wishlist
 const addToWishlist = (product) => {
   console.log(`added: ${product.name} to wishlist`);

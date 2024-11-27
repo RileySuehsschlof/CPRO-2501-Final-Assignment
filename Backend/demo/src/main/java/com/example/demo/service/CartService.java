@@ -65,4 +65,22 @@ public class CartService {
         return cartRepository.findByUserEmail(userEmail);
     }
 
+    // Add an item to the cart by user email
+    public CartItem addItemToCartByEmail(String userEmail, Integer productId, Integer quantity) {
+        // Find the cart by ID
+        Cart cart = cartRepository.findByUserEmail(userEmail);
+
+        // Find the product by ID
+        ProductEntity product = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+
+        // Create a new CartItem and set properties
+        CartItem cartItem = new CartItem();
+        cartItem.setCart(cart);
+        cartItem.setProduct(product);
+        cartItem.setQuantity(quantity);
+
+        return cartItemRepository.save(cartItem);
+    }
+
 }

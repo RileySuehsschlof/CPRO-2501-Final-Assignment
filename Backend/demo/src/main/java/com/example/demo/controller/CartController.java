@@ -52,4 +52,20 @@ public class CartController {
             throw new RuntimeException("Error decoding the email: " + e.getMessage());
         }
     }
+
+    // Add an item to the cart by user email
+    @PostMapping("/{userEmail}/add-item-by-email")
+    public CartItem addItemToCart(@PathVariable String userEmail, @RequestBody AddItemRequestDTO addItemRequest) {
+        try {
+            // Decode the email parameter
+            String decodedEmail = URLDecoder.decode(userEmail, "UTF-8");
+            
+            // Add item to the cart based on the decoded email
+            return cartService.addItemToCartByEmail(decodedEmail, addItemRequest.getProductId(), addItemRequest.getQuantity());
+        } catch (UnsupportedEncodingException e) {
+            // Handle the exception if decoding fails
+            e.printStackTrace();
+            throw new RuntimeException("Error decoding the email: " + e.getMessage());
+        }
+    }
 }

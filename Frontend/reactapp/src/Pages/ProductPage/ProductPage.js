@@ -16,6 +16,7 @@ const ProductPage = () => {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [wishlistMessage, setWishlistMessage] = useState("");
 
   useEffect(() => {
 
@@ -23,12 +24,10 @@ const ProductPage = () => {
     const fetchProductData = async () => {
       try {
         const response = await axios.get(`http://localhost:8881/ProductsById/${productId}`);
-
-
-        setProduct(response.data);
-
+        console.log("Fetched product data:", response.data);  // Debugging log for fetched product
+        setProduct(response.data); // Set product data
       } catch (error) {
-        setError("Failed to fetch product" + error.message);
+        setError("Failed to fetch product: " + error.message);
       } finally {
         setLoading(false);
       }
@@ -44,15 +43,86 @@ const ProductPage = () => {
     return <div>Error: {error}</div>
   }
 
+  // Handle adding product to wishlist
+  const addToWishlist = async (product) => {
+    console.log("Product in addToWishlist:", product); // Log the product data here
+  
+    // Check if the product is valid
+    if (!product || !product.id) {  // Use 'id' here as it is available
+      setWishlistMessage("Invalid product data. Please try again.");
+      return; // Stop if the product is invalid
+    }
+  
+    // Check if the user is logged in by verifying the authToken in sessionStorage
+    const token = sessionStorage.getItem("authToken");
+    if (!token) {
+      setWishlistMessage("You need to log in to add products to your wishlist.");
+      return; // Don't proceed if the user is not logged in
+    }
+  
+    // Retrieve the userID from sessionStorage
+    const userID = sessionStorage.getItem("userID");
+    if (!userID) {
+      setWishlistMessage("User ID not found. Please log in again.");
+      return; // Don't proceed if there's no user ID
+    }
+  
+    const wishlistID = parseInt(userID); // Convert userID to integer
+  
+    // Prompt the user for a note about the wishlist product
+    const notes = prompt("Why are you adding this product to your wishlist?");
+  
+    // Create the wishlist product object
+    const wishlistProduct = {
+      wishlistProductID: `${wishlistID}-${product.id}`, // Use product.id instead of product.productID
+      wishlistID: wishlistID, // Ensure wishlistID is an integer
+      productID: product.id, // Use product.id here
+      notes: notes || "No notes provided", // Default note if none provided
+    };
+  
+    console.log("Adding to wishlist with data:", wishlistProduct); // Log the data being sent
+  
+    try {
+      // Send POST request to backend to add the product to the wishlist
+      const response = await axios.post(
+        "http://localhost:8881/wishlistproducts/addWish",
+        wishlistProduct,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+  
+      // Log the response data to debug
+      console.log("Response from backend:", response.data);
+  
+      // Set message based on response
+      setWishlistMessage(response.data);
+    } catch (error) {
+      // Log the error response to get more details
+      console.error("Error adding to wishlist:", error);
+      if (error.response) {
+        // If the server responds with an error, log it
+        console.error("Backend error:", error.response.data);
+        setWishlistMessage("Server error: " + error.response.data.message || "Failed to add product to wishlist.");
+      } else {
+        // Otherwise, it's a network error
+        setWishlistMessage("Network error: Failed to reach the server.");
+      }
+    }
+  };
+  
+
+  // Will eventually send the product to the cart
+  const addToCart = (product) => {
+    console.log(`Added: ${product.productName} to cart`);
+  };
+
   return (
     <div className="product-page">
       <div className="column2">
-
-        {/* if there are no images to display let the user know */}
+        {/* If there are no images to display, let the user know */}
         {product.productImages && product.productImages.length > 0 ? (
-          <ImageCarousel
-            images={product.productImages.map((img) => img.imageUrl)}
-          />
+          <ImageCarousel images={product.productImages.map((img) => img.imageUrl)} />
         ) : (
           <div>No images available for this product</div>
         )}
@@ -69,17 +139,10 @@ const ProductPage = () => {
         <button onClick={() => addToCart(product)}>Add to Cart</button>
         <button onClick={() => addToWishlist(product)}>Add to Wishlist</button>
       </div>
+      {wishlistMessage && <p>{wishlistMessage}</p>}
       <RecommendedProductPage category={product.category} />
     </div>
   );
-};
-//will eventually send the product to the cart
-const addToCart = (product) => {
-  console.log(`added: ${product.name} to cart`);
-};
-//will eventually send the product to the wishlist
-const addToWishlist = (product) => {
-  console.log(`added: ${product.name} to wishlist`);
 };
 
 export default ProductPage;

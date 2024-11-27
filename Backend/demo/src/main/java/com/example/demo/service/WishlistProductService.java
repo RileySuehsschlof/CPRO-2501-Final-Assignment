@@ -34,7 +34,7 @@ public class WishlistProductService {
         }
         // Save the wishlist product in the repository
         repository.save(wishlistProductEntity);
-        return "Wishlist product saved: " + wishlistProductEntity.getProductName(); // validation happens in WishlistProductEntity
+        return "Wishlist product saved"; // We no longer return product name
     }
 
     public WishlistProductEntity getWishlistProductById(String wishlistProductID) {
@@ -61,11 +61,8 @@ public class WishlistProductService {
         }
 
         // Update other fields of the wishlist product if provided
-        if (updatedWishlistProduct.getProductName() != null) {
-            wishlistProduct.setProductName(updatedWishlistProduct.getProductName());
-        }
-        if (updatedWishlistProduct.getImg() != null) {
-            wishlistProduct.setImg(updatedWishlistProduct.getImg());
+        if (updatedWishlistProduct.getProductID() != null) {
+            wishlistProduct.setProductID(updatedWishlistProduct.getProductID());
         }
         if (updatedWishlistProduct.getNotes() != null) {
             wishlistProduct.setNotes(updatedWishlistProduct.getNotes());

@@ -15,43 +15,94 @@ import java.util.List;
 public class WishlistProductController {
 
     @Autowired
-    WishlistProductService wishlistProductService;
+    private WishlistProductService wishlistProductService;
 
     @Autowired
-    AccountService accountService; // Service to fetch Account details
+    private AccountService accountService; // Service to fetch Account details
 
+    /**
+     * Get all wishlist products.
+     * @return list of all wishlist products
+     */
     @GetMapping
-    public List<WishlistProductEntity> getAllWishlistProducts() {
-        return wishlistProductService.getAllWishlistProducts();
+    public ResponseEntity<List<WishlistProductEntity>> getAllWishlistProducts() {
+        List<WishlistProductEntity> wishlistProducts = wishlistProductService.getAllWishlistProducts();
+        return ResponseEntity.ok(wishlistProducts);
     }
 
+    /**
+     * Get a specific wishlist product by its ID.
+     * @param id the wishlist product ID
+     * @return the wishlist product
+     */
     @GetMapping("/get{id}")
-    public ResponseEntity<WishlistProductEntity> getWishlistProductById(@PathVariable String id) {
+    public ResponseEntity<?> getWishlistProductById(@PathVariable String id) {
         WishlistProductEntity wishlistProduct = wishlistProductService.getWishlistProductById(id);
+        if (wishlistProduct == null) {
+            return ResponseEntity.status(404).body("Wishlist product not found.");
+        }
         return ResponseEntity.ok(wishlistProduct);
     }
 
-    @PostMapping("/addWish")  
-    public String saveWishlistProduct(@RequestBody @Valid WishlistProductEntity wishlistProduct) {
+    /**
+     * Add a new wishlist product.
+     * @param wishlistProduct the wishlist product entity to be added
+     * @return response indicating success or failure
+     */
+    @PostMapping("/addWish")
+    public ResponseEntity<String> saveWishlistProduct(@RequestBody @Valid WishlistProductEntity wishlistProduct) {
         // Ensure the wishlistID corresponds to an existing account (user)
         Integer wishlistID = wishlistProduct.getWishlistID(); // Get the customer/account ID
 
-        // Optional: You could validate that the account exists in the system
+        // Check if the account exists
         if (accountService.getAccountById(wishlistID) == null) {
-            return "Account with ID " + wishlistID + " does not exist.";
+            return ResponseEntity.status(400).body("Account with ID " + wishlistID + " does not exist.");
+        }
+
+        // Optional: Validate that the wishlistProductID is correctly formed (e.g., "wishlistID-productID")
+        if (wishlistProduct.getWishlistProductID() == null || !wishlistProduct.getWishlistProductID().matches("\\d+-\\d+")) {
+            return ResponseEntity.status(400).body("Invalid Wishlist Product ID format.");
         }
 
         // Save the wishlist product
-        return wishlistProductService.saveWishlistProduct(wishlistProduct);
+        try {
+            wishlistProductService.saveWishlistProduct(wishlistProduct);
+            return ResponseEntity.status(201).body("Product added to wishlist successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error saving wishlist product: " + e.getMessage());
+        }
     }
 
+    /**
+     * Remove a wishlist product by its ID.
+     * @param id the wishlist product ID to be deleted
+     * @return response indicating success or failure
+     */
     @DeleteMapping("/remove{id}")
-    public String deleteWishlistProduct(@PathVariable String id) {
-        return wishlistProductService.deleteWishlistProduct(id);
+    public ResponseEntity<String> deleteWishlistProduct(@PathVariable String id) {
+        try {
+            String result = wishlistProductService.deleteWishlistProduct(id);
+            if (result.equals("Product not found")) {
+                return ResponseEntity.status(404).body("Wishlist product not found.");
+            }
+            return ResponseEntity.ok("Product removed from wishlist successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error removing product from wishlist: " + e.getMessage());
+        }
     }
 
+    /**
+     * Update a wishlist product by its ID.
+     * @param id the wishlist product ID to be updated
+     * @param updatedWishlistProduct the updated wishlist product details
+     * @return the updated wishlist product
+     */
     @PutMapping("/update{id}")
-    public WishlistProductEntity editWishlistProduct(@PathVariable String id, @RequestBody WishlistProductEntity updatedWishlistProduct) {
-        return wishlistProductService.editWishlistProduct(id, updatedWishlistProduct);
+    public ResponseEntity<?> editWishlistProduct(@PathVariable String id, @RequestBody WishlistProductEntity updatedWishlistProduct) {
+        WishlistProductEntity updatedProduct = wishlistProductService.editWishlistProduct(id, updatedWishlistProduct);
+        if (updatedProduct == null) {
+            return ResponseEntity.status(404).body("Wishlist product not found.");
+        }
+        return ResponseEntity.ok(updatedProduct);
     }
 }

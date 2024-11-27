@@ -13,14 +13,26 @@ public class WishlistProductService {
     @Autowired
     IWishlistProductRepository repository;
 
+    @Autowired
+    AccountService accountService; // Injecting the AccountService to check if Account exists
+
     public List<WishlistProductEntity> getAllWishlistProducts() {
         return repository.findAll(); // returns an empty list if there are no wishlist products
     }
 
     public String saveWishlistProduct(WishlistProductEntity wishlistProductEntity) {
+        // Validate if the wishlistID (accountID) exists in the database
+        Integer wishlistID = wishlistProductEntity.getWishlistID();
+        // Ensure the account exists by calling AccountService
+        if (accountService.getAccountById(wishlistID).isEmpty()) {
+            throw WishlistProductException.wishlistProductNotFound(wishlistProductEntity.getWishlistProductID());
+        }
+
+        // Check if the wishlistProductID already exists in the repository
         if (repository.existsById(wishlistProductEntity.getWishlistProductID())) {
             throw WishlistProductException.idAlreadyExists(wishlistProductEntity.getWishlistProductID());
         }
+        // Save the wishlist product in the repository
         repository.save(wishlistProductEntity);
         return "Wishlist product saved: " + wishlistProductEntity.getProductName(); // validation happens in WishlistProductEntity
     }
@@ -38,6 +50,17 @@ public class WishlistProductService {
     public WishlistProductEntity editWishlistProduct(String wishlistProductID, WishlistProductEntity updatedWishlistProduct) {
         WishlistProductEntity wishlistProduct = getWishlistProductById(wishlistProductID);
 
+        // Check if the updated wishlist product has a valid wishlistID (accountID)
+        if (updatedWishlistProduct.getWishlistID() != null) {
+            Integer wishlistID = updatedWishlistProduct.getWishlistID();
+            // Validate if the account (wishlistID) exists
+            if (accountService.getAccountById(wishlistID).isEmpty()) {
+                throw WishlistProductException.wishlistProductNotFound(updatedWishlistProduct.getWishlistProductID());
+            }
+            wishlistProduct.setWishlistID(wishlistID);
+        }
+
+        // Update other fields of the wishlist product if provided
         if (updatedWishlistProduct.getProductName() != null) {
             wishlistProduct.setProductName(updatedWishlistProduct.getProductName());
         }
@@ -47,7 +70,8 @@ public class WishlistProductService {
         if (updatedWishlistProduct.getNotes() != null) {
             wishlistProduct.setNotes(updatedWishlistProduct.getNotes());
         }
-        // Add any other fields you wish to update
+
+        // Save the updated wishlist product
         return repository.save(wishlistProduct);
     }
 

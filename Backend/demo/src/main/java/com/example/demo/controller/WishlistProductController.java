@@ -31,11 +31,23 @@ public class WishlistProductController {
     }
 
     /**
+     * Get wishlist products by user ID (wishlistID).
+     * @param wishlistID the user ID (account ID)
+     * @return list of wishlist products for the specified user
+     */
+    @GetMapping("/wishlist/{wishlistID}")
+    public ResponseEntity<List<WishlistProductEntity>> getWishlistByUserId(@PathVariable Integer wishlistID) {
+        // Fetch wishlist products for the given user ID
+        List<WishlistProductEntity> wishlistProducts = wishlistProductService.getWishlistByUserId(wishlistID);
+        return ResponseEntity.ok(wishlistProducts);
+    }
+
+    /**
      * Get a specific wishlist product by its ID.
      * @param id the wishlist product ID
      * @return the wishlist product
      */
-    @GetMapping("/get{id}")
+    @GetMapping("/{id}")  // Corrected path variable usage
     public ResponseEntity<?> getWishlistProductById(@PathVariable String id) {
         WishlistProductEntity wishlistProduct = wishlistProductService.getWishlistProductById(id);
         if (wishlistProduct == null) {
@@ -78,7 +90,7 @@ public class WishlistProductController {
      * @param id the wishlist product ID to be deleted
      * @return response indicating success or failure
      */
-    @DeleteMapping("/remove{id}")
+    @DeleteMapping("/remove/{id}")  // Corrected path variable usage
     public ResponseEntity<String> deleteWishlistProduct(@PathVariable String id) {
         try {
             String result = wishlistProductService.deleteWishlistProduct(id);
@@ -97,7 +109,7 @@ public class WishlistProductController {
      * @param updatedWishlistProduct the updated wishlist product details
      * @return the updated wishlist product
      */
-    @PutMapping("/update{id}")
+    @PutMapping("/update/{id}")  // Corrected path variable usage
     public ResponseEntity<?> editWishlistProduct(@PathVariable String id, @RequestBody WishlistProductEntity updatedWishlistProduct) {
         WishlistProductEntity updatedProduct = wishlistProductService.editWishlistProduct(id, updatedWishlistProduct);
         if (updatedProduct == null) {

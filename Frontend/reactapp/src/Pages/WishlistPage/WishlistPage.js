@@ -3,34 +3,50 @@ import axios from "axios";
 import Card from "../../Components/Card"; // Assuming you have a Card component to display products
 
 const WishlistPage = () => {
-  // Initialize state for the products
-  const [regCardData, setRegCardData] = useState([]);
+  const [wishlistItems, setWishlistItems] = useState([]);
+  const [productDetails, setProductDetails] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch the products from the backend when the component mounts
   const [regCarouselIndex, setRegCarouselIndex] = useState(0);
-  const [recCarouselIndex, setRecCarouselIndex] = useState(0);
-
   const [cardsPerSlide, setCardsPerSlide] = useState(3);
 
+  // Fetch wishlist items for the logged-in user
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchWishlistItems = async () => {
       try {
-        // Make an API call to fetch all products
-        const response = await axios.get("http://localhost:8881/Products");
-        // Set the response data into regCardData state
-        setRegCardData(response.data);
+        const userID = sessionStorage.getItem("userID"); // Get user ID from sessionStorage
+        if (!userID) {
+          setError("You need to log in to view your wishlist.");
+          return;
+        }
+
+        // Fetch wishlist items for the user
+        const response = await axios.get(
+          `http://localhost:8881/wishlistproducts/wishlist/${userID}`
+        );
+        setWishlistItems(response.data); // Assuming response.data contains an array of wishlist products
+
+        // Fetch product details for each wishlist product by productID
+        const productPromises = response.data.map((wishlistProduct) => {
+          return axios.get(`http://localhost:8881/ProductsById/${wishlistProduct.productID}`);
+        });
+
+        // Wait for all product details to be fetched
+        const productResponses = await Promise.all(productPromises);
+
+        // Set the product details in state
+        const products = productResponses.map((res) => res.data); // Assuming the API returns product data as `res.data`
+        setProductDetails(products);
       } catch (error) {
-        // Handle any error that occurs during the fetch
-        setError("Failed to fetch products: " + error.message);
+        setError("Failed to fetch wishlist items: " + error.message);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchProducts();
-  }, []);
+    fetchWishlistItems();
+  }, []); // Empty array means this runs once when the component mounts
 
   // Dynamic adjustment for cards per slide based on screen width
   const updateCardsPerSlide = () => {
@@ -53,7 +69,7 @@ const WishlistPage = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading products...</div>; // Display loading text
+    return <div>Loading wishlist...</div>; // Display loading text
   }
 
   if (error) {
@@ -61,19 +77,15 @@ const WishlistPage = () => {
   }
 
   // Calculate the range of items to display based on the carousel index
-  const currentRegCards = regCardData.slice(
+  const currentWishlistItems = wishlistItems.slice(
     regCarouselIndex * cardsPerSlide,
     (regCarouselIndex + 1) * cardsPerSlide
   );
 
-  const currentRecCards = regCardData.slice(
-    recCarouselIndex * cardsPerSlide,
-    (recCarouselIndex + 1) * cardsPerSlide
-  );
 
   // Function to handle next slide for regular carousel
   const nextRegSlide = () => {
-    if ((regCarouselIndex + 1) * cardsPerSlide < regCardData.length) {
+    if ((regCarouselIndex + 1) * cardsPerSlide < wishlistItems.length) {
       setRegCarouselIndex(regCarouselIndex + 1);
     }
   };
@@ -85,56 +97,39 @@ const WishlistPage = () => {
     }
   };
 
-  // Function to handle next slide for recommended carousel
-  const nextRecSlide = () => {
-    if ((recCarouselIndex + 1) * cardsPerSlide < regCardData.length) {
-      setRecCarouselIndex(recCarouselIndex + 1);
-    }
-  };
-
-  // Function to handle previous slide for recommended carousel
-  const prevRecSlide = () => {
-    if (recCarouselIndex > 0) {
-      setRecCarouselIndex(recCarouselIndex - 1);
-    }
-  };
-
   return (
     <div className="main-page">
-      <h1>On Sale</h1>
+      <h1>Your Wishlist</h1>
       <div className="carousel-container">
         <button onClick={prevRegSlide} disabled={regCarouselIndex === 0}>
           Prev
         </button>
         <div id="regCarousel" className="carousel-cards">
-          {currentRegCards.map((product, index) => (
-            <Card key={index} {...product} />
-          ))}
+          {currentWishlistItems.map((wishlistProduct, index) => {
+            // Find the corresponding product details using the productID
+            const product = productDetails.find(
+              (product) => product.id === wishlistProduct.productID
+            );
+
+            // If product details are not found, return a fallback message
+            if (!product) {
+              return <div key={index}>Product data missing</div>;
+            }
+
+            // Pass the product data to Card component
+            return (
+              <div key={index}>
+                <Card {...product} />
+                {/* Display the product name and notes below the card */}
+                <p>{product.productName}: {wishlistProduct.notes}</p>
+              </div>
+            );
+          })}
         </div>
         <button
           onClick={nextRegSlide}
           disabled={
-            (regCarouselIndex + 1) * cardsPerSlide >= regCardData.length
-          }
-        >
-          Next
-        </button>
-      </div>
-
-      <h1>Products You Might Like</h1>
-      <div className="carousel-container">
-        <button onClick={prevRecSlide} disabled={recCarouselIndex === 0}>
-          Prev
-        </button>
-        <div id="recCarousel" className="carousel-cards">
-          {currentRecCards.map((product, index) => (
-            <Card key={index} {...product} />
-          ))}
-        </div>
-        <button
-          onClick={nextRecSlide}
-          disabled={
-            (recCarouselIndex + 1) * cardsPerSlide >= regCardData.length
+            (regCarouselIndex + 1) * cardsPerSlide >= wishlistItems.length
           }
         >
           Next

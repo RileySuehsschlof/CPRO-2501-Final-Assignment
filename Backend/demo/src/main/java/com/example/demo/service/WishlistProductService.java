@@ -82,4 +82,27 @@ public class WishlistProductService {
         repository.deleteById(wishlistProductID);
         return "Successfully deleted wishlist product: " + wishlistProductID;
     }
+
+    /**
+     * Get the wishlist products for a specific user by wishlistID.
+     * @param wishlistID the wishlist ID of the user
+     * @return list of wishlist products
+     */
+    public List<WishlistProductEntity> getWishlistByUserId(Integer wishlistID) {
+        // Validate if the account exists
+        if (accountService.getAccountById(wishlistID).isEmpty()) {
+            throw WishlistProductException.accountNotFound(wishlistID);  // Use the new exception method
+        }
+    
+        // Retrieve all products for the given wishlistID
+        List<WishlistProductEntity> wishlistProducts = repository.findByWishlistID(wishlistID);
+    
+        if (wishlistProducts.isEmpty()) {
+            throw WishlistProductException.noProductsInWishlist(wishlistID);  // Use the new exception method
+        }
+    
+        return wishlistProducts;
+    }
+    
+    
 }

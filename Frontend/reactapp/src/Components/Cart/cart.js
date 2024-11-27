@@ -9,7 +9,7 @@ const Cart = () => {
   const token = sessionStorage.getItem("authToken");
   const [, payload] = token.split(".");
   const decodedPayload = JSON.parse(atob(payload));
-  const userEmail = decodedPayload;
+  const userEmail = decodedPayload.email;
 
   const fetchCart = useCallback(async () => {
     try {

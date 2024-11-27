@@ -1,43 +1,42 @@
 package com.example.demo.entity;
 
-import com.example.demo.exception.customAnnotation.ValidBigDecimal;
-import com.example.demo.exception.customAnnotation.ValidInteger;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
-import jakarta.validation.constraints.NotNull;
-
-import java.math.BigDecimal;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class WishlistProductEntity {
+
     @Id
-    @NotNull(message = "Must have a Wishlist Product ID")
-    private String wishlistProductID; // Unique ID for the wishlist product, which right now is the concatenation of WishlistID and ProductID
+    @NotNull(message = "Wishlist Product ID is required")
+    private String wishlistProductID; // Concatenated WishlistID (User ID) and ProductID
 
-    @NotNull(message = "Must have a Wishlist ID")
-    private Integer wishlistID; // This can correspond to the Customer ID
+    @NotNull(message = "Wishlist ID (User ID) is required")
+    private Integer wishlistID; // Corresponds to the User ID (Customer ID)
 
-    @NotNull(message = "Must have a Product ID")
-    private Integer productID; // The ID of the product
+    @NotNull(message = "Product ID is required")
+    private Integer productID; // Reference to the Product ID
 
-    @Lob
-    private byte[] img; // Store image as byte array if needed
+    @NotBlank(message = "Notes are required")
+    private String notes; // Allows users to specify why they added this product to their wishlist
 
-    @NotNull(message = "Must have a Product Name")
-    private String productName; // Name of the product
+    // Constructor that automatically generates wishlistProductID from wishlistID and productID
+    public WishlistProductEntity(Integer wishlistID, Integer productID, String notes) {
+        this.wishlistID = wishlistID;
+        this.productID = productID;
+        this.wishlistProductID = generateWishlistProductID(wishlistID, productID);
+        this.notes = notes;
+    }
 
-    @ValidBigDecimal(message = "Must be a valid decimal")
-    @NotNull(message = "Must have a Price")
-    private String price; // Using BigDecimal for price
-
-    @NotNull(message = "Must have Notes")
-    private String notes; // Any additional notes for the wishlist item
-
+    // Helper method to generate WishlistProductID by concatenating WishlistID and ProductID
+    private String generateWishlistProductID(Integer wishlistID, Integer productID) {
+        return String.valueOf(wishlistID) + "_" + String.valueOf(productID);
+    }
 }

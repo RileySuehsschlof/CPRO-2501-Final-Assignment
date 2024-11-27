@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Card from "../Components/Card"; // Assuming you have a Card component to display products
+import Card from "../../Components/Card"; // Assuming you have a Card component to display products
 import "./MainPage.css";
 
 const MainPage = () => {

@@ -17,11 +17,6 @@ const ProductPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const token = sessionStorage.getItem("authToken");
-  const [, payload] = token.split(".");
-  const decodedPayload = JSON.parse(atob(payload));
-  const userEmail = decodedPayload;
-
   useEffect(() => {
 
     // get the product from backend

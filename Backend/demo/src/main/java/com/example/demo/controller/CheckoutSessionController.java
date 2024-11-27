@@ -28,14 +28,14 @@ public class CheckoutSessionController {
                 .setCancelUrl("http://localhost:3000/cancel")
                 .addLineItem(
                     SessionCreateParams.LineItem.builder()
-                        .setQuantity(1L) // Quantity - set dynamically
+                        .setQuantity(1L)
                         .setPriceData(
                             SessionCreateParams.LineItem.PriceData.builder()
                                 .setCurrency("cad")
                                 .setUnitAmount(1500L) // Amount in cents ($15.00) - set dynamically
                                 .setProductData(
                                     SessionCreateParams.LineItem.PriceData.ProductData.builder()
-                                        .setName("Custom Item") // Product name - set dynamically
+                                        .setName("Cart total")
                                         .build()
                                 )
                                 .build()

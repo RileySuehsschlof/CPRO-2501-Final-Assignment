@@ -6,10 +6,10 @@ import CheckoutButton from "../Stripe/CheckoutButton";
 const Cart = () => {
   const [cart, setCart] = useState([]);
 
-  //const token = sessionStorage.getItem("authToken");
-  //const [header, payload, signature] = token.split(".");
-  //const decodedPayload = JSON.parse(atob(payload));
-  const userEmail = "fff@gmail.com";
+  const token = sessionStorage.getItem("authToken");
+  const [, payload] = token.split(".");
+  const decodedPayload = JSON.parse(atob(payload));
+  const userEmail = decodedPayload.sub;
 
   const fetchCart = useCallback(async () => {
     try {
@@ -26,24 +26,9 @@ const Cart = () => {
     fetchCart();
   }, [fetchCart]);
 
-  const addItemToCart = async (cartId, productId, quantity) => {
-    try {
-        const response = await axios.post(`http://localhost:8881/cart/${cartId}/add-item`, {
-            cartId: cartId,
-            productId: productId,
-            quantity: quantity
-        });
-        console.log("Item added:", response.data);
-    } catch (error) {
-        console.error("Error adding item to cart:", error);
-    }
-  };
-
-
   return (
     <div>
       <h2>Your Cart</h2>
-      <button onClick={() => addItemToCart(2, 1, 1)}>Add Item to Cart</button>
       <CheckoutButton />
       {cart.length > 0 ? (
         cart.map((item) => <CartItem key={item.id} item={item} />)

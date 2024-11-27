@@ -137,7 +137,7 @@ const ProductPage = () => {
 
       <div className="column">
         <p>Price: ${product.price}</p>
-        <button onClick={() => addToCart(product)}>Add to Cart</button>
+        <button onClick={() => addItemToCart(productId, 1)}>Add to Cart</button>
         <button onClick={() => addToWishlist(product)}>Add to Wishlist</button>
       </div>
 
@@ -151,6 +151,42 @@ const ProductPage = () => {
       <RecommendedProductPage category={product.category} />
     </div>
   );
+};
+
+
+const addItemToCart = async (productId, quantity) => {
+  try {
+    const token = sessionStorage.getItem("authToken");
+    const [, payload] = token.split(".");
+    const decodedPayload = JSON.parse(atob(payload));
+    const userEmail = decodedPayload.sub;
+
+    // Fetch the cart by user email
+    const cartResponse = await axios.get(`http://localhost:8881/cart/${encodeURIComponent(userEmail)}`);
+    const cart = cartResponse.data;
+
+    if (!cart || !cart.id) {
+      throw new Error("Cart not found or cart ID is missing");
+    }
+
+    // Use cart.id from the response
+    const cartId = cart.id;
+
+    const response = await axios.post(`http://localhost:8881/cart/${cartId}/add-item`, {
+      productId: productId,
+      quantity: quantity,
+    });
+
+    console.log("Item added:", response.data);
+  } catch (error) {
+    console.error("Error adding item to cart:", error);
+  }
+};
+
+
+//will eventually send the product to the wishlist
+const addToWishlist = (product) => {
+  console.log(`added: ${product.name} to wishlist`);
 };
 
 export default ProductPage;

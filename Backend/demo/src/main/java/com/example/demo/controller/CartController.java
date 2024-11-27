@@ -3,8 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.entity.Cart;
 import com.example.demo.entity.CartItem;
 import com.example.demo.service.CartService;
-
-import jakarta.validation.constraints.Min;
+import com.example.demo.DTO.AddItemRequestDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -28,8 +27,8 @@ public class CartController {
 
     // Add an item to the cart by id
     @PostMapping("/{cartId}/add-item")
-    public CartItem addItemToCart(@PathVariable Integer cartId, @RequestParam @Min(1) Integer productId, @RequestParam @Min(1) Integer quantity) {
-        return cartService.addItemToCart(cartId, productId, quantity);
+    public CartItem addItemToCart(@PathVariable Integer cartId, @RequestBody AddItemRequestDTO addItemRequest) {
+        return cartService.addItemToCart(cartId, addItemRequest.getProductId(), addItemRequest.getQuantity());
     }
 
     // Get the total price of items in the cart
@@ -47,6 +46,22 @@ public class CartController {
             
             // Fetch the cart based on the decoded email
             return cartService.getCartByEmail(decodedEmail);
+        } catch (UnsupportedEncodingException e) {
+            // Handle the exception if decoding fails
+            e.printStackTrace();
+            throw new RuntimeException("Error decoding the email: " + e.getMessage());
+        }
+    }
+
+    // Add an item to the cart by user email
+    @PostMapping("/{userEmail}/add-item-by-email")
+    public CartItem addItemToCart(@PathVariable String userEmail, @RequestBody AddItemRequestDTO addItemRequest) {
+        try {
+            // Decode the email parameter
+            String decodedEmail = URLDecoder.decode(userEmail, "UTF-8");
+            
+            // Add item to the cart based on the decoded email
+            return cartService.addItemToCartByEmail(decodedEmail, addItemRequest.getProductId(), addItemRequest.getQuantity());
         } catch (UnsupportedEncodingException e) {
             // Handle the exception if decoding fails
             e.printStackTrace();

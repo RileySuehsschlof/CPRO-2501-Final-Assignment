@@ -49,10 +49,6 @@ public class CartService {
         cartItem.setProduct(product);
         cartItem.setQuantity(quantity);
 
-        // Calculate total price and convert to string
-        BigDecimal totalPrice = cartItem.getTotalPrice();
-        cartItem.setTotalPrice(totalPrice.toString());
-
         return cartItemRepository.save(cartItem);
     }
 
@@ -67,6 +63,24 @@ public class CartService {
     // Get a cart by user email
     public Cart getCartByEmail(String userEmail) {
         return cartRepository.findByUserEmail(userEmail);
+    }
+
+    // Add an item to the cart by user email
+    public CartItem addItemToCartByEmail(String userEmail, Integer productId, Integer quantity) {
+        // Find the cart by ID
+        Cart cart = cartRepository.findByUserEmail(userEmail);
+
+        // Find the product by ID
+        ProductEntity product = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+
+        // Create a new CartItem and set properties
+        CartItem cartItem = new CartItem();
+        cartItem.setCart(cart);
+        cartItem.setProduct(product);
+        cartItem.setQuantity(quantity);
+
+        return cartItemRepository.save(cartItem);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 import com.example.demo.exception.customAnnotation.ValidBigDecimal;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -22,9 +23,10 @@ public class CartItem {
 
     @ManyToOne
     @JoinColumn(name = "cart_id", nullable = false)
+    @JsonBackReference
     private Cart cart;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id", nullable = false)
     private ProductEntity product;
 
@@ -36,7 +38,16 @@ public class CartItem {
     private String totalPrice; // Derived dynamically
 
     public BigDecimal getTotalPrice() {
-        return new BigDecimal(product.getPrice()).multiply(new BigDecimal(quantity));
+        if (product != null && product.getPrice() != null) {
+            try {
+                BigDecimal price = new BigDecimal(product.getPrice());
+                return price.multiply(BigDecimal.valueOf(quantity));
+            } catch (NumberFormatException e) {
+                // Handle invalid price format
+                return BigDecimal.ZERO;
+            }
+        }
+        return BigDecimal.ZERO;
     }
 
     

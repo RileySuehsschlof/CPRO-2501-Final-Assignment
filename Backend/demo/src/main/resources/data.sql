@@ -1,6 +1,8 @@
 -- DELETE FROM product_entity and product_image to ensure that there are no duplicates;
+SET FOREIGN_KEY_CHECKS = 0;
 DELETE FROM product_image;
 DELETE FROM product_entity;
+SET FOREIGN_KEY_CHECKS = 1;
 
 
 --populates the Product and image tables with data;

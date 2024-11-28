@@ -11,6 +11,9 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,8 +29,9 @@ public class CartItem {
     @JsonBackReference
     private Cart cart;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private ProductEntity product;
 
     @NotNull(message = "Quantity is required")

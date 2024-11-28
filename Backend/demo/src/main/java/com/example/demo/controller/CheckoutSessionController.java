@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.DTO.PriceRequestDTO;
 import com.stripe.Stripe;
 import com.stripe.model.checkout.Session;
 import com.stripe.param.checkout.SessionCreateParams;
@@ -7,6 +8,7 @@ import com.stripe.param.checkout.SessionCreateParams;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,8 +23,9 @@ public class CheckoutSessionController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/create-checkout-session", method = RequestMethod.POST)
-    public ResponseEntity<String> createCheckoutSession() {
+    public ResponseEntity<String> createCheckoutSession(@RequestBody PriceRequestDTO priceRequest) {
         try {
+            long totalPrice = priceRequest.getTotalPrice();
             SessionCreateParams params = SessionCreateParams.builder()
                 .setSuccessUrl("http://localhost:3000/success")
                 .setCancelUrl("http://localhost:3000/cancel")
@@ -32,7 +35,7 @@ public class CheckoutSessionController {
                         .setPriceData(
                             SessionCreateParams.LineItem.PriceData.builder()
                                 .setCurrency("cad")
-                                .setUnitAmount(1500L) // Amount in cents ($15.00) - set dynamically
+                                .setUnitAmount(totalPrice) // Amount in cents ($15.00) - set dynamically
                                 .setProductData(
                                     SessionCreateParams.LineItem.PriceData.ProductData.builder()
                                         .setName("Cart total")

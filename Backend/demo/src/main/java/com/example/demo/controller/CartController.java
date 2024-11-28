@@ -6,6 +6,7 @@ import com.example.demo.service.CartService;
 import com.example.demo.DTO.AddItemRequestDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
@@ -67,5 +68,11 @@ public class CartController {
             e.printStackTrace();
             throw new RuntimeException("Error decoding the email: " + e.getMessage());
         }
+    }
+
+    @DeleteMapping("/remove-item/{cartItemId}")
+    public ResponseEntity<String> removeCartItemById(@PathVariable Integer cartItemId) {
+        cartService.removeCartItemById(cartItemId);
+        return ResponseEntity.ok("Item removed successfully.");
     }
 }

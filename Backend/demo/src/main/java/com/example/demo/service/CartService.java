@@ -83,4 +83,12 @@ public class CartService {
         return cartItemRepository.save(cartItem);
     }
 
+    public void removeCartItemById(Integer cartItemId) {
+        cartItemRepository.findById(cartItemId)
+                .ifPresentOrElse(
+                    cartItemRepository::delete,
+                    () -> { throw new RuntimeException("Cart item not found for ID: " + cartItemId); }
+                );
+    }
+
 }

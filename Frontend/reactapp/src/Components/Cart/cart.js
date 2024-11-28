@@ -11,6 +11,10 @@ const Cart = () => {
   const decodedPayload = JSON.parse(atob(payload));
   const userEmail = decodedPayload.sub;
 
+  const handleRemove = (cartItemId) => {
+    setCart((prevItems) => prevItems.filter((item) => item.id !== cartItemId));
+  };
+
   const fetchCart = useCallback(async () => {
     try {
       const encodedEmail = encodeURIComponent(userEmail);
@@ -19,12 +23,14 @@ const Cart = () => {
     } catch (error) {
       console.error("Error fetching cart:", error);
     }
-  }, [userEmail]);
+  }, [setCart, userEmail]);
 
   // Fetch cart data on component mount
   useEffect(() => {
     fetchCart();
   }, [fetchCart]);
+
+  const totalPrice = cart.reduce((sum, item) => sum + item.totalPrice, 0);
 
   const cartStyle = {
     backgroundColor: "white"
@@ -34,12 +40,12 @@ const Cart = () => {
     <div style={cartStyle}>
       <h2>Your Cart</h2>
       {cart.length > 0 ? (
-        cart.map((item) => <CartItem key={item.id} item={item} />)
+        cart.map((item) => <CartItem key={item.id} item={item} onRemove={handleRemove} />)
       ) : (
         <p>Your cart is empty.</p>
       )}
-      <h1>Total Price: </h1>
-      <CheckoutButton />
+      <h1>Total Price: ${totalPrice}</h1>
+      <CheckoutButton totalPrice={totalPrice} />
     </div>
   );
 };

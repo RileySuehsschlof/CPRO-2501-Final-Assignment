@@ -46,32 +46,32 @@ const ProductPage = () => {
   // Handle adding product to wishlist
   const addToWishlist = async (product) => {
     console.log("Product in addToWishlist:", product); // Log the product data here
-  
+
     // Check if the product is valid
     if (!product || !product.id) {  // Use 'id' here as it is available
       setWishlistMessage("Invalid product data. Please try again.");
       return; // Stop if the product is invalid
     }
-  
+
     // Check if the user is logged in by verifying the authToken in sessionStorage
     const token = sessionStorage.getItem("authToken");
     if (!token) {
       setWishlistMessage("You need to log in to add products to your wishlist.");
       return; // Don't proceed if the user is not logged in
     }
-  
+
     // Retrieve the userID from sessionStorage
     const userID = sessionStorage.getItem("userID");
     if (!userID) {
       setWishlistMessage("User ID not found. Please log in again.");
       return; // Don't proceed if there's no user ID
     }
-  
+
     const wishlistID = parseInt(userID); // Convert userID to integer
-  
+
     // Prompt the user for a note about the wishlist product
     const notes = prompt("Why are you adding this product to your wishlist?");
-  
+
     // Create the wishlist product object
     const wishlistProduct = {
       wishlistProductID: `${wishlistID}-${product.id}`, // Use product.id instead of product.productID
@@ -79,9 +79,9 @@ const ProductPage = () => {
       productID: product.id, // Use product.id here
       notes: notes || "No notes provided", // Default note if none provided
     };
-  
+
     console.log("Adding to wishlist with data:", wishlistProduct); // Log the data being sent
-  
+
     try {
       // Send POST request to backend to add the product to the wishlist
       const response = await axios.post(
@@ -91,10 +91,10 @@ const ProductPage = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-  
+
       // Log the response data to debug
       console.log("Response from backend:", response.data);
-  
+
       // Set message based on response
       setWishlistMessage(response.data);
     } catch (error) {
@@ -142,7 +142,7 @@ const ProductPage = () => {
           productId={product.id}
         />
       </div>
-      <RecommendedProductPage category={product.category} />
+
     </div>
   );
 };

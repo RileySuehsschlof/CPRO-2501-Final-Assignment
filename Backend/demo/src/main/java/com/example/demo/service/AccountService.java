@@ -98,9 +98,7 @@ public class AccountService {
                 .findFirst();
     }
     // This was to use streams for the assignment.
-    public Optional<Account> getAccountByEmailTest(String email){
-        return repository.findByEmailTest(email);
-    }
+
     public Account editAccountByEmail(String email, Account updatedAccount) {
         // Fetch the existing account
         Account existingAccount = repository.findByEmail(email)

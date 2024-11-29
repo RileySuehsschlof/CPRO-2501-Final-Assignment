@@ -18,6 +18,9 @@ public class AccountService {
     @Autowired
     IAccountRepository repository;
 
+    @Autowired
+    private CartService cartService;
+
     //Log Errors
     private static final Logger logger = LoggerFactory.getLogger(AccountService.class);
 
@@ -35,6 +38,7 @@ public class AccountService {
         }
         else {
             repository.save(account);
+            cartService.createCart(account.getEmail());
             return "Account saved.";
         }
     }

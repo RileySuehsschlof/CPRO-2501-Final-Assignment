@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
+
+import java.util.stream.Collectors;
 
 @Service
 public class ProductEntityService {
@@ -40,6 +43,14 @@ public class ProductEntityService {
             throw ProductException.productNotFound(id);
         }
         return repository.findById(id).get();
+    }
+
+    public List<ProductEntity> getProductsByCategory(int id, String category) {
+        return repository.findAll().stream()
+                .filter(product -> product.getCategory().equals(category)) // Filter by category
+                .filter(product -> product.getId() != id) // Filter out product with the given ID
+                .sorted(Comparator.comparing(ProductEntity::getPrice)) // Sort by price
+                .collect(Collectors.toList());
     }
 
     public ProductEntity editProduct(Integer id, ProductEntity upDatedProduct) {

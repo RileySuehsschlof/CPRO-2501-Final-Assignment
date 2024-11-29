@@ -1,0 +1,115 @@
+/* General Styles */
+#nav {
+  background-color: #002c3e;
+}
+
+body {
+  background-color: #78bcc4;
+}
+
+.cartPic {
+  width: 20px;
+  height: auto;
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 300px; /* Fixed card width */
+  text-align: center;
+  padding: 20px;
+  flex-shrink: 0; /* Prevent the card from shrinking */
+}
+
+img.card-image {
+  width: 100px;
+  height: 100px;
+}
+
+.card-title {
+  font-size: 1.5em;
+  margin: 0;
+  color: #333;
+}
+
+.card-price {
+  font-size: 1.2em;
+  color: #007bff;
+}
+
+.card-link {
+  font-size: 1.2em;
+  color: #007bff;
+}
+
+footer {
+  background-color: #002c3e;
+  width: 150%;
+  height: 150px;
+  color: white;
+  margin-left: -40px;
+  margin-top: 400px;
+}
+
+body::-webkit-scrollbar {
+  display: none; /* Hides scroll bar in Safari and Chrome */
+}
+
+/* Carousel Styles */
+.carousel-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 20px 0;
+  overflow: hidden;
+}
+
+.carousel-cards {
+  display: flex;
+  justify-content: space-evenly; /* Evenly space cards across the container */
+  width: 100%;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Prevent cards from shrinking */
+.carousel-cards .card {
+  flex-shrink: 0;
+}
+
+/* For Viewports 1350px or wider - 3 cards per slide */
+@media screen and (min-width: 1350px) {
+  .carousel-cards {
+    justify-content: space-evenly; /* Evenly space 3 cards */
+  }
+
+  .carousel-cards .card {
+    flex-basis: 300px; /* Fixed width for each card */
+    margin: 0 20px;/* Min and max margin spacing */
+  }
+}
+
+/* For Viewports between 890px and 1349px - 2 cards per slide */
+@media screen and (min-width: 890px) and (max-width: 1349px) {
+  .carousel-cards {
+    justify-content: space-evenly; /* Evenly space 2 cards */
+  }
+
+  .carousel-cards .card {
+    flex-basis: 300px; /* Fixed width for each card */
+    margin: 0 15px; /* Min and max margin spacing */
+  }
+}
+
+/* For Viewports under 890px - 1 card per slide */
+@media screen and (max-width: 889px) {
+  .carousel-cards {
+    justify-content: center; /* Center the single card */
+  }
+
+  .carousel-cards .card {
+    flex-basis: 300px; /* Fixed width for each card */
+    margin: 0 10px; /* Min and max margin spacing */
+  }
+}

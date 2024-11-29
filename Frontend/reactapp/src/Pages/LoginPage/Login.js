@@ -1,5 +1,5 @@
-import CreateField from "../Components/Field";
-import CreateButton from "../Components/Button";
+import CreateField from "../../Components/Field";
+import CreateButton from "../../Components/Button";
 import "./Login.css";
 import React, { useState } from "react";
 import axios from "axios";
@@ -31,18 +31,21 @@ const Login = () => {
         accountCred,
         { headers: { "Content-Type": "application/json" } }
       );
-      //response contains token
+      //response contains both token and userID
       const token = response.data.token;
-      if (token) {
-        // Store the token in session storage, deleted after session
+      const userID = response.data.userID; // Retrieve the userID from the response
+
+      if (token && userID) {
+        // Store both the token and userID in sessionStorage
         sessionStorage.setItem("authToken", token);
+        sessionStorage.setItem("userID", userID); // Store userID as well
 
         setMessage("Login successful!");
         //if there is a locationState go there, otherwise go to default page
         const redirectTo = location.state?.from?.pathname || "/";
         navigate(redirectTo);
       } else {
-        setMessage("Login failed, no token received.");
+        setMessage("Login failed, no token or userID received.");
       }
     } catch (error) {
       setMessage(error.response?.data?.message || "Invalid email or password");
@@ -60,8 +63,7 @@ const Login = () => {
           id="email"
           value={accountCred.email}
           onChange={handleChange}
-        ></CreateField>
-
+        />
         <CreateField
           title="Password"
           id="password"
@@ -69,9 +71,8 @@ const Login = () => {
           type="password"
           value={accountCred.password}
           onChange={handleChange}
-        ></CreateField>
-
-        <CreateButton text="Login" functionName={handleSubmit}></CreateButton>
+        />
+        <CreateButton text="Login" functionName={handleSubmit} />
       </form>
       <a href="/register">
         <p>Create Account</p>

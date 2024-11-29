@@ -12,6 +12,7 @@ public class WishlistProductException extends RuntimeException {
         this.errorCode = errorCode;
     }
 
+    // Existing exception methods for product-related errors
     public static WishlistProductException invalidWishlistProductId() {
         return new WishlistProductException("Invalid Wishlist Product ID. ID cannot be empty.", "INVALID_WISHLIST_PRODUCT_ID");
     }
@@ -24,4 +25,12 @@ public class WishlistProductException extends RuntimeException {
         return new WishlistProductException("The Wishlist Product ID: " + wishlistProductID + " is already in use", "ID_IN_USE");
     }
 
+    // New exception methods for user-related errors
+    public static WishlistProductException accountNotFound(Integer wishlistID) {
+        return new WishlistProductException("Account not found for wishlistID: " + wishlistID, "ACCOUNT_NOT_FOUND");
+    }
+
+    public static WishlistProductException noProductsInWishlist(Integer wishlistID) {
+        return new WishlistProductException("No products found in wishlist for user with ID: " + wishlistID, "NO_PRODUCTS_IN_WISHLIST");
+    }
 }

@@ -43,72 +43,88 @@ public class AccountController {
         if (isValid) {
             // Generate a JWT for the user
             String token = jwtUtil.generateToken(loginRequest.getEmail());
-            return ResponseEntity.ok(new JwtResponse(token)); // Return the JWT in the response
+
+            // Retrieve the Account object by email
+            Optional<Account> account = accountService.getAccountByEmail(loginRequest.getEmail());
+            
+            if (account.isPresent()) {
+                Integer userID = account.get().getId(); // Get the userID (Account ID)
+                // Return the JWT and userID in the response
+                return ResponseEntity.ok(new JwtResponse(token, userID));
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Account not found");
+            }
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
         }
     }
+    // Check if the email already exists in the system
     @GetMapping("/checkEmail")
-    public boolean checkEmail(@RequestParam String email){
-        //maybe returns an account if its email is correct
-       Optional<Account> account = accountService.getAccountByEmail(email);
-       //returns a boolean based on presence of account
-       return account.isPresent();
-    }
-    @GetMapping("/checkPassword")
-    public String checkPassword(@RequestParam String email){
+    public boolean checkEmail(@RequestParam String email) {
         Optional<Account> account = accountService.getAccountByEmail(email);
-        //used to return a password to compare to input
-        if (account.isPresent()){
+        return account.isPresent();
+    }
+    // Get the password for a specific email
+    @GetMapping("/checkPassword")
+    public String checkPassword(@RequestParam String email) {
+        Optional<Account> account = accountService.getAccountByEmail(email);
+        if (account.isPresent()) {
             return account.get().getPassword();
         }
         return "";
     }
 
+    // Endpoint to retrieve an account by email
+    @GetMapping("/account/{email}")
+    public Optional<Account> findAccount(@PathVariable String email) {
+        return accountService.getAccountByEmail(email);
+    }
+
+    // Delete a specific account by ID
+    @DeleteMapping("/deleteaccount/{accountId}")
+    public ResponseEntity<String> deleteAccountById(@PathVariable Integer accountId) {
+        return accountService.deleteAccountById(accountId);
+    }
+
+    // Handle error when account ID is missing in the delete request
+    @DeleteMapping({"/deleteaccount", "/deleteaccount/"})
+    public ResponseEntity<String> deleteAccountError() {
+        return ResponseEntity.badRequest().body("Account ID is missing");
+    }
+
+    // Handle error when account ID is missing in the edit request
+    @PutMapping({"/editaccount/", "/editaccount"})
+    public ResponseEntity<String> editAccountError() {
+        return ResponseEntity.badRequest().body("Account Id is missing");
+    }
+
+    // Edit an account by email
+    @PutMapping("/editaccount/{email}")
+    public ResponseEntity<Map<String, String>> editAccountById(@PathVariable String email, @RequestBody Account account) {
+        accountService.editAccountByEmail(email, account);
+        //reissue a new token that corresponds to the updated email
+        String newToken = jwtUtil.generateToken(account.getEmail());
+        Map<String, String> response = new HashMap<>();
+        response.put("token", newToken);
+        return ResponseEntity.ok(response);
+    }
+
+    // JWT Response class to return both token and userID
     class JwtResponse {
         private String token;
+        private Integer userID;
 
-        public JwtResponse(String token) {
+        public JwtResponse(String token, Integer userID) {
             this.token = token;
+            this.userID = userID;
         }
 
         public String getToken() {
             return token;
         }
-    }
 
-
-    @GetMapping("/account/{email}")
-    public Optional<Account> findAccount(@PathVariable(required=true)String email){
-        return accountService.getAccountByEmail(email);
-    }
-
-
-    //    Delete a specific account by ID
-    @DeleteMapping("/deleteaccount/{accountId}")
-    public ResponseEntity<String> deleteAccountById(@PathVariable Integer accountId){
-       return accountService.deleteAccountById(accountId);
-    }
-
-    @DeleteMapping({"/deleteaccount","/deleteaccount/"})
-    public ResponseEntity<String> deleteAccountError() {
-        return ResponseEntity.badRequest().body("Account ID is missing");
-    }
-
-
-    @PutMapping({"/editaccount/","/editaccount"})
-    public ResponseEntity<String> editAccountError(){
-        return ResponseEntity.badRequest().body("Account Id is missing");
-    }
-
-    @PutMapping("/editaccount/{email}")
-    public ResponseEntity<Map<String, String>>editAccountById(@PathVariable String email, @RequestBody Account account) {
-        accountService.editAccountByEmail(email, account);
-        //reissue a new token that corresponds to the updated email
-        String newToken = jwtUtil.generateToken(account.getEmail());
-        //structure response
-        Map<String, String> response = new HashMap<>();
-        response.put("token", newToken);
-        return ResponseEntity.ok(response);
+        public Integer getUserID() {
+            return userID;
+        }
     }
 }

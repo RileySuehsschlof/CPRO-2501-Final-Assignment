@@ -13,16 +13,28 @@ public class WishlistProductService {
     @Autowired
     IWishlistProductRepository repository;
 
+    @Autowired
+    AccountService accountService; // Injecting the AccountService to check if Account exists
+
     public List<WishlistProductEntity> getAllWishlistProducts() {
         return repository.findAll(); // returns an empty list if there are no wishlist products
     }
 
     public String saveWishlistProduct(WishlistProductEntity wishlistProductEntity) {
+        // Validate if the wishlistID (accountID) exists in the database
+        Integer wishlistID = wishlistProductEntity.getWishlistID();
+        // Ensure the account exists by calling AccountService
+        if (accountService.getAccountById(wishlistID).isEmpty()) {
+            throw WishlistProductException.wishlistProductNotFound(wishlistProductEntity.getWishlistProductID());
+        }
+
+        // Check if the wishlistProductID already exists in the repository
         if (repository.existsById(wishlistProductEntity.getWishlistProductID())) {
             throw WishlistProductException.idAlreadyExists(wishlistProductEntity.getWishlistProductID());
         }
+        // Save the wishlist product in the repository
         repository.save(wishlistProductEntity);
-        return "Wishlist product saved: " + wishlistProductEntity.getProductName(); // validation happens in WishlistProductEntity
+        return "Wishlist product saved"; // We no longer return product name
     }
 
     public WishlistProductEntity getWishlistProductById(String wishlistProductID) {
@@ -38,16 +50,25 @@ public class WishlistProductService {
     public WishlistProductEntity editWishlistProduct(String wishlistProductID, WishlistProductEntity updatedWishlistProduct) {
         WishlistProductEntity wishlistProduct = getWishlistProductById(wishlistProductID);
 
-        if (updatedWishlistProduct.getProductName() != null) {
-            wishlistProduct.setProductName(updatedWishlistProduct.getProductName());
+        // Check if the updated wishlist product has a valid wishlistID (accountID)
+        if (updatedWishlistProduct.getWishlistID() != null) {
+            Integer wishlistID = updatedWishlistProduct.getWishlistID();
+            // Validate if the account (wishlistID) exists
+            if (accountService.getAccountById(wishlistID).isEmpty()) {
+                throw WishlistProductException.wishlistProductNotFound(updatedWishlistProduct.getWishlistProductID());
+            }
+            wishlistProduct.setWishlistID(wishlistID);
         }
-        if (updatedWishlistProduct.getImg() != null) {
-            wishlistProduct.setImg(updatedWishlistProduct.getImg());
+
+        // Update other fields of the wishlist product if provided
+        if (updatedWishlistProduct.getProductID() != null) {
+            wishlistProduct.setProductID(updatedWishlistProduct.getProductID());
         }
         if (updatedWishlistProduct.getNotes() != null) {
             wishlistProduct.setNotes(updatedWishlistProduct.getNotes());
         }
-        // Add any other fields you wish to update
+
+        // Save the updated wishlist product
         return repository.save(wishlistProduct);
     }
 
@@ -61,4 +82,27 @@ public class WishlistProductService {
         repository.deleteById(wishlistProductID);
         return "Successfully deleted wishlist product: " + wishlistProductID;
     }
+
+    /**
+     * Get the wishlist products for a specific user by wishlistID.
+     * @param wishlistID the wishlist ID of the user
+     * @return list of wishlist products
+     */
+    public List<WishlistProductEntity> getWishlistByUserId(Integer wishlistID) {
+        // Validate if the account exists
+        if (accountService.getAccountById(wishlistID).isEmpty()) {
+            throw WishlistProductException.accountNotFound(wishlistID);  // Use the new exception method
+        }
+    
+        // Retrieve all products for the given wishlistID
+        List<WishlistProductEntity> wishlistProducts = repository.findByWishlistID(wishlistID);
+    
+        if (wishlistProducts.isEmpty()) {
+            throw WishlistProductException.noProductsInWishlist(wishlistID);  // Use the new exception method
+        }
+    
+        return wishlistProducts;
+    }
+    
+    
 }

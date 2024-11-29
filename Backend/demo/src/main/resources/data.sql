@@ -1,6 +1,8 @@
 -- DELETE FROM product_entity and product_image to ensure that there are no duplicates;
+SET FOREIGN_KEY_CHECKS = 0;
 DELETE FROM product_image;
 DELETE FROM product_entity;
+SET FOREIGN_KEY_CHECKS = 1;
 
 
 --populates the Product and image tables with data;
@@ -50,7 +52,7 @@ INSERT INTO product_entity (id, product_name, price, discount, quantity, categor
 VALUES (14, 'Soccerball', '15.99', '2.00', '150', 'Sports', 'BasicProduct', 'A durable soccer ball designed for outdoor and indoor games, perfect for practice or competition.');
 
 INSERT INTO product_entity (id, product_name, price, discount, quantity, category, product_type, description)
-VALUES (15, 'Studfinder', '12.99', '1.50', '85', 'Tools', 'toBasicProductol', 'A handy stud finder for locating studs and beams behind walls, perfect for hanging heavy objects.');
+VALUES (15, 'Studfinder', '12.99', '1.50', '85', 'Tools', 'BasicProduct', 'A handy stud finder for locating studs and beams behind walls, perfect for hanging heavy objects.');
 
 INSERT INTO product_entity (id, product_name, price, discount, quantity, category, product_type, description)
 VALUES (16, 'Volleyball', '9.99', '1.00', '200', 'Sports', 'BasicProduct', 'A high-quality volleyball, great for both recreational play and competitive matches.');

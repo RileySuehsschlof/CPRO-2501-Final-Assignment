@@ -9,12 +9,29 @@
   }
   
   .card-image {
-    width: 100%;
-    height: auto;
+    width: 100%; /* Image takes up 100% of the container's width */
+    height: 200px; /* Fixed height for the image container (you can adjust as needed) */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f5f5; /* Fallback background color in case image is missing */
+  }
+  
+  .card-image img {
+    max-width: 100%; /* Prevent the image from stretching beyond the container */
+    max-height: 100%; /* Prevent the image from exceeding the height of the container */
+    width: auto; /* Preserve the original width to maintain aspect ratio */
+    height: auto; /* Preserve the original height to maintain aspect ratio */
+    object-fit: contain; /* Ensure the image scales to fit without cropping */
+  }
+
+  .card-link {
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Inherit color from parent */
   }
   
   .card-content {
-    padding: 16px;
+    padding: 0px;
   }
   
   .card-title {

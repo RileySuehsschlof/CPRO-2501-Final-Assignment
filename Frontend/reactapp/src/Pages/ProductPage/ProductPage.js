@@ -110,12 +110,6 @@ const ProductPage = () => {
       }
     }
   };
-  
-
-  // Will eventually send the product to the cart
-  const addToCart = (product) => {
-    console.log(`Added: ${product.productName} to cart`);
-  };
 
   return (
     <div className="product-page">
@@ -178,6 +172,7 @@ const addItemToCart = async (productId, quantity) => {
     });
 
     console.log("Item added:", response.data);
+    alert("Item added to cart!");
   } catch (error) {
     console.error("Error adding item to cart:", error);
   }

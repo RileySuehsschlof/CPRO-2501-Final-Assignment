@@ -44,10 +44,7 @@ public abstract class ProductEntity {
 
     @NotNull(message = "Must have a Category")
     private String category;
-
-    // @Column(name = "product_type")
-    // private String productType;
-
+    
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductImage> productImages;
 }

@@ -33,8 +33,14 @@ const Cart = () => {
   const totalPrice = cart.reduce((sum, item) => sum + item.totalPrice, 0);
 
   const cartStyle = {
-    backgroundColor: "white"
-  };
+    display: "flex",
+    justifyContent: "center",
+    maxHeight: "fit-content",
+    flexDirection: "column",
+    alignItems: "center",
+    height: "100vh",
+    width: "100%"
+  }
 
   return (
     <div style={cartStyle}>

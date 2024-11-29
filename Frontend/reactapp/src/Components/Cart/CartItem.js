@@ -6,16 +6,24 @@ const CartItem = ({ item, onRemove }) => {
     return <div>Product not available</div>;
   }
 
-  const divStyle = {
+  const tableStyle = {
     backgroundColor: "white",
-    padding: "7px",
-    maxWidth: "100px",
-    border: "1px solid #ddd",
-    display: "inline-block"
+    padding: "5px",
+    margin: "5px",
+    border: "1px solid #ddd"
   };
 
   const buttonStyle = {
     backgroundColor: "red"
+  };
+
+  const style2 = {
+    padding: "5px 10px"
+  };
+
+  const nameStyle = {
+    padding: "5px 10px",
+    fontWeight: "bold"
   };
 
   const handleRemove = async () => {
@@ -32,12 +40,16 @@ const CartItem = ({ item, onRemove }) => {
   };
 
   return (
-    <div style={divStyle} onClick={handleRemove}>
-      <h4>{item.product.productName}</h4>
-      <p>Price: {item.totalPrice}</p>
-      <p>Qty: {item.quantity}</p>
-      <button style={buttonStyle}>X</button>
-    </div>
+    <table style={tableStyle}>
+      <tbody>
+        <tr>
+          <td style={nameStyle}>{item.product.productName}</td>
+          <td style={style2}>${item.totalPrice}</td>
+          <td style={style2}>Qty: {item.quantity}</td>
+          <button style={buttonStyle} onClick={handleRemove}>X</button>
+        </tr>
+      </tbody>
+    </table>
   );
 };
 

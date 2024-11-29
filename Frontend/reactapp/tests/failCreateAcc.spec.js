@@ -17,3 +17,4 @@ test("failCreateAcc", async ({ page }) => {
     "User with that email already exists."
   );
 });
+//run tests with npx playwright test ./tests/{testName}

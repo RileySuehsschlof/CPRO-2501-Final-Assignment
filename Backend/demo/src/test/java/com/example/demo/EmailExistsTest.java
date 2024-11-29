@@ -26,8 +26,8 @@ public class EmailExistsTest {
         Account mockAccount = new Account();
         mockAccount.setEmail("smith@email.com");
         //mock repository
-        when(accountRepository.findByEmailTest("smith@email.com")).thenReturn((Optional.of(mockAccount)));
-        Optional<Account> emailExists = accountService.getAccountByEmailTest("smith@email.com");
+        when(accountRepository.findByEmail("smith@email.com")).thenReturn((Optional.of(mockAccount)));
+        Optional<Account> emailExists = accountService.getAccountByEmail("smith@email.com");
         System.out.println(emailExists);
 
         assertTrue(emailExists.isPresent(), "The email should exist");

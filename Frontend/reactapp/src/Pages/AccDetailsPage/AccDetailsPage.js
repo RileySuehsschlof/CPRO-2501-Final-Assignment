@@ -97,7 +97,7 @@ function validateEmail(email) {
 }
 async function checkPassword(email) {
   try {
-    //get password orresponding to email
+    //get password corresponding to email
     const response = await axios.get("http://localhost:8881/checkPassword", {
       params: { email: email },
     });
@@ -208,7 +208,7 @@ function AccDetailsPage() {
           sessionStorage.setItem("authToken", newToken);
           setErrors({ generalError: "Account updated successfully" });
           navigate("/");
-        } catch (err) {}
+        } catch (err) { }
       }
     } else {
       setErrors({ generalError: "Old password is invalid" });

@@ -180,8 +180,8 @@ const addItemToCart = async (productId, quantity) => {
 
 
 //will eventually send the product to the wishlist
-const addToWishlist = (product) => {
-  console.log(`added: ${product.name} to wishlist`);
-};
+// const addToWishlist = (product) => {
+//   console.log(`added: ${product.name} to wishlist`);
+// };
 
 export default ProductPage;

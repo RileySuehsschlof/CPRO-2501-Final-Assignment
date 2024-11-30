@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import './ImageCarousel.css';
-// import selfie from './selfie.jpg';
+
 
 const ImageCarousel = ({ images }) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
+    //fetches the next image in the array
     const nextImage = () => {
         setCurrentImageIndex((prevIndex) =>
             prevIndex === images.length - 1 ? 0 : prevIndex + 1
         );
     };
-
+    //fetches the previous image in the array
     const prevImage = () => {
         setCurrentImageIndex((prevIndex) =>
             prevIndex === 0 ? images.length - 1 : prevIndex - 1

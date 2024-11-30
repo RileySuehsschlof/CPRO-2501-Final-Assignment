@@ -3,9 +3,6 @@ import axios from "axios";
 import './RecommendedProduct.css';
 import { Link } from "react-router-dom";
 
-
-
-
 const RecommendedProductPage = ({ category, productId }) => {
 
     const [products, setProducts] = useState([]);
@@ -40,6 +37,7 @@ const RecommendedProductPage = ({ category, productId }) => {
     if (error) {
         return <div>{error}</div>;
     }
+
     return (
         <div className="recommended-products">
 

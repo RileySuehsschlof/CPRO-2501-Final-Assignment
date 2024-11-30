@@ -50,3 +50,25 @@
     color: #007BFF;
   }
   
+
+  .card-info h2 {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+  }
+  
+  .card-info p {
+    margin: 4px 0;
+    font-size: 1rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-height: 50px; /* Limit height to 1 line of text */
+    line-height: 1.5em; /* Adjust line height if needed */
+    width: 100%;
+  }
+  
+  
+  .card-info p.price {
+    font-weight: bold;
+    color: #ff6b6b; /* Price in a different color for emphasis */
+  }

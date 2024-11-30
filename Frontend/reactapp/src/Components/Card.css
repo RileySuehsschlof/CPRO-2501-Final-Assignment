@@ -1,74 +1,73 @@
 .card {
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    width: 300px; 
-    overflow: hidden;
-    text-align: center;
-    margin: 10px;
-  }
-  
-  .card-image {
-    width: 100%; /* Image takes up 100% of the container's width */
-    height: 200px; /* Fixed height for the image container (you can adjust as needed) */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f5f5f5; /* Fallback background color in case image is missing */
-  }
-  
-  .card-image img {
-    max-width: 100%; /* Prevent the image from stretching beyond the container */
-    max-height: 100%; /* Prevent the image from exceeding the height of the container */
-    width: auto; /* Preserve the original width to maintain aspect ratio */
-    height: auto; /* Preserve the original height to maintain aspect ratio */
-    object-fit: contain; /* Ensure the image scales to fit without cropping */
-  }
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f9f9f9;
+  cursor: pointer; /* To show a pointer when hovering */
+}
 
-  .card-link {
-    text-decoration: none; /* Remove underline */
-    color: inherit; /* Inherit color from parent */
-  }
-  
-  .card-content {
-    padding: 0px;
-  }
-  
-  .card-title {
-    font-size: 1.5em;
-    margin: 0;
-    color: #333;
-  }
-  
-  .card-price {
-    font-size: 1.2em;
-    color: #007BFF;
-  }
-  
-  .card-link {
-    font-size: 1.2em;
-    color: #007BFF;
-  }
-  
+.card-image {
+  width: 100%;
+  height: 200px; /* Control the size of the image container */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  .card-info h2 {
-    font-size: 1.2rem;
-    margin-bottom: 8px;
-  }
-  
-  .card-info p {
-    margin: 4px 0;
-    font-size: 1rem;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    max-height: 50px; /* Limit height to 1 line of text */
-    line-height: 1.5em; /* Adjust line height if needed */
-    width: 100%;
-  }
-  
-  
-  .card-info p.price {
-    font-weight: bold;
-    color: #ff6b6b; /* Price in a different color for emphasis */
-  }
+.card-image img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.no-image {
+  font-size: 16px;
+  color: #888;
+}
+
+.card-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 16px;
+  min-height: 200px; /* Make card-info section taller */
+  height: auto;
+  flex-grow: 1; /* Allow it to expand to fill available space */
+}
+
+.card-info h2 {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+.card-info p {
+  margin: 4px 0;
+  font-size: 1rem;
+}
+
+.price-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.original-price {
+  font-size: 1.2rem;
+  color: #000; /* Black color for the original price */
+}
+
+/* This style is for the crossed-out original price */
+.discounted {
+  text-decoration: line-through;
+  color: #888; /* Light gray color for crossed-out original price */
+}
+
+.sale-price {
+  color: #ff6b6b; /* Highlight the sale price in a different color */
+  font-weight: bold;
+}

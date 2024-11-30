@@ -30,7 +30,7 @@ const Cart = () => {
     fetchCart();
   }, [fetchCart]);
 
-  const totalPrice = cart.reduce((sum, item) => sum + item.totalPrice, 0).toPrecision(4);
+  const totalPrice = cart.reduce((sum, item) => sum + item.totalPrice, 0).toFixed(2);
 
   const cartStyle = {
     display: "flex",

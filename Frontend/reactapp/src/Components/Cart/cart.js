@@ -14,7 +14,15 @@ const Cart = () => {
   const userEmail = decodedPayload.sub;
 
   const handleRemove = (cartItemId) => {
-    setCart((prevItems) => prevItems.filter((item) => item.id !== cartItemId));
+    // Remove the item from the cart
+    const updatedCart = cart.filter((item) => item.id !== cartItemId);
+    setCart(updatedCart);
+
+    // Check if we need to go to the previous page if the last page is empty
+    const totalPages = Math.ceil(updatedCart.length / itemsPerPage);
+    if (currentPage >= totalPages && totalPages > 0) {
+      setCurrentPage(totalPages - 1);  // Go to the previous page if the current page is out of bounds
+    }
   };
 
   const fetchCart = useCallback(async () => {
@@ -43,6 +51,9 @@ const Cart = () => {
   const itemsPerPage = 5;
   const startIndex = currentPage * itemsPerPage;
   const currentItems = cart.slice(startIndex, startIndex + itemsPerPage);
+
+  // Total number of pages
+  const totalPages = Math.ceil(cart.length / itemsPerPage);
 
   // Handle Next Page
   const nextPage = () => {
@@ -171,6 +182,11 @@ const Cart = () => {
                 {currentItems.map((item) => (
                   <CartItem key={item.id} item={item} onRemove={handleRemove} />
                 ))}
+              </div>
+
+              {/* Page Info */}
+              <div style={{ textAlign: "center", marginTop: "10px" }}>
+                Page {currentPage + 1} of {totalPages}
               </div>
 
               {/* Render Carousel Navigation Buttons only if there are more than 5 items */}

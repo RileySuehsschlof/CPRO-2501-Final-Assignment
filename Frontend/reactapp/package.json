@@ -41,6 +41,10 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.49.0",
+<<<<<<< Updated upstream
     "@types/node": "^22.10.1"
+=======
+    "@types/node": "^22.9.3"
+>>>>>>> Stashed changes
   }
 }

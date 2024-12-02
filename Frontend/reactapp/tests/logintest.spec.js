@@ -12,3 +12,4 @@ test("logintest", async ({ page }) => {
   await page.locator('label:has-text("Name:")').waitFor();
   await expect(page.getByLabel("Name:")).toHaveValue("smith");
 });
+//currently broken

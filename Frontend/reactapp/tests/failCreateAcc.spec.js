@@ -18,3 +18,4 @@ test("failCreateAcc", async ({ page }) => {
   );
 });
 //run tests with npx playwright test ./tests/{testName}
+//have to have user with email smith@email.com and password smithy for test to pass

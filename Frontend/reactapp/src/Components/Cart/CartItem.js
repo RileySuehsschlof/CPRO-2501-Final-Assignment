@@ -6,24 +6,36 @@ const CartItem = ({ item, onRemove }) => {
     return <div>Product not available</div>;
   }
 
+  // Extract the first image URL
+  const firstImageUrl = item.product.productImages && item.product.productImages[0]?.imageUrl;
+
+  // Log the image URL for debugging
+  console.log('First Image URL:', firstImageUrl);
+
   const tableStyle = {
     backgroundColor: "white",
     padding: "5px",
     margin: "5px",
-    border: "1px solid #ddd"
+    border: "1px solid #ddd",
+    width: "400px",  // Set the width of the entire cart item container
+    tableLayout: "fixed" // Prevent the table from expanding beyond the width
+  };
+
+  const tdStyle = {
+    padding: "5px",
+    Width: "400px", // Ensure table cells are also constrained
+    textOverflow: "ellipsis",
+    overflow: "hidden",
+    whiteSpace: "nowrap"
+  };
+
+  const imgStyle = {
+    height: "50px",  // Set image height
+    width: "auto"   // Maintain aspect ratio
   };
 
   const buttonStyle = {
     backgroundColor: "red"
-  };
-
-  const style2 = {
-    padding: "5px 10px"
-  };
-
-  const nameStyle = {
-    padding: "5px 10px",
-    fontWeight: "bold"
   };
 
   const handleRemove = async () => {
@@ -43,10 +55,28 @@ const CartItem = ({ item, onRemove }) => {
     <table style={tableStyle}>
       <tbody>
         <tr>
-          <td style={nameStyle}>{item.product.productName}</td>
-          <td style={style2}>${item.totalPrice}</td>
-          <td style={style2}>Qty: {item.quantity}</td>
-          <button style={buttonStyle} onClick={handleRemove}>X</button>
+          {/* Image Column */}
+          <td style={tdStyle}>
+            {firstImageUrl ? (
+              <img 
+                src={`http://localhost:8881/${firstImageUrl}`} 
+                alt={item.product.productName} 
+                style={imgStyle} 
+              />
+            ) : (
+              <div>No image available</div>
+            )}
+          </td>
+          {/* Product Name Column */}
+          <td style={tdStyle}>{item.product.productName}</td>
+          {/* Price Column */}
+          <td style={tdStyle}>${item.totalPrice}</td>
+          {/* Quantity Column */}
+          <td style={tdStyle}>Qty: {item.quantity}</td>
+          {/* Remove Button */}
+          <td>
+            <button style={buttonStyle} onClick={handleRemove}>X</button>
+          </td>
         </tr>
       </tbody>
     </table>

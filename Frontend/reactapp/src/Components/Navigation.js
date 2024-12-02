@@ -57,7 +57,12 @@ function Navigation() {
         &#9776;
       </div>
       <div className="right">
-        <a className="navbarButton" href="#" onClick={handleAccountClick}>
+        <a
+          className="navbarButton"
+          id="accountNavBtn"
+          href="#"
+          onClick={handleAccountClick}
+        >
           Account
         </a>
         {/* <Link className="navbarButton" to={linkToAccount} onClick={closeMenu}>

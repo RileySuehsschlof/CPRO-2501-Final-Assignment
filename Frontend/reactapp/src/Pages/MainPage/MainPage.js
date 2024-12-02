@@ -61,8 +61,13 @@ const MainPage = () => {
     return <div>Error: {error}</div>; // Display error message
   }
 
+  // Filter and sort products that are on sale (discount > 0)
+  const saleProducts = regCardData
+    .filter((product) => product.discount > 0) // Filter products with discount > 0
+    .sort((a, b) => b.discount - a.discount); // Sort by discount in descending order
+
   // Calculate the range of items to display based on the carousel index
-  const currentRegCards = regCardData.slice(
+  const currentRegCards = saleProducts.slice(
     regCarouselIndex * cardsPerSlide,
     (regCarouselIndex + 1) * cardsPerSlide
   );
@@ -74,7 +79,7 @@ const MainPage = () => {
 
   // Function to handle next slide for regular carousel
   const nextRegSlide = () => {
-    if ((regCarouselIndex + 1) * cardsPerSlide < regCardData.length) {
+    if ((regCarouselIndex + 1) * cardsPerSlide < saleProducts.length) {
       setRegCarouselIndex(regCarouselIndex + 1);
     }
   };
@@ -114,9 +119,7 @@ const MainPage = () => {
         </div>
         <button
           onClick={nextRegSlide}
-          disabled={
-            (regCarouselIndex + 1) * cardsPerSlide >= regCardData.length
-          }
+          disabled={regCarouselIndex + 1 >= saleProducts.length / cardsPerSlide}
         >
           Next
         </button>
@@ -134,9 +137,7 @@ const MainPage = () => {
         </div>
         <button
           onClick={nextRecSlide}
-          disabled={
-            (recCarouselIndex + 1) * cardsPerSlide >= regCardData.length
-          }
+          disabled={recCarouselIndex + 1 >= regCardData.length / cardsPerSlide}
         >
           Next
         </button>

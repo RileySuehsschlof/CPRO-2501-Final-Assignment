@@ -10,61 +10,53 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 
 INSERT INTO product_entity (id, product_name, price, discount, quantity, category, product_type, description)
-VALUES (1, 'Drill', '49.99', '5.00', '50', 'Tools', 'BasicProduct', 'This is a powerful electric drill suitable for home improvement and construction projects.');
+VALUES (1, 'Drill', '49.99', '25', '50', 'Tools', 'BasicProduct', 'This is a powerful electric drill suitable for home improvement and construction projects.');
 
 INSERT INTO product_entity (id, product_name, price, discount, quantity, category, product_type, description)
-VALUES (2, 'Frisbee', '9.99', '1.00', '100', 'Sports', 'BasicProduct', 'A lightweight and durable frisbee for outdoor fun and competitive games.');
+VALUES (2, 'Frisbee', '9.99', '0', '100', 'Sports', 'BasicProduct', 'A lightweight and durable frisbee for outdoor fun and competitive games.');
 
 INSERT INTO product_entity (id, product_name, price, discount, quantity, category, product_type, description)
-VALUES (3, 'Ketchup', '2.49', '0.50', '200', 'Food', 'BasicProduct', 'A classic tomato ketchup perfect for burgers, fries, and other snacks.');
+VALUES (3, 'Ketchup', '2.49', '33', '200', 'Food', 'BasicProduct', 'A classic tomato ketchup perfect for burgers, fries, and other snacks.');
 
 INSERT INTO product_entity (id, product_name, price, discount, quantity, category, product_type, description)
-VALUES (4, 'Mustard', '1.99', '0.30', '150', 'Food', 'BasicProduct', 'Tangy and smooth mustard, ideal for hot dogs, sandwiches, and more.');
+VALUES (4, 'Mustard', '1.99', '10', '150', 'Food', 'BasicProduct', 'Tangy and smooth mustard, ideal for hot dogs, sandwiches, and more.');
 
 INSERT INTO product_entity (id, product_name, price, discount, quantity, category, product_type, description)
-VALUES (5, 'Pencil', '0.99', '0.10', '500', 'Stationery', 'BasicProduct', 'A high-quality wood pencil, perfect for writing, sketching, or drawing.');
+VALUES (5, 'Pencil', '0.99', '0', '500', 'Stationery', 'BasicProduct', 'A high-quality wood pencil, perfect for writing, sketching, or drawing.');
 
 INSERT INTO product_entity (id, product_name, price, discount, quantity, category, product_type, description)
-VALUES (6, 'Punch', '3.99', '0.50', '75', 'Beverages', 'BasicProduct', 'A refreshing fruit punch, ideal for parties, picnics, and gatherings.');
+VALUES (6, 'Punch', '3.99', '0', '75', 'Beverages', 'BasicProduct', 'A refreshing fruit punch, ideal for parties, picnics, and gatherings.');
 
 INSERT INTO product_entity (id, product_name, price, discount, quantity, category, product_type, description)
-VALUES (7, 'Ranch', '2.79', '0.40', '120', 'Food', 'BasicProduct', 'Creamy and tangy ranch dressing, perfect for salads, veggies, and dipping.');
+VALUES (7, 'Ranch', '2.79', '25', '120', 'Food', 'BasicProduct', 'Creamy and tangy ranch dressing, perfect for salads, veggies, and dipping.');
 
 INSERT INTO product_entity (id, product_name, price, discount, quantity, category, product_type, description)
-VALUES (8, 'Screwdriver', '8.99', '1.00', '60', 'Tools', 'BasicProduct', 'A reliable and durable screwdriver for tightening screws and assembly work.');
+VALUES (8, 'Screwdriver', '8.99', '10', '25', 'Tools', 'BasicProduct', 'A reliable and durable screwdriver for tightening screws and assembly work.');
 
 INSERT INTO product_entity (id, product_name, price, discount, quantity, category, product_type, description)
-VALUES (9, 'Sharpener', '1.49', '0.20', '200', 'Stationery', 'BasicProduct', 'A handy pencil sharpener for keeping your writing instruments in perfect condition.');
+VALUES (9, 'Sharpener', '1.49', '20', '10', 'Stationery', 'BasicProduct', 'A handy pencil sharpener for keeping your writing instruments in perfect condition.');
 
 INSERT INTO product_entity (id, product_name, price, discount, quantity, category, product_type, description)
-VALUES (10, 'Shawl 1', '19.99', '3.00', '40', 'Apparel', 'BasicProduct', 'A soft and cozy shawl made of wool, perfect for chilly evenings.');
+VALUES (10, 'Shawl 1', '19.99', '0', '5', 'Apparel', 'BasicProduct', 'A soft and cozy shawl made of wool, perfect for chilly evenings.');
 
 INSERT INTO product_entity (id, product_name, price, discount, quantity, category, product_type, description)
-VALUES (11, 'Shawl 2', '19.99', '3.00', '40', 'Apparel', 'BasicProduct', 'A stylish and warm shawl made from high-quality fabric.');
+VALUES (11, 'Shawl 2', '19.99', '15', '5', 'Apparel', 'BasicProduct', 'A stylish and warm shawl made from high-quality fabric.');
 
 INSERT INTO product_entity (id, product_name, price, discount, quantity, category, product_type, description)
-VALUES (12, 'Shawl 3', '19.99', '3.00', '40', 'Apparel', 'BasicProduct', 'A comfortable and elegant shawl for all seasons.');
+VALUES (12, 'Shawl 3', '19.99', '60', '20', 'Apparel', 'BasicProduct', 'A comfortable and elegant shawl for all seasons.');
 
 INSERT INTO product_entity (id, product_name, price, discount, quantity, category, product_type, description)
-VALUES (13, 'Shawl 4', '19.99', '3.00', '40', 'Apparel', 'BasicProduct', 'A versatile shawl that adds a touch of sophistication to any outfit.');
+VALUES (13, 'Shawl 4', '19.99', '60', '20', 'Apparel', 'BasicProduct', 'A versatile shawl that adds a touch of sophistication to any outfit.');
 
 INSERT INTO product_entity (id, product_name, price, discount, quantity, category, product_type, description)
-VALUES (14, 'Soccerball', '15.99', '2.00', '150', 'Sports', 'BasicProduct', 'A durable soccer ball designed for outdoor and indoor games, perfect for practice or competition.');
+VALUES (14, 'Soccerball', '15.99', '15', '10', 'Sports', 'BasicProduct', 'A durable soccer ball designed for outdoor and indoor games, perfect for practice or competition.');
 
 INSERT INTO product_entity (id, product_name, price, discount, quantity, category, product_type, description)
-VALUES (15, 'Studfinder', '12.99', '1.50', '85', 'Tools', 'BasicProduct', 'A handy stud finder for locating studs and beams behind walls, perfect for hanging heavy objects.');
+VALUES (15, 'Studfinder', '12.99', '10', '25', 'Tools', 'BasicProduct', 'A handy stud finder for locating studs and beams behind walls, perfect for hanging heavy objects.');
 
 INSERT INTO product_entity (id, product_name, price, discount, quantity, category, product_type, description)
-VALUES (16, 'Volleyball', '9.99', '1.00', '200', 'Sports', 'BasicProduct', 'A high-quality volleyball, great for both recreational play and competitive matches.');
+VALUES (16, 'Volleyball', '9.99', '10', '10', 'Sports', 'BasicProduct', 'A high-quality volleyball, great for both recreational play and competitive matches.');
 
-INSERT INTO product_entity (id, product_name, price, discount, quantity, category, product_type, description)
-VALUES (17, 'Basic Product 1', '99.99', '10.00', '50', 'Electronics', 'BasicProduct', 'This is the description for an electronics test');
-
-INSERT INTO product_entity (id, product_name, price, discount, quantity, category, product_type, description)
-VALUES (18, 'Basic Product 2', '59.99', '5.00', '30', 'Books', 'BasicProduct', 'This is the description for a book');
-
-INSERT INTO product_entity (id, product_name, price, discount, quantity, category, product_type, description)
-VALUES (19, 'Basic Product 3', '59.99', '5.00', '30', 'Books', 'BasicProduct', 'This is the description for a book 2');
 
 
 

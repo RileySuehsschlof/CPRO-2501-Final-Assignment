@@ -90,14 +90,17 @@ public class AccountService {
         // passwordEncoder.encode(password));
     }
 
-    public Optional<Account> getAccountByEmail(String email) {
-        return repository.findAll()
-                // get all accounts, then filter by the email
-                .stream()
-                .filter(account -> account.getEmail().equalsIgnoreCase(email))
-                .findFirst();
-    }
+//    public Optional<Account> getAccountByEmail(String email) {
+//        return repository.findAll()
+//                // get all accounts, then filter by the email
+//                .stream()
+//                .filter(account -> account.getEmail().equalsIgnoreCase(email))
+//                .findFirst();
+//    }
     // This was to use streams for the assignment.
+    public Optional<Account>getAccountByEmail(String email){
+        return repository.findByEmail(email);
+    }
 
     public Account editAccountByEmail(String email, Account updatedAccount) {
         // Fetch the existing account

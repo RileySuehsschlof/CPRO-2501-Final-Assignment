@@ -25,15 +25,25 @@ public class WishlistProductCRUDTests {
 
     @InjectMocks
     private WishlistProductService wishlistProductService;
+    private AccountService accountService;
 
     private WishlistProductEntity wishlistProduct;
+    private Account account;
 
     @BeforeEach
     void setUp() {
+        account = new Account();
+        account.setBillingAddress("123 Billing Ave");
+        account.setShippingAddress("123 Shipping Cres.");
+        account.setCardNumber("1234123412341234");
+        account.setEmail("First@Last.com");
+        account.setId(1);
+        account.setName("First Last");
+        account.setPassword("Totally_Secure_Password123");
+
+
 
         wishlistProduct = new WishlistProductEntity();
-
-
         wishlistProduct.setWishlistProductID("1-1");
         wishlistProduct.setWishlistID(1);
         wishlistProduct.setProductID(1);

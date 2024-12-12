@@ -1,16 +1,9 @@
 package com.example.demo;
 
-import com.example.demo.entity.BasicProductEntity;
-import com.example.demo.entity.ProductEntity;
-import com.example.demo.entity.Account;
 import com.example.demo.entity.WishlistProductEntity;
-import com.example.demo.service.ProductEntityService;
 import com.example.demo.service.WishlistProductService;
 import com.example.demo.exception.WishlistProductException;
-import com.example.demo.repository.IProductRepository;
-import com.example.demo.repository.IProductImageRepository;
 import com.example.demo.repository.IWishlistProductRepository;
-import com.example.demo.repository.IAccountRepository;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,45 +20,16 @@ import static org.mockito.Mockito.*;
 public class WishlistProductCRUDTests {
 
     @Mock
-    private IProductRepository productRepository;
-    @Mock
     private IWishlistProductRepository wishlistProductRepository;
-    @Mock
-    private IAccountRepository accountRepository;
-    @Mock
-    private IProductImageRepository productImageRepository;
 
     @InjectMocks
-    private ProductEntityService productEntityService;
     private WishlistProductService wishlistProductService;
 
-    private ProductEntity product;
-    private Account account;
     private WishlistProductEntity wishlistProduct;
 
     @BeforeEach
     void setUp() {
 
-        // Using concrete class BasicProductEntity
-        product = new BasicProductEntity();
-        product.setId(1);
-        product.setProductName("Test Product");
-        product.setCategory("Test Category");
-        product.setDiscount("10.0");
-        product.setQuantity("100");
-        product.setPrice("20.0");
-
-        // Setting additional properties for BasicProductEntity
-        ((BasicProductEntity) product).setDescription("This is a basic product description.");
-
-
-        account.setBillingAddress("123 Test Ave.");
-        ((Account) account).setCardNumber("1234123412341234");
-        account.setEmail("User@email.com");
-        account.setId(1);
-        account.setName("First Last");
-        account.setPassword("SecurePassword");
-        account.setShippingAddress("123 Shipping Cres.");
 
         wishlistProduct.setWishlistProductID("1-1");
         wishlistProduct.setWishlistID(1);

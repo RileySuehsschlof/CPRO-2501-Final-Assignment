@@ -3,6 +3,7 @@ package com.example.demo;
 import com.example.demo.entity.WishlistProductEntity;
 import com.example.demo.service.WishlistProductService;
 import com.example.demo.exception.WishlistProductException;
+import com.example.demo.repository.IAccountRepository;
 import com.example.demo.repository.IWishlistProductRepository;
 import com.example.demo.service.AccountService;
 import com.example.demo.entity.Account;
@@ -22,6 +23,9 @@ public class WishlistProductCRUDTests {
 
     @Mock
     private IWishlistProductRepository wishlistProductRepository;
+
+    @Mock
+    private IAccountRepository accountRepository;
 
     @InjectMocks
     private WishlistProductService wishlistProductService;

@@ -30,6 +30,8 @@ public class WishlistProductCRUDTests {
     @BeforeEach
     void setUp() {
 
+        wishlistProduct = new WishlistProductEntity();
+
 
         wishlistProduct.setWishlistProductID("1-1");
         wishlistProduct.setWishlistID(1);

@@ -5,6 +5,7 @@ import com.example.demo.service.WishlistProductService;
 import com.example.demo.exception.WishlistProductException;
 import com.example.demo.repository.IWishlistProductRepository;
 import com.example.demo.service.AccountService;
+import com.example.demo.entity.Account;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

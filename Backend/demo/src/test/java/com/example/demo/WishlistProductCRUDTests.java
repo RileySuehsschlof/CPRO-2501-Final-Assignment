@@ -74,7 +74,7 @@ public class WishlistProductCRUDTests {
         WishlistProductEntity result = wishlistProductService.getWishlistProductById("1-1");
 
         assertNotNull(result);
-        assertEquals("Test Product", result.getNotes());
+        assertEquals("First Last would really like this product.", result.getNotes());
     }
 
     // what happens when no wishlist product with that id exists
@@ -87,7 +87,7 @@ public class WishlistProductCRUDTests {
             wishlistProductService.getWishlistProductById("1-1");
         });
 
-        assertEquals("No Wishlist Product found with WP id: " + wishlistProduct.getWishlistProductID(), thrown.getMessage());
+        assertEquals("No Wishlist Product found with ID: " + wishlistProduct.getWishlistProductID(), thrown.getMessage());
     }
 
     // deleting a wishlist product
@@ -97,7 +97,7 @@ public class WishlistProductCRUDTests {
 
         String result = wishlistProductService.deleteWishlistProduct("1-1");
 
-        assertEquals("successfully deleted wishlist product:1-1", result);
+        assertEquals("successfully deleted wishlist product: 1-1", result);
         verify(wishlistProductRepository, times(1)).deleteById("1-1");
     }
 
@@ -111,7 +111,7 @@ public class WishlistProductCRUDTests {
             wishlistProductService.deleteWishlistProduct("1-1");
         });
 
-        assertEquals("No Product found with id: " + wishlistProduct.getWishlistProductID(), thrown.getMessage());
+        assertEquals("No Wishlist Product found with ID: " + wishlistProduct.getWishlistProductID(), thrown.getMessage());
     }
 
     

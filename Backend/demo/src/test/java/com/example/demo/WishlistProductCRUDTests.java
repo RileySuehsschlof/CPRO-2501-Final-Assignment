@@ -4,7 +4,7 @@ import com.example.demo.entity.WishlistProductEntity;
 import com.example.demo.service.WishlistProductService;
 import com.example.demo.exception.WishlistProductException;
 import com.example.demo.repository.IWishlistProductRepository;
-
+import com.example.demo.service.AccountService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -97,7 +97,7 @@ public class WishlistProductCRUDTests {
 
         String result = wishlistProductService.deleteWishlistProduct("1-1");
 
-        assertEquals("successfully deleted wishlist product: 1-1", result);
+        assertEquals("Successfully deleted wishlist product: 1-1", result);
         verify(wishlistProductRepository, times(1)).deleteById("1-1");
     }
 

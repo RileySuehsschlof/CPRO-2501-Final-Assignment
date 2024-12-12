@@ -101,7 +101,7 @@ public class WishlistProductCRUDTests {
 
     // deleting a product that does not exist
     @Test
-    void testDeleteProductNotFound() {
+    void testDeleteWishlistProductNotFound() {
 
         when(wishlistProductRepository.existsById("1-1")).thenReturn(false);
 
